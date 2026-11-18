@@ -1,0 +1,1660 @@
+```html
+<!DOCTYPE html>
+<html lang="bn" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NextGen Academy | Complete Coaching Management & Website</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Hind Siliguri (Bangla) & Plus Jakarta Sans (English) -->
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Hind Siliguri', 'Plus Jakarta Sans', 'sans-serif'],
+                        heading: ['Plus Jakarta Sans', 'Hind Siliguri', 'sans-serif'],
+                    },
+                    colors: {
+                        primary: '#2563EB',
+                        secondary: '#0F172A',
+                        accent: '#F59E0B',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Print Styles for ID Card & Reports */
+        @media print {
+            body * { visibility: hidden; }
+            #printable-area, #printable-area * { visibility: visible; }
+            #printable-area { position: absolute; left: 0; top: 0; width: 100%; }
+        }
+        .sidebar-scroll::-webkit-scrollbar { width: 5px; }
+        .sidebar-scroll::-webkit-scrollbar-thumb { background: #334155; border-radius: 10px; }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 antialiased">
+
+    <!-- Toast Notification Container -->
+    <div id="toast-container" class="fixed bottom-5 right-5 z-[100] flex flex-col gap-2"></div>
+
+    <!-- =====================================================================
+         VIEW 1: PUBLIC WEBSITE (সবার জন্য উন্মুক্ত মূল ওয়েবসাইট)
+    ====================================================================== -->
+    <div id="public-view" class="block">
+        <!-- Top Utility Bar: BD Live Clock, Notice Ticker & Portal Logins -->
+        <div class="bg-secondary text-white text-xs sm:text-sm py-2 px-4 border-b border-slate-800">
+            <div class="max-w-7xl mx-auto flex flex-wrap justify-between items-center gap-2">
+                <div class="flex items-center space-x-4">
+                    <span id="widget-clock" class="flex items-center text-amber-400 font-semibold">
+                        <i class="fa-regular fa-clock mr-1.5"></i> <span id="bd-time">Loading BD Time...</span>
+                    </span>
+                    <button id="widget-calc-btn" onclick="toggleCalculator()" class="bg-white/10 hover:bg-white/20 px-2.5 py-1 rounded-lg text-xs transition flex items-center">
+                        <i class="fa-solid fa-calculator mr-1.5 text-blue-400"></i> Calculator
+                    </button>
+                </div>
+                <div class="flex items-center space-x-2">
+                    <button onclick="openLoginModal('admin')" class="bg-primary hover:bg-blue-600 px-3 py-1 rounded-lg text-xs font-semibold transition">
+                        <i class="fa-solid fa-user-shield mr-1"></i> Admin
+                    </button>
+                    <button onclick="openLoginModal('teacher')" class="bg-emerald-600 hover:bg-emerald-500 px-3 py-1 rounded-lg text-xs font-semibold transition">
+                        <i class="fa-solid fa-chalkboard-user mr-1"></i> Teacher
+                    </button>
+                    <button onclick="openLoginModal('student')" class="bg-amber-600 hover:bg-amber-500 px-3 py-1 rounded-lg text-xs font-semibold transition">
+                        <i class="fa-solid fa-user-graduate mr-1"></i> Student
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Navbar -->
+        <header class="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-slate-200 shadow-sm">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex justify-between items-center">
+                <a href="#" class="flex items-center space-x-3">
+                    <div id="pub-logo-box" class="w-12 h-12 bg-primary rounded-xl flex items-center justify-center text-white text-xl shadow-lg shadow-blue-500/30 overflow-hidden">
+                        <i id="pub-logo-icon" class="fa-solid fa-graduation-cap"></i>
+                        <img id="pub-logo-img" src="" alt="NextGen Academy Logo" class="hidden w-full h-full object-cover">
+                    </div>
+                    <div>
+                        <span id="pub-academy-name" class="font-heading font-extrabold text-xl text-secondary block leading-none">NEXTGEN ACADEMY</span>
+                        <span id="pub-academy-tagline" class="text-xs font-semibold text-primary">আন্তর্জাতিক মানের আধুনিক কোচিং সেন্টার</span>
+                    </div>
+                </a>
+
+                <nav class="hidden md:flex space-x-7 font-semibold text-sm text-slate-600">
+                    <a href="#pub-home" class="hover:text-primary transition">হোম (Home)</a>
+                    <a href="#pub-about" class="hover:text-primary transition">পরিচিতি (About)</a>
+                    <a href="#pub-courses" class="hover:text-primary transition">কোর্সসমূহ (Courses)</a>
+                    <a href="#pub-notices" class="hover:text-primary transition">নোটিশ বোর্ড</a>
+                    <a href="#pub-admission" class="hover:text-primary transition">ভর্তি তথ্য</a>
+                </nav>
+
+                <div class="flex items-center space-x-3">
+                    <a id="pub-whatsapp-top" href="https://wa.me/8801792818005" target="_blank" class="bg-emerald-500 hover:bg-emerald-600 text-white px-4 py-2.5 rounded-xl text-sm font-semibold shadow-md flex items-center transition">
+                        <i class="fa-brands fa-whatsapp text-lg mr-1.5"></i> <span class="hidden sm:inline">WhatsApp</span>
+                    </a>
+                </div>
+            </div>
+        </header>
+
+        <!-- Hero Section -->
+        <section id="pub-home" class="bg-gradient-to-br from-slate-900 via-blue-950 to-slate-900 text-white py-16 lg:py-24">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <div class="space-y-6">
+                    <span class="inline-block bg-blue-500/20 border border-blue-400/30 text-blue-200 text-xs font-semibold px-4 py-1.5 rounded-full">
+                        🌟 ডিজিটাল ও স্মার্ট শিক্ষা ব্যবস্থাপনা
+                    </span>
+                    <h1 id="pub-hero-title" class="font-heading text-3xl sm:text-5xl font-extrabold leading-tight">
+                        আপনার সন্তানের উজ্জ্বল ভবিষ্যৎ গড়ার বিশ্বস্ত প্রতিষ্ঠান
+                    </h1>
+                    <p id="pub-hero-desc" class="text-slate-300 text-base sm:text-lg leading-relaxed">
+                        অভিজ্ঞ শিক্ষকমণ্ডলী, ডিজিটাল ক্লাসরুম, নিয়মিত মূল্যায়ন এবং অনলাইন ও অফলাইন সমন্বিত শিক্ষা ব্যবস্থার মাধ্যমে আমরা শিক্ষার্থীদের সর্বোচ্চ সাফল্য নিশ্চিত করি।
+                    </p>
+                    <div class="flex flex-wrap gap-4 pt-2">
+                        <a href="#pub-admission" class="bg-primary hover:bg-blue-600 text-white px-7 py-3.5 rounded-xl font-bold shadow-lg transition">
+                            অনলাইন ভর্তি আবেদন <i class="fa-solid fa-arrow-right ml-2"></i>
+                        </a>
+                        <a href="#pub-courses" class="bg-white/10 hover:bg-white/20 text-white px-7 py-3.5 rounded-xl font-bold border border-white/20 transition">
+                            কোর্সসমূহ দেখুন
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Live Notice Board Card on Hero -->
+                <div id="pub-notices" class="bg-white text-slate-800 rounded-3xl p-6 sm:p-8 shadow-2xl border border-slate-100">
+                    <div class="flex items-center justify-between border-b border-slate-100 pb-4 mb-4">
+                        <h3 class="font-heading font-bold text-xl text-secondary flex items-center">
+                            <i class="fa-solid fa-bullhorn text-accent mr-2.5"></i> নোটিশ বোর্ড (Notice Board)
+                        </h3>
+                        <span class="text-xs bg-red-100 text-red-600 font-bold px-2.5 py-1 rounded-full animate-pulse">LIVE</span>
+                    </div>
+                    <div id="public-notice-list" class="space-y-3 max-h-72 overflow-y-auto pr-1">
+                        <!-- Rendered dynamically via JS -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Us Section -->
+        <section id="pub-about" class="py-16 bg-white">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center max-w-3xl mx-auto mb-12">
+                    <span class="text-primary font-bold text-sm uppercase">আমাদের সম্পর্কে (About Us)</span>
+                    <h2 class="font-heading text-3xl font-bold text-secondary mt-1">কেন আমরা সেরা?</h2>
+                    <p id="pub-about-text" class="text-slate-600 mt-3">
+                        NextGen Academy-তে প্রতিটি শিক্ষার্থীর জন্য রয়েছে আলাদা কেয়ার, অভিভাবকদের সাথে সার্বক্ষণিক WhatsApp যোগাযোগ, ডিজিটাল হাজিরা এবং অনলাইন পোর্টাল সুবিধা।
+                    </p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+                    <div class="p-6 bg-slate-50 rounded-2xl border border-slate-100 text-center">
+                        <div class="w-12 h-12 bg-blue-100 text-primary rounded-xl flex items-center justify-center text-xl mx-auto mb-4"><i class="fa-solid fa-users"></i></div>
+                        <h4 class="font-bold text-lg text-secondary">অভিজ্ঞ শিক্ষক</h4>
+                        <p class="text-xs text-slate-500 mt-1">বিষয়ভিত্তিক দক্ষ ও প্রশিক্ষিত শিক্ষকমণ্ডলী</p>
+                    </div>
+                    <div class="p-6 bg-slate-50 rounded-2xl border border-slate-100 text-center">
+                        <div class="w-12 h-12 bg-emerald-100 text-emerald-600 rounded-xl flex items-center justify-center text-xl mx-auto mb-4"><i class="fa-solid fa-video"></i></div>
+                        <h4 class="font-bold text-lg text-secondary">অনলাইন ক্লাস</h4>
+                        <p class="text-xs text-slate-500 mt-1">Google Meet-এর মাধ্যমে লাইভ ক্লাস ও সাপোর্ট</p>
+                    </div>
+                    <div class="p-6 bg-slate-50 rounded-2xl border border-slate-100 text-center">
+                        <div class="w-12 h-12 bg-amber-100 text-amber-600 rounded-xl flex items-center justify-center text-xl mx-auto mb-4"><i class="fa-solid fa-id-card"></i></div>
+                        <h4 class="font-bold text-lg text-secondary">স্মার্ট পোর্টাল</h4>
+                        <p class="text-xs text-slate-500 mt-1">শিক্ষার্থী ও শিক্ষকদের জন্য আলাদা লগইন পোর্টাল</p>
+                    </div>
+                    <div class="p-6 bg-slate-50 rounded-2xl border border-slate-100 text-center">
+                        <div class="w-12 h-12 bg-purple-100 text-purple-600 rounded-xl flex items-center justify-center text-xl mx-auto mb-4"><i class="fa-brands fa-whatsapp"></i></div>
+                        <h4 class="font-bold text-lg text-secondary">অভিভাবক আপডেট</h4>
+                        <p class="text-xs text-slate-500 mt-1">উপস্থিতি ও ফলাফলের তাৎক্ষণিক WhatsApp বার্তা</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Courses Section -->
+        <section id="pub-courses" class="py-16 bg-slate-50">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center max-w-2xl mx-auto mb-12">
+                    <span class="text-primary font-bold text-sm uppercase">আমাদের কোর্সসমূহ</span>
+                    <h2 class="font-heading text-3xl font-bold text-secondary mt-1">চলমান একাডেমিক ও স্কিল কোর্স</h2>
+                </div>
+                <div id="public-course-grid" class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <!-- Rendered dynamically from Admin Courses -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Admission & Contact Section -->
+        <section id="pub-admission" class="py-16 bg-white">
+            <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="bg-slate-900 text-white rounded-3xl overflow-hidden shadow-xl grid grid-cols-1 lg:grid-cols-5">
+                    <div class="lg:col-span-2 bg-primary p-8 flex flex-col justify-between">
+                        <div>
+                            <h3 class="font-heading text-2xl font-bold mb-3">যোগাযোগ ও ভর্তি তথ্য</h3>
+                            <p class="text-blue-100 text-sm mb-6">যেকোনো তথ্যের জন্য সরাসরি কল করুন অথবা ফর্মটি পূরণ করুন।</p>
+                            <div class="space-y-4 text-sm">
+                                <p><i class="fa-solid fa-user-tie mr-2 text-accent"></i> <strong>পরিচালক:</strong> <span id="pub-director">মো: আলমগীর হোসেন (সাগর)</span></p>
+                                <p><i class="fa-solid fa-location-dot mr-2 text-accent"></i> <span id="pub-address">লক্ষিপুরা রোড, বাস-স্ট্যান্ড, জয়দেবপুর, গাজীপুর।</span></p>
+                                <p><i class="fa-solid fa-phone mr-2 text-accent"></i> <span id="pub-phone">01792818005, 01581299984</span></p>
+                                <p><i class="fa-solid fa-envelope mr-2 text-accent"></i> <span id="pub-email">sagorrana097@gmail.com</span></p>
+                            </div>
+                        </div>
+                        <div class="pt-6 border-t border-blue-400/30 flex space-x-3">
+                            <a id="pub-fb-link" href="#" target="_blank" class="w-9 h-9 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20"><i class="fa-brands fa-facebook-f"></i></a>
+                            <a id="pub-yt-link" href="#" target="_blank" class="w-9 h-9 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20"><i class="fa-brands fa-youtube"></i></a>
+                            <a id="pub-wa-link" href="https://wa.me/8801792818005" target="_blank" class="w-9 h-9 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20"><i class="fa-brands fa-whatsapp"></i></a>
+                        </div>
+                    </div>
+                    <div class="lg:col-span-3 p-8 bg-white text-slate-800">
+                        <h4 class="font-bold text-xl text-secondary mb-4">অনলাইন ভর্তি ফর্ম (Admission Inquiry)</h4>
+                        <form id="public-admission-form" class="space-y-4">
+                            <input type="text" id="inq-name" required placeholder="শিক্ষার্থীর নাম *" class="w-full px-4 py-3 rounded-xl border border-slate-300 text-sm">
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                <input type="tel" id="inq-phone" required placeholder="অভিভাবকের WhatsApp নম্বর *" class="w-full px-4 py-3 rounded-xl border border-slate-300 text-sm">
+                                <input type="text" id="inq-class" required placeholder="শ্রেণি / বিভাগ (যেমন: Class 10 - Science)" class="w-full px-4 py-3 rounded-xl border border-slate-300 text-sm">
+                            </div>
+                            <select id="inq-course" class="w-full px-4 py-3 rounded-xl border border-slate-300 text-sm bg-white"></select>
+                            <button type="submit" class="w-full bg-primary hover:bg-blue-700 text-white font-bold py-3.5 rounded-xl shadow-md transition">
+                                আবেদন জমা দিন
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <footer class="bg-secondary text-slate-400 py-8 text-center text-xs">
+            <p>&copy; 2026 <span id="footer-academy-name">NextGen Academy</span> | পরিচালক: মো: আলমগীর হোসেন (সাগর)। All Rights Reserved.</p>
+        </footer>
+    </div>
+
+    <!-- =====================================================================
+         VIEW 2: ADMIN PANEL (প্রশাসনিক প্যানেল - Full ERP System)
+    ====================================================================== -->
+    <div id="admin-view" class="hidden min-h-screen flex bg-slate-100">
+        <!-- Sidebar -->
+        <aside id="admin-sidebar" class="w-64 bg-secondary text-slate-300 flex-shrink-0 flex flex-col justify-between fixed inset-y-0 left-0 z-30 transform -translate-x-full lg:translate-x-0 transition duration-200">
+            <div>
+                <div class="h-16 flex items-center justify-between px-5 border-b border-slate-800">
+                    <span class="font-heading font-bold text-white text-lg"><i class="fa-solid fa-shield-halved text-primary mr-2"></i>ADMIN ERP</span>
+                    <button onclick="toggleAdminSidebar()" class="lg:hidden text-slate-400"><i class="fa-solid fa-xmark text-xl"></i></button>
+                </div>
+                <nav class="p-3 space-y-1 text-sm max-h-[calc(100vh-8rem)] overflow-y-auto sidebar-scroll">
+                    <button onclick="switchAdminTab('dashboard')" class="admin-nav-btn w-full flex items-center px-3 py-2.5 rounded-xl bg-primary text-white font-semibold"><i class="fa-solid fa-gauge w-6"></i> Dashboard</button>
+                    <button onclick="switchAdminTab('students')" class="admin-nav-btn w-full flex items-center px-3 py-2.5 rounded-xl hover:bg-slate-800"><i class="fa-solid fa-user-graduate w-6"></i> Students & ID Card</button>
+                    <button onclick="switchAdminTab('teachers')" class="admin-nav-btn w-full flex items-center px-3 py-2.5 rounded-xl hover:bg-slate-800"><i class="fa-solid fa-chalkboard-user w-6"></i> Teachers & ID Card</button>
+                    <button onclick="switchAdminTab('courses')" class="admin-nav-btn w-full flex items-center px-3 py-2.5 rounded-xl hover:bg-slate-800"><i class="fa-solid fa-book-open w-6"></i> Courses</button>
+                    <button onclick="switchAdminTab('batches')" class="admin-nav-btn w-full flex items-center px-3 py-2.5 rounded-xl hover:bg-slate-800"><i class="fa-solid fa-layer-group w-6"></i> Batches</button>
+                    <button onclick="switchAdminTab('attendance')" class="admin-nav-btn w-full flex items-center px-3 py-2.5 rounded-xl hover:bg-slate-800"><i class="fa-solid fa-clipboard-user w-6"></i> Attendance & WA</button>
+                    <button onclick="switchAdminTab('routine')" class="admin-nav-btn w-full flex items-center px-3 py-2.5 rounded-xl hover:bg-slate-800"><i class="fa-solid fa-calendar-days w-6"></i> Class Routine</button>
+                    <button onclick="switchAdminTab('online-class')" class="admin-nav-btn w-full flex items-center px-3 py-2.5 rounded-xl hover:bg-slate-800"><i class="fa-solid fa-video w-6"></i> Online Class</button>
+                    <button onclick="switchAdminTab('homework')" class="admin-nav-btn w-full flex items-center px-3 py-2.5 rounded-xl hover:bg-slate-800"><i class="fa-solid fa-file-pen w-6"></i> Daily Homework</button>
+                    <button onclick="switchAdminTab('fees')" class="admin-nav-btn w-full flex items-center px-3 py-2.5 rounded-xl hover:bg-slate-800"><i class="fa-solid fa-money-bill-wave w-6"></i> Fees & Accounts</button>
+                    <button onclick="switchAdminTab('salary')" class="admin-nav-btn w-full flex items-center px-3 py-2.5 rounded-xl hover:bg-slate-800"><i class="fa-solid fa-hand-holding-dollar w-6"></i> Teacher Salary</button>
+                    <button onclick="switchAdminTab('exams')" class="admin-nav-btn w-full flex items-center px-3 py-2.5 rounded-xl hover:bg-slate-800"><i class="fa-solid fa-award w-6"></i> Exam & Result</button>
+                    <button onclick="switchAdminTab('notices')" class="admin-nav-btn w-full flex items-center px-3 py-2.5 rounded-xl hover:bg-slate-800"><i class="fa-solid fa-bullhorn w-6"></i> Notices</button>
+                    <button onclick="switchAdminTab('reports')" class="admin-nav-btn w-full flex items-center px-3 py-2.5 rounded-xl hover:bg-slate-800"><i class="fa-solid fa-chart-pie w-6"></i> Reports</button>
+                    <button onclick="switchAdminTab('settings')" class="admin-nav-btn w-full flex items-center px-3 py-2.5 rounded-xl hover:bg-slate-800"><i class="fa-solid fa-gear w-6"></i> Website Settings</button>
+                </nav>
+            </div>
+            <div class="p-3 border-t border-slate-800">
+                <button onclick="logoutPortal()" class="w-full bg-red-600/20 hover:bg-red-600 text-red-400 hover:text-white py-2.5 rounded-xl text-sm font-semibold transition">
+                    <i class="fa-solid fa-right-from-bracket mr-2"></i> Logout to Website
+                </button>
+            </div>
+        </aside>
+
+        <!-- Main Admin Workspace -->
+        <div class="flex-1 lg:ml-64 flex flex-col min-w-0">
+            <header class="h-16 bg-white border-b border-slate-200 px-4 sm:px-6 flex items-center justify-between sticky top-0 z-20">
+                <div class="flex items-center space-x-3">
+                    <button onclick="toggleAdminSidebar()" class="lg:hidden p-2 rounded-lg text-slate-600 hover:bg-slate-100"><i class="fa-solid fa-bars text-xl"></i></button>
+                    <h2 id="admin-page-title" class="font-heading font-bold text-lg text-secondary">Dashboard Overview</h2>
+                </div>
+                <div class="flex items-center space-x-3">
+                    <button onclick="backupToDriveSimulation()" class="bg-emerald-50 text-emerald-700 border border-emerald-200 hover:bg-emerald-100 px-3 py-1.5 rounded-xl text-xs font-bold flex items-center">
+                        <i class="fa-brands fa-google-drive mr-1.5"></i> Drive Backup
+                    </button>
+                    <button onclick="switchView('public')" class="bg-slate-100 hover:bg-slate-200 text-slate-700 px-3 py-1.5 rounded-xl text-xs font-semibold">
+                        View Public Site <i class="fa-solid fa-external-link ml-1"></i>
+                    </button>
+                </div>
+            </header>
+
+            <main id="admin-content-area" class="p-4 sm:p-6 space-y-6">
+                <!-- Content injected dynamically by JS -->
+            </main>
+        </div>
+    </div>
+
+    <!-- =====================================================================
+         VIEW 3: STUDENT PORTAL (শিক্ষার্থীদের পোর্টাল)
+    ====================================================================== -->
+    <div id="student-view" class="hidden min-h-screen bg-slate-100">
+        <header class="bg-secondary text-white px-6 py-4 flex justify-between items-center shadow">
+            <div class="flex items-center space-x-3">
+                <i class="fa-solid fa-user-graduate text-amber-400 text-2xl"></i>
+                <div>
+                    <h1 class="font-bold text-lg leading-none" id="stu-portal-name">Student Portal</h1>
+                    <span class="text-xs text-slate-400" id="stu-portal-id">ID: STU-101</span>
+                </div>
+            </div>
+            <button onclick="logoutPortal()" class="bg-red-600 hover:bg-red-700 px-4 py-2 rounded-xl text-xs font-bold">Logout</button>
+        </header>
+        <main id="student-portal-content" class="max-w-6xl mx-auto p-4 sm:p-6 space-y-6"></main>
+    </div>
+
+    <!-- =====================================================================
+         VIEW 4: TEACHER PORTAL (শিক্ষকদের পোর্টাল)
+    ====================================================================== -->
+    <div id="teacher-view" class="hidden min-h-screen bg-slate-100">
+        <header class="bg-emerald-900 text-white px-6 py-4 flex justify-between items-center shadow">
+            <div class="flex items-center space-x-3">
+                <i class="fa-solid fa-chalkboard-user text-emerald-300 text-2xl"></i>
+                <div>
+                    <h1 class="font-bold text-lg leading-none" id="tch-portal-name">Teacher Portal</h1>
+                    <span class="text-xs text-emerald-200" id="tch-portal-sub">Faculty Dashboard</span>
+                </div>
+            </div>
+            <button onclick="logoutPortal()" class="bg-red-600 hover:bg-red-700 px-4 py-2 rounded-xl text-xs font-bold">Logout</button>
+        </header>
+        <main id="teacher-portal-content" class="max-w-6xl mx-auto p-4 sm:p-6 space-y-6"></main>
+    </div>
+
+    <!-- =====================================================================
+         MODALS: Login Modal, Calculator Widget, Student & Teacher ID Card Modal
+    ====================================================================== -->
+    <!-- Role Login Modal -->
+    <div id="login-modal" class="hidden fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-md w-full p-6 sm:p-8 shadow-2xl">
+            <div class="flex justify-between items-center mb-4">
+                <h3 id="login-modal-title" class="font-heading font-bold text-xl text-secondary">Admin Login</h3>
+                <button onclick="closeLoginModal()" class="text-slate-400 hover:text-slate-600"><i class="fa-solid fa-xmark text-xl"></i></button>
+            </div>
+            <p id="login-hint" class="text-xs bg-blue-50 text-blue-700 p-3 rounded-xl mb-4"></p>
+            <form id="portal-login-form" class="space-y-4">
+                <input type="hidden" id="login-role">
+                <div>
+                    <label class="block text-xs font-bold text-slate-600 mb-1">User ID / Email</label>
+                    <input type="text" id="login-username" required class="w-full px-4 py-3 rounded-xl border border-slate-300 text-sm">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-600 mb-1">Password</label>
+                    <input type="password" id="login-password" required class="w-full px-4 py-3 rounded-xl border border-slate-300 text-sm">
+                </div>
+                <button type="submit" class="w-full bg-primary hover:bg-blue-700 text-white font-bold py-3 rounded-xl shadow">Login Now</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Floating Calculator Widget -->
+    <div id="calculator-modal" class="hidden fixed bottom-6 left-6 z-50 bg-slate-900 text-white p-4 rounded-2xl shadow-2xl border border-slate-700 w-72">
+        <div class="flex justify-between items-center mb-2">
+            <span class="text-xs font-bold text-amber-400"><i class="fa-solid fa-calculator mr-1"></i> Quick Calculator</span>
+            <button onclick="toggleCalculator()" class="text-slate-400 hover:text-white"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+        <input type="text" id="calc-display" readonly class="w-full bg-slate-800 text-right text-xl font-mono p-3 rounded-xl mb-3 text-white border border-slate-700" value="0">
+        <div class="grid grid-cols-4 gap-2 text-sm font-bold">
+            <button onclick="calcClear()" class="bg-red-600 p-2.5 rounded-lg">C</button>
+            <button onclick="calcAppend('/')" class="bg-slate-700 p-2.5 rounded-lg">÷</button>
+            <button onclick="calcAppend('*')" class="bg-slate-700 p-2.5 rounded-lg">×</button>
+            <button onclick="calcBack()" class="bg-slate-700 p-2.5 rounded-lg">⌫</button>
+            <button onclick="calcAppend('7')" class="bg-slate-800 p-2.5 rounded-lg">7</button>
+            <button onclick="calcAppend('8')" class="bg-slate-800 p-2.5 rounded-lg">8</button>
+            <button onclick="calcAppend('9')" class="bg-slate-800 p-2.5 rounded-lg">9</button>
+            <button onclick="calcAppend('-')" class="bg-slate-700 p-2.5 rounded-lg">-</button>
+            <button onclick="calcAppend('4')" class="bg-slate-800 p-2.5 rounded-lg">4</button>
+            <button onclick="calcAppend('5')" class="bg-slate-800 p-2.5 rounded-lg">5</button>
+            <button onclick="calcAppend('6')" class="bg-slate-800 p-2.5 rounded-lg">6</button>
+            <button onclick="calcAppend('+')" class="bg-slate-700 p-2.5 rounded-lg">+</button>
+            <button onclick="calcAppend('1')" class="bg-slate-800 p-2.5 rounded-lg">1</button>
+            <button onclick="calcAppend('2')" class="bg-slate-800 p-2.5 rounded-lg">2</button>
+            <button onclick="calcAppend('3')" class="bg-slate-800 p-2.5 rounded-lg">3</button>
+            <button onclick="calcEqual()" class="row-span-2 bg-primary p-2.5 rounded-lg">=</button>
+            <button onclick="calcAppend('0')" class="col-span-2 bg-slate-800 p-2.5 rounded-lg">0</button>
+            <button onclick="calcAppend('.')" class="bg-slate-800 p-2.5 rounded-lg">.</button>
+        </div>
+    </div>
+
+    <!-- Universal ID Card Print Modal (For Both Students & Teachers with Photo) -->
+    <div id="idcard-modal" class="hidden fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-sm w-full p-6 shadow-2xl text-center">
+            <div id="printable-area" class="border-2 border-primary rounded-2xl overflow-hidden bg-white shadow-md">
+                <div id="card-header-bg" class="bg-primary text-white py-4 px-3 flex flex-col items-center">
+                    <img id="card-academy-logo" src="" class="hidden w-11 h-11 rounded-full object-cover bg-white p-0.5 mb-1.5 shadow">
+                    <h4 id="card-academy-name" class="font-heading font-extrabold text-base uppercase">NEXTGEN ACADEMY</h4>
+                    <p id="card-role-badge" class="text-[10px] font-bold tracking-wider uppercase text-blue-100">STUDENT IDENTITY CARD</p>
+                </div>
+                <div class="p-5">
+                    <img id="card-photo" src="" class="w-24 h-24 rounded-full mx-auto object-cover border-4 border-blue-100 shadow mb-3">
+                    <h3 id="card-name" class="font-bold text-lg text-secondary">Name</h3>
+                    <span id="card-id" class="inline-block bg-blue-50 text-primary font-bold text-xs px-3 py-1 rounded-full mt-1">ID: STU-101</span>
+                    <div id="card-details-box" class="mt-4 text-left text-xs space-y-1.5 bg-slate-50 p-3 rounded-xl border border-slate-100">
+                        <!-- Dynamic details for Student or Teacher -->
+                    </div>
+                </div>
+                <div class="bg-secondary text-white text-[10px] py-2">
+                    <span id="card-footer-addr">জয়দেবপুর, গাজীপুর • Academic Session 2026-27</span>
+                </div>
+            </div>
+            <div class="mt-5 flex gap-3">
+                <button onclick="window.print()" class="flex-1 bg-primary text-white py-2.5 rounded-xl text-sm font-bold"><i class="fa-solid fa-print mr-1"></i> Print ID</button>
+                <button onclick="document.getElementById('idcard-modal').classList.add('hidden')" class="flex-1 bg-slate-200 text-slate-700 py-2.5 rounded-xl text-sm font-bold">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- =====================================================================
+         JAVASCRIPT ENGINE (All 24 Modules State & Interactive Logic)
+    ====================================================================== -->
+    <script>
+        // --- 1. CENTRALIZED IN-MEMORY DATABASE ---
+        const appData = {
+            settings: {
+                name: "NEXTGEN ACADEMY",
+                logo: "",
+                director: "মো: আলমগীর হোসেন (সাগর)",
+                tagline: "আন্তর্জাতিক মানের আধুনিক কোচিং সেন্টার",
+                about: "NextGen Academy-তে প্রতিটি শিক্ষার্থীর জন্য রয়েছে আলাদা কেয়ার, অভিভাবকদের সাথে সার্বক্ষণিক WhatsApp যোগাযোগ, ডিজিটাল হাজিরা এবং অনলাইন পোর্টাল সুবিধা।",
+                address: "লক্ষিপুরা রোড, বাস-স্ট্যান্ড, জয়দেবপুর, গাজীপুর।",
+                phone: "01792818005, 01581299984",
+                whatsapp: "8801792818005",
+                email: "sagorrana097@gmail.com",
+                facebook: "https://facebook.com",
+                youtube: "https://youtube.com",
+                showClock: true,
+                showCalculator: true
+            },
+            courses: [
+                { id: 1, name: "HSC Science Complete Care", className: "Class 11-12", group: "Science", subject: "Physics, Chemistry, Math", fee: 2500, desc: "বোর্ড পরীক্ষা ও এডমিশন প্রস্তুতির পূর্ণাঙ্গ প্যাকেজ।" },
+                { id: 2, name: "SSC Academic Excellence", className: "Class 9-10", group: "Science/Commerce", subject: "All Subjects", fee: 2000, desc: "সাপ্তাহিক মডেল টেস্ট ও সৃজনশীল প্রশ্ন সমাধান।" },
+                { id: 3, name: "IELTS & Spoken English", className: "All Levels", group: "Language", subject: "English", fee: 4000, desc: "ব্রিটিশ কাউন্সিল কারিকুলাম অনুযায়ী স্পোকেন ও IELTS।" }
+            ],
+            students: [
+                { id: "STU-101", pass: "1234", name: "আরিফুর রহমান (Arif)", className: "Class 10", group: "Science", batch: "Morning Alpha", guardian: "মোঃ আবুল কালাম", phone: "8801711111111", admissionDate: "2026-01-10", monthlyFee: 2000, paidAmount: 2000, photo: "https://placehold.co/150x150/2563eb/ffffff?text=Arif" },
+                { id: "STU-102", pass: "1234", name: "নুসরাত জাহান (Nusrat)", className: "Class 12", group: "Science", batch: "Evening Victory", guardian: "সাইফুল ইসলাম", phone: "8801822222222", admissionDate: "2026-01-15", monthlyFee: 2500, paidAmount: 1000, photo: "https://placehold.co/150x150/db2777/ffffff?text=Nusrat" },
+                { id: "STU-103", pass: "1234", name: "তানভীর আহমেদ (Tanvir)", className: "Class 10", group: "Science", batch: "Morning Alpha", guardian: "রফিকুল ইসলাম", phone: "8801933333333", admissionDate: "2026-02-01", monthlyFee: 2000, paidAmount: 0, photo: "https://placehold.co/150x150/059669/ffffff?text=Tanvir" }
+            ],
+            teachers: [
+                { id: "TCH-01", pass: "1234", name: "মো: আলমগীর হোসেন (সাগর)", phone: "01792818005", email: "sagorrana097@gmail.com", subject: "Director & Senior Faculty", salary: 30000, paidSalary: 30000, photo: "https://placehold.co/150x150/0f172a/ffffff?text=Director" },
+                { id: "TCH-02", pass: "1234", name: "ড. তারিক রহমান", phone: "8801755555555", email: "tariq@nextgen.edu", subject: "Physics", salary: 25000, paidSalary: 25000, photo: "https://placehold.co/150x150/059669/ffffff?text=Tariq" }
+            ],
+            batches: [
+                { id: 1, name: "Morning Alpha", className: "Class 10", group: "Science", teacher: "ড. তারিক রহমান", schedule: "শনি-সোম-বুধ (সকাল ৮:০০)" },
+                { id: 2, name: "Evening Victory", className: "Class 12", group: "Science", teacher: "মো: আলমগীর হোসেন (সাগর)", schedule: "রবি-মঙ্গল-বৃহঃ (বিকাল ৪:০০)" }
+            ],
+            attendance: [
+                { date: new Date().toISOString().split('T')[0], batch: "Morning Alpha", studentId: "STU-101", status: "Present" },
+                { date: new Date().toISOString().split('T')[0], batch: "Morning Alpha", studentId: "STU-103", status: "Absent" }
+            ],
+            routines: [
+                { id: 1, batch: "Morning Alpha", day: "Saturday", time: "08:00 AM", subject: "Physics", teacher: "ড. তারিক রহমান" },
+                { id: 2, batch: "Evening Victory", day: "Sunday", time: "04:00 PM", subject: "Higher Math", teacher: "মো: আলমগীর হোসেন (সাগর)" }
+            ],
+            onlineClasses: [
+                { id: 1, batch: "Morning Alpha", date: "2026-11-20", time: "08:30 PM", subject: "Physics Chapter 4 Live", link: "https://meet.google.com" }
+            ],
+            homeworks: [
+                { id: 1, batch: "Morning Alpha", subject: "Physics", title: "গতির সমীকরণ প্রমাণ ও ১০টি গাণিতিক সমস্যা সমাধান", deadline: "2026-11-22", submissions: [
+                    { studentId: "STU-101", studentName: "আরিফুর রহমান", answer: "স্যার, আমি সবগুলো অঙ্ক সমাধান করে নোট খাতায় তুলেছি।", feedback: "অসাধারণ হয়েছে! (10/10)" }
+                ]}
+            ],
+            results: [
+                { id: 1, examName: "Monthly Model Test - 1", studentId: "STU-101", subject: "Physics", marks: 88, total: 100, grade: "A+" },
+                { id: 2, examName: "Monthly Model Test - 1", studentId: "STU-102", subject: "English", marks: 82, total: 100, grade: "A+" }
+            ],
+            notices: [
+                { id: 1, title: "২০২৬-২৭ শিক্ষাবর্ষে নতুন ব্যাচে ভর্তি চলছে!", date: "2026-11-18", desc: "আগামী ১লা ডিসেম্বর থেকে নতুন ব্যাচের ক্লাস শুরু হবে। দ্রুত আসন নিশ্চিত করুন।" },
+                { id: 2, title: "সাপ্তাহিক মডেল টেস্ট পরীক্ষার সময়সূচি", date: "2026-11-16", desc: "আগামী শুক্রবার সকাল ৯টায় সকল ব্যাচের সাপ্তাহিক পরীক্ষা অনুষ্ঠিত হবে।" }
+            ],
+            inquiries: []
+        };
+
+        let currentUser = null;
+
+        // --- 2. UTILITY FUNCTIONS ---
+        function showToast(msg, type = "success") {
+            const container = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+            const bg = type === "success" ? "bg-emerald-600" : type === "error" ? "bg-red-600" : "bg-blue-600";
+            toast.className = `${bg} text-white px-5 py-3 rounded-xl shadow-xl text-sm font-semibold flex items-center space-x-2 transition-all`;
+            toast.innerHTML = `<i class="fa-solid fa-circle-info"></i> <span>${msg}</span>`;
+            container.appendChild(toast);
+            setTimeout(() => toast.remove(), 3500);
+        }
+
+        // Convert Uploaded Image File to Base64 Data URL for Instant Photo Preview & ID Card
+        function readPhotoFile(fileInput, fallbackText, bgColor = "2563eb") {
+            return new Promise((resolve) => {
+                if (fileInput && fileInput.files && fileInput.files[0]) {
+                    const reader = new FileReader();
+                    reader.onload = (e) => resolve(e.target.result);
+                    reader.readAsDataURL(fileInput.files[0]);
+                } else {
+                    resolve(`https://placehold.co/150x150/${bgColor}/ffffff?text=${encodeURIComponent(fallbackText)}`);
+                }
+            });
+        }
+
+        function updateBDClock() {
+            const now = new Date();
+            const options = { timeZone: 'Asia/Dhaka', hour: '2-digit', minute: '2-digit', second: '2-digit', day: 'numeric', month: 'short', year: 'numeric' };
+            document.getElementById('bd-time').innerText = "BD: " + now.toLocaleString('en-US', options);
+        }
+        setInterval(updateBDClock, 1000);
+        updateBDClock();
+
+        function toggleCalculator() { document.getElementById('calculator-modal').classList.toggle('hidden'); }
+        function calcAppend(val) {
+            const disp = document.getElementById('calc-display');
+            disp.value = disp.value === '0' ? val : disp.value + val;
+        }
+        function calcClear() { document.getElementById('calc-display').value = '0'; }
+        function calcBack() {
+            const disp = document.getElementById('calc-display');
+            disp.value = disp.value.length > 1 ? disp.value.slice(0, -1) : '0';
+        }
+        function calcEqual() {
+            try {
+                const disp = document.getElementById('calc-display');
+                disp.value = Function('"use strict";return (' + disp.value + ')')();
+            } catch {
+                document.getElementById('calc-display').value = 'Error';
+            }
+        }
+
+        function openWhatsAppChat(phone, message) {
+            const cleanPhone = phone.replace(/[^0-9]/g, '');
+            const formattedPhone = cleanPhone.startsWith('01') ? '88' + cleanPhone : cleanPhone;
+            const url = `https://wa.me/${formattedPhone}?text=${encodeURIComponent(message)}`;
+            window.open(url, '_blank');
+        }
+
+        // --- 3. PUBLIC WEBSITE RENDERER ---
+        function renderPublicWebsite() {
+            const s = appData.settings;
+            const logoImg = document.getElementById('pub-logo-img');
+            const logoIcon = document.getElementById('pub-logo-icon');
+            const logoBox = document.getElementById('pub-logo-box');
+            if (s.logo) {
+                logoImg.src = s.logo;
+                logoImg.classList.remove('hidden');
+                logoIcon.classList.add('hidden');
+                logoBox.classList.remove('bg-primary');
+                logoBox.classList.add('bg-white', 'border', 'border-slate-200');
+            } else {
+                logoImg.classList.add('hidden');
+                logoIcon.classList.remove('hidden');
+                logoBox.classList.add('bg-primary');
+                logoBox.classList.remove('bg-white', 'border', 'border-slate-200');
+            }
+            document.getElementById('pub-academy-name').innerText = s.name;
+            document.getElementById('footer-academy-name').innerText = s.name;
+            document.getElementById('pub-director').innerText = s.director;
+            document.getElementById('pub-academy-tagline').innerText = s.tagline;
+            document.getElementById('pub-about-text').innerText = s.about;
+            document.getElementById('pub-address').innerText = s.address;
+            document.getElementById('pub-phone').innerText = s.phone;
+            document.getElementById('pub-email').innerText = s.email;
+            document.getElementById('pub-fb-link').href = s.facebook;
+            document.getElementById('pub-yt-link').href = s.youtube;
+            const waUrl = `https://wa.me/${(s.whatsapp || '8801792818005').replace(/[^0-9]/g, '')}`;
+            document.getElementById('pub-whatsapp-top').href = waUrl;
+            document.getElementById('pub-wa-link').href = waUrl;
+
+            document.getElementById('widget-clock').style.display = s.showClock ? 'flex' : 'none';
+            document.getElementById('widget-calc-btn').style.display = s.showCalculator ? 'flex' : 'none';
+
+            const noticeList = document.getElementById('public-notice-list');
+            noticeList.innerHTML = appData.notices.map(n => `
+                <div class="p-3.5 rounded-2xl bg-slate-50 border border-slate-100 hover:border-primary/40 transition">
+                    <div class="flex justify-between items-start gap-2">
+                        <h4 class="font-bold text-sm text-secondary">${n.title}</h4>
+                        <span class="text-[11px] bg-blue-100 text-primary px-2 py-0.5 rounded-md whitespace-nowrap">${n.date}</span>
+                    </div>
+                    <p class="text-xs text-slate-600 mt-1">${n.desc}</p>
+                </div>
+            `).join('');
+
+            const courseGrid = document.getElementById('public-course-grid');
+            const courseSelect = document.getElementById('inq-course');
+            courseGrid.innerHTML = appData.courses.map(c => `
+                <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm hover:shadow-lg transition flex flex-col justify-between">
+                    <div>
+                        <div class="flex justify-between items-center text-xs font-bold text-primary mb-2">
+                            <span class="bg-blue-50 px-2.5 py-1 rounded-lg">${c.className}</span>
+                            <span>${c.group}</span>
+                        </div>
+                        <h3 class="font-heading font-bold text-xl text-secondary mb-2">${c.name}</h3>
+                        <p class="text-xs text-slate-500 mb-2"><strong>বিষয়:</strong> ${c.subject}</p>
+                        <p class="text-sm text-slate-600 mb-4">${c.desc}</p>
+                    </div>
+                    <div class="pt-4 border-t border-slate-100 flex items-center justify-between">
+                        <span class="font-bold text-lg text-secondary">৳ ${c.fee} /মাস</span>
+                        <a href="#pub-admission" onclick="document.getElementById('inq-course').value='${c.name}'" class="bg-primary text-white px-4 py-2 rounded-xl text-xs font-bold hover:bg-blue-700">ভর্তি হোন</a>
+                    </div>
+                </div>
+            `).join('');
+
+            courseSelect.innerHTML = appData.courses.map(c => `<option value="${c.name}">${c.name} (৳${c.fee})</option>`).join('');
+        }
+
+        document.getElementById('public-admission-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            appData.inquiries.push({
+                name: document.getElementById('inq-name').value,
+                phone: document.getElementById('inq-phone').value,
+                className: document.getElementById('inq-class').value,
+                course: document.getElementById('inq-course').value,
+                date: new Date().toLocaleDateString()
+            });
+            showToast("আপনার ভর্তি আবেদন সফলভাবে জমা হয়েছে! শীঘ্রই যোগাযোগ করা হবে।");
+            this.reset();
+        });
+
+        // --- 4. PORTAL SWITCHING & AUTHENTICATION ---
+        function switchView(viewName) {
+            ['public-view', 'admin-view', 'student-view', 'teacher-view'].forEach(id => {
+                document.getElementById(id).classList.add('hidden');
+            });
+            document.getElementById(`${viewName}-view`).classList.remove('hidden');
+            if (viewName === 'public') renderPublicWebsite();
+            if (viewName === 'admin') switchAdminTab('dashboard');
+            if (viewName === 'student') renderStudentPortal();
+            if (viewName === 'teacher') renderTeacherPortal();
+        }
+
+        function openLoginModal(role) {
+            document.getElementById('login-role').value = role;
+            const title = document.getElementById('login-modal-title');
+            const hint = document.getElementById('login-hint');
+            const userField = document.getElementById('login-username');
+            const passField = document.getElementById('login-password');
+
+            if (role === 'admin') {
+                title.innerText = "Admin Panel Login";
+                hint.innerText = "Demo Admin ID: admin | Password: admin";
+                userField.value = "admin"; passField.value = "admin";
+            } else if (role === 'teacher') {
+                title.innerText = "Teacher Portal Login";
+                hint.innerText = "Demo Teacher ID: TCH-01 | Password: 1234";
+                userField.value = "TCH-01"; passField.value = "1234";
+            } else {
+                title.innerText = "Student Portal Login";
+                hint.innerText = "Demo Student ID: STU-101 | Password: 1234";
+                userField.value = "STU-101"; passField.value = "1234";
+            }
+            document.getElementById('login-modal').classList.remove('hidden');
+        }
+
+        function closeLoginModal() { document.getElementById('login-modal').classList.add('hidden'); }
+
+        document.getElementById('portal-login-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const role = document.getElementById('login-role').value;
+            const user = document.getElementById('login-username').value.trim();
+            const pass = document.getElementById('login-password').value.trim();
+
+            if (role === 'admin') {
+                if (user === 'admin' && pass === 'admin') {
+                    closeLoginModal();
+                    switchView('admin');
+                    showToast("Welcome to Admin Dashboard!");
+                } else showToast("Invalid Admin Credentials!", "error");
+            } else if (role === 'teacher') {
+                const tch = appData.teachers.find(t => t.id === user && t.pass === pass);
+                if (tch) {
+                    currentUser = tch;
+                    closeLoginModal();
+                    switchView('teacher');
+                    showToast(`স্বাগতম, ${tch.name}!`);
+                } else showToast("Invalid Teacher ID or Password!", "error");
+            } else if (role === 'student') {
+                const stu = appData.students.find(s => s.id === user && s.pass === pass);
+                if (stu) {
+                    currentUser = stu;
+                    closeLoginModal();
+                    switchView('student');
+                    showToast(`স্বাগতম, ${stu.name}!`);
+                } else showToast("Invalid Student ID or Password!", "error");
+            }
+        });
+
+        function logoutPortal() {
+            currentUser = null;
+            switchView('public');
+            showToast("Logged out successfully.");
+        }
+
+        function toggleAdminSidebar() { document.getElementById('admin-sidebar').classList.toggle('-translate-x-full'); }
+
+        function backupToDriveSimulation() {
+            const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(appData, null, 2));
+            const dlAnchor = document.createElement('a');
+            dlAnchor.setAttribute("href", dataStr);
+            dlAnchor.setAttribute("download", `NextGen_Academy_Backup_${new Date().toISOString().slice(0,10)}.json`);
+            document.body.appendChild(dlAnchor);
+            dlAnchor.click();
+            dlAnchor.remove();
+            showToast("Google Drive Backup ফাইল ডাউনলোড সম্পন্ন হয়েছে!");
+        }
+
+        // --- 5. ADMIN PANEL TABS ---
+        function switchAdminTab(tab) {
+            document.querySelectorAll('.admin-nav-btn').forEach(btn => {
+                btn.classList.remove('bg-primary', 'text-white', 'font-semibold');
+            });
+            if (event && event.currentTarget && event.currentTarget.classList.contains('admin-nav-btn')) {
+                event.currentTarget.classList.add('bg-primary', 'text-white', 'font-semibold');
+            }
+
+            const area = document.getElementById('admin-content-area');
+            const title = document.getElementById('admin-page-title');
+
+            // DASHBOARD
+            if (tab === 'dashboard') {
+                title.innerText = "Dashboard Overview";
+                const totalFeeExpected = appData.students.reduce((sum, s) => sum + Number(s.monthlyFee), 0);
+                const totalFeeCollected = appData.students.reduce((sum, s) => sum + Number(s.paidAmount), 0);
+                const totalDue = totalFeeExpected - totalFeeCollected;
+                const totalSalaryPaid = appData.teachers.reduce((sum, t) => sum + Number(t.paidSalary), 0);
+
+                area.innerHTML = `
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+                        <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
+                            <p class="text-xs font-bold text-slate-400 uppercase">মোট শিক্ষার্থী (Students)</p>
+                            <h3 class="text-3xl font-extrabold text-secondary mt-2">${appData.students.length}</h3>
+                        </div>
+                        <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
+                            <p class="text-xs font-bold text-slate-400 uppercase">মোট শিক্ষক (Teachers)</p>
+                            <h3 class="text-3xl font-extrabold text-primary mt-2">${appData.teachers.length}</h3>
+                        </div>
+                        <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
+                            <p class="text-xs font-bold text-slate-400 uppercase">মোট কোর্স ও ব্যাচ</p>
+                            <h3 class="text-3xl font-extrabold text-emerald-600 mt-2">${appData.courses.length} <span class="text-sm font-normal text-slate-500">Courses</span> / ${appData.batches.length} <span class="text-sm font-normal text-slate-500">Batches</span></h3>
+                        </div>
+                        <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
+                            <p class="text-xs font-bold text-slate-400 uppercase">নতুন ভর্তি আবেদন</p>
+                            <h3 class="text-3xl font-extrabold text-amber-500 mt-2">${appData.inquiries.length}</h3>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+                        <div class="bg-emerald-600 text-white p-6 rounded-2xl shadow">
+                            <p class="text-xs uppercase font-semibold text-emerald-100">মোট ফি আদায় (Collected Fees)</p>
+                            <h3 class="text-3xl font-bold mt-2">৳ ${totalFeeCollected}</h3>
+                        </div>
+                        <div class="bg-red-600 text-white p-6 rounded-2xl shadow">
+                            <p class="text-xs uppercase font-semibold text-red-100">মোট বকেয়া ফি (Total Due)</p>
+                            <h3 class="text-3xl font-bold mt-2">৳ ${totalDue}</h3>
+                        </div>
+                        <div class="bg-slate-800 text-white p-6 rounded-2xl shadow">
+                            <p class="text-xs uppercase font-semibold text-slate-300">শিক্ষক বেতন প্রদান (Salary Paid)</p>
+                            <h3 class="text-3xl font-bold mt-2">৳ ${totalSalaryPaid}</h3>
+                        </div>
+                    </div>
+
+                    <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
+                        <h4 class="font-bold text-secondary mb-3">সাম্প্রতিক অনলাইন ভর্তি আবেদনসমূহ</h4>
+                        ${appData.inquiries.length === 0 ? '<p class="text-sm text-slate-500">এখনো কোনো নতুন আবেদন জমা পড়েনি।</p>' : `
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-left text-sm">
+                                <thead class="bg-slate-50 text-slate-600"><tr><th class="p-3">নাম</th><th class="p-3">ফোন</th><th class="p-3">কোর্স</th><th class="p-3">WhatsApp</th></tr></thead>
+                                <tbody>
+                                    ${appData.inquiries.map(i => `<tr class="border-t"><td class="p-3 font-semibold">${i.name}</td><td class="p-3">${i.phone}</td><td class="p-3">${i.course}</td><td class="p-3"><button onclick="openWhatsAppChat('${i.phone}', 'আসসালামু আলাইকুম ${i.name}, NextGen Academy-তে ভর্তির আবেদনের জন্য ধন্যবাদ।')" class="bg-emerald-500 text-white px-3 py-1 rounded-lg text-xs">Chat</button></td></tr>`).join('')}
+                                </tbody>
+                            </table>
+                        </div>`}
+                    </div>
+                `;
+            }
+
+            // STUDENTS & STUDENT ID CARD (With Photo Upload)
+            else if (tab === 'students') {
+                title.innerText = "Students Management & ID Card";
+                area.innerHTML = `
+                    <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
+                        <h3 class="font-bold text-secondary mb-4">নতুন শিক্ষার্থী যুক্ত করুন (ছবিসহ Student ID Card ও Portal)</h3>
+                        <form id="add-student-form" class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                            <input type="text" id="st-name" required placeholder="শিক্ষার্থীর নাম *" class="px-3 py-2.5 border rounded-xl text-sm">
+                            <input type="text" id="st-class" required placeholder="শ্রেণি (যেমন: Class 10) *" class="px-3 py-2.5 border rounded-xl text-sm">
+                            <input type="text" id="st-group" required placeholder="বিভাগ (Science/Arts)" class="px-3 py-2.5 border rounded-xl text-sm">
+                            <select id="st-batch" class="px-3 py-2.5 border rounded-xl text-sm bg-white">
+                                ${appData.batches.map(b => `<option value="${b.name}">${b.name}</option>`).join('')}
+                            </select>
+                            <input type="text" id="st-guardian" required placeholder="অভিভাবকের নাম *" class="px-3 py-2.5 border rounded-xl text-sm">
+                            <input type="text" id="st-phone" required placeholder="অভিভাবকের WhatsApp (017...)" class="px-3 py-2.5 border rounded-xl text-sm">
+                            <input type="number" id="st-fee" required placeholder="মাসিক ফি (৳) *" class="px-3 py-2.5 border rounded-xl text-sm">
+                            <input type="text" id="st-pass" value="1234" required placeholder="Login Password" class="px-3 py-2.5 border rounded-xl text-sm">
+                            <div class="border rounded-xl px-3 py-1.5 text-xs bg-slate-50 flex flex-col justify-center">
+                                <label class="font-bold text-slate-600 mb-0.5"><i class="fa-solid fa-camera text-primary mr-1"></i> শিক্ষার্থীর ছবি (Photo):</label>
+                                <input type="file" id="st-photo" accept="image/*" class="text-xs">
+                            </div>
+                            <button type="submit" class="sm:col-span-3 bg-primary text-white font-bold py-2.5 rounded-xl text-sm">+ Add Student & Generate ID</button>
+                        </form>
+                    </div>
+
+                    <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm overflow-x-auto">
+                        <table class="w-full text-left text-sm">
+                            <thead class="bg-slate-50 text-slate-600">
+                                <tr><th class="p-3">ছবি ও ID</th><th class="p-3">নাম</th><th class="p-3">শ্রেণি ও ব্যাচ</th><th class="p-3">অভিভাবক ও WA</th><th class="p-3">ID Card ও Action</th></tr>
+                            </thead>
+                            <tbody>
+                                ${appData.students.map((s, idx) => `
+                                    <tr class="border-t">
+                                        <td class="p-3 flex items-center space-x-3">
+                                            <img src="${s.photo}" class="w-10 h-10 rounded-full object-cover border">
+                                            <div><span class="font-bold text-primary">${s.id}</span><br><span class="text-xs text-slate-400">Pass: ${s.pass}</span></div>
+                                        </td>
+                                        <td class="p-3 font-semibold">${s.name}</td>
+                                        <td class="p-3">${s.className} (${s.group})<br><span class="text-xs text-slate-500">${s.batch}</span></td>
+                                        <td class="p-3">${s.guardian}<br><button onclick="openWhatsAppChat('${s.phone}', 'আসসালামু আলাইকুম, ${s.name} এর অভিভাবক।')" class="text-emerald-600 text-xs font-bold"><i class="fa-brands fa-whatsapp"></i> ${s.phone}</button></td>
+                                        <td class="p-3">
+                                            <div class="flex gap-2">
+                                                <button onclick="generateIDCard('student', '${s.id}')" class="bg-blue-100 text-primary px-3 py-1.5 rounded-lg text-xs font-bold"><i class="fa-solid fa-id-card mr-1"></i> ID Card</button>
+                                                <button onclick="appData.students.splice(${idx},1); switchAdminTab('students');" class="bg-red-100 text-red-600 px-2.5 py-1.5 rounded-lg text-xs"><i class="fa-solid fa-trash"></i></button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                `).join('')}
+                            </tbody>
+                        </table>
+                    </div>
+                `;
+                document.getElementById('add-student-form').onsubmit = async function(e) {
+                    e.preventDefault();
+                    const newId = "STU-" + (101 + appData.students.length);
+                    const nameVal = document.getElementById('st-name').value;
+                    const photoUrl = await readPhotoFile(document.getElementById('st-photo'), nameVal.slice(0, 6), "2563eb");
+
+                    appData.students.push({
+                        id: newId,
+                        pass: document.getElementById('st-pass').value,
+                        name: nameVal,
+                        className: document.getElementById('st-class').value,
+                        group: document.getElementById('st-group').value,
+                        batch: document.getElementById('st-batch').value,
+                        guardian: document.getElementById('st-guardian').value,
+                        phone: document.getElementById('st-phone').value,
+                        admissionDate: new Date().toISOString().split('T')[0],
+                        monthlyFee: Number(document.getElementById('st-fee').value),
+                        paidAmount: 0,
+                        photo: photoUrl
+                    });
+                    showToast(`শিক্ষার্থী যুক্ত হয়েছে! Student ID: ${newId}`);
+                    switchAdminTab('students');
+                };
+            }
+
+            // TEACHERS & TEACHER ID CARD (With Photo Upload)
+            else if (tab === 'teachers') {
+                title.innerText = "Teachers Management & ID Card";
+                area.innerHTML = `
+                    <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
+                        <h3 class="font-bold text-secondary mb-4">নতুন শিক্ষক যুক্ত করুন (ছবিসহ Teacher ID Card ও Portal)</h3>
+                        <form id="add-teacher-form" class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                            <input type="text" id="tc-name" required placeholder="শিক্ষকের নাম *" class="px-3 py-2.5 border rounded-xl text-sm">
+                            <input type="text" id="tc-phone" required placeholder="ফোন নম্বর *" class="px-3 py-2.5 border rounded-xl text-sm">
+                            <input type="email" id="tc-email" required placeholder="ইমেইল *" class="px-3 py-2.5 border rounded-xl text-sm">
+                            <input type="text" id="tc-sub" required placeholder="বিষয় / পদবী (Subject/Designation) *" class="px-3 py-2.5 border rounded-xl text-sm">
+                            <input type="number" id="tc-sal" required placeholder="মাসিক বেতন (৳) *" class="px-3 py-2.5 border rounded-xl text-sm">
+                            <div class="border rounded-xl px-3 py-1.5 text-xs bg-slate-50 flex flex-col justify-center">
+                                <label class="font-bold text-slate-600 mb-0.5"><i class="fa-solid fa-camera text-emerald-600 mr-1"></i> শিক্ষকের ছবি (Photo):</label>
+                                <input type="file" id="tc-photo" accept="image/*" class="text-xs">
+                            </div>
+                            <button type="submit" class="sm:col-span-3 bg-emerald-600 text-white font-bold py-2.5 rounded-xl text-sm">+ Add Teacher & Generate ID</button>
+                        </form>
+                    </div>
+                    <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm overflow-x-auto">
+                        <table class="w-full text-left text-sm">
+                            <thead class="bg-slate-50"><tr><th class="p-3">ছবি ও ID</th><th class="p-3">নাম</th><th class="p-3">বিষয় / পদবী</th><th class="p-3">ফোন</th><th class="p-3">বেতন</th><th class="p-3">ID Card ও Action</th></tr></thead>
+                            <tbody>
+                                ${appData.teachers.map((t, i) => `
+                                    <tr class="border-t">
+                                        <td class="p-3 flex items-center space-x-3">
+                                            <img src="${t.photo}" class="w-10 h-10 rounded-full object-cover border">
+                                            <div><span class="font-bold text-emerald-700">${t.id}</span><br><span class="text-xs text-slate-400">Pass: ${t.pass}</span></div>
+                                        </td>
+                                        <td class="p-3 font-semibold">${t.name}</td>
+                                        <td class="p-3">${t.subject}</td>
+                                        <td class="p-3">${t.phone}</td>
+                                        <td class="p-3">৳ ${t.salary}</td>
+                                        <td class="p-3">
+                                            <div class="flex gap-2">
+                                                <button onclick="generateIDCard('teacher', '${t.id}')" class="bg-emerald-100 text-emerald-700 px-3 py-1.5 rounded-lg text-xs font-bold"><i class="fa-solid fa-id-card mr-1"></i> ID Card</button>
+                                                <button onclick="appData.teachers.splice(${i},1); switchAdminTab('teachers');" class="bg-red-100 text-red-600 px-2.5 py-1.5 rounded-lg text-xs"><i class="fa-solid fa-trash"></i></button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                `).join('')}
+                            </tbody>
+                        </table>
+                    </div>
+                `;
+                document.getElementById('add-teacher-form').onsubmit = async function(e) {
+                    e.preventDefault();
+                    const newId = "TCH-0" + (appData.teachers.length + 1);
+                    const nameVal = document.getElementById('tc-name').value;
+                    const photoUrl = await readPhotoFile(document.getElementById('tc-photo'), nameVal.slice(0, 6), "059669");
+
+                    appData.teachers.push({
+                        id: newId, pass: "1234",
+                        name: nameVal,
+                        phone: document.getElementById('tc-phone').value,
+                        email: document.getElementById('tc-email').value,
+                        subject: document.getElementById('tc-sub').value,
+                        salary: Number(document.getElementById('tc-sal').value),
+                        paidSalary: 0,
+                        photo: photoUrl
+                    });
+                    showToast(`শিক্ষক যুক্ত হয়েছেন! Teacher ID: ${newId}`);
+                    switchAdminTab('teachers');
+                };
+            }
+
+            // COURSES
+            else if (tab === 'courses') {
+                title.innerText = "Courses Management (Synced with Website)";
+                area.innerHTML = `
+                    <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
+                        <h3 class="font-bold text-secondary mb-4">নতুন কোর্স যোগ করুন (পাবলিক ওয়েবসাইটেও দেখাবে)</h3>
+                        <form id="add-course-form" class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                            <input type="text" id="cr-name" required placeholder="কোর্সের নাম *" class="px-3 py-2.5 border rounded-xl text-sm">
+                            <input type="text" id="cr-class" required placeholder="শ্রেণি (যেমন: Class 9-10)" class="px-3 py-2.5 border rounded-xl text-sm">
+                            <input type="text" id="cr-group" required placeholder="বিভাগ (Science/Commerce)" class="px-3 py-2.5 border rounded-xl text-sm">
+                            <input type="text" id="cr-sub" required placeholder="বিষয়সমূহ" class="px-3 py-2.5 border rounded-xl text-sm">
+                            <input type="number" id="cr-fee" required placeholder="কোর্স ফি (৳)" class="px-3 py-2.5 border rounded-xl text-sm">
+                            <input type="text" id="cr-desc" required placeholder="সংক্ষিপ্ত বিবরণ" class="px-3 py-2.5 border rounded-xl text-sm">
+                            <button type="submit" class="sm:col-span-3 bg-primary text-white font-bold py-2.5 rounded-xl text-sm">+ Publish Course</button>
+                        </form>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        ${appData.courses.map((c, i) => `
+                            <div class="bg-white p-5 rounded-2xl border shadow-sm">
+                                <div class="flex justify-between"><span class="text-xs font-bold text-primary">${c.className}</span><button onclick="appData.courses.splice(${i},1); switchAdminTab('courses');" class="text-red-500 text-xs">Delete</button></div>
+                                <h4 class="font-bold text-lg mt-1">${c.name}</h4>
+                                <p class="text-xs text-slate-500 mt-1">${c.desc}</p>
+                                <p class="font-bold text-emerald-600 mt-3">ফি: ৳ ${c.fee}</p>
+                            </div>
+                        `).join('')}
+                    </div>
+                `;
+                document.getElementById('add-course-form').onsubmit = function(e) {
+                    e.preventDefault();
+                    appData.courses.push({
+                        id: Date.now(),
+                        name: document.getElementById('cr-name').value,
+                        className: document.getElementById('cr-class').value,
+                        group: document.getElementById('cr-group').value,
+                        subject: document.getElementById('cr-sub').value,
+                        fee: Number(document.getElementById('cr-fee').value),
+                        desc: document.getElementById('cr-desc').value
+                    });
+                    showToast("নতুন কোর্স যুক্ত হয়েছে!");
+                    switchAdminTab('courses');
+                };
+            }
+
+            // BATCHES
+            else if (tab === 'batches') {
+                title.innerText = "Batches Management";
+                area.innerHTML = `
+                    <div class="bg-white p-6 rounded-2xl border shadow-sm">
+                        <h3 class="font-bold mb-4">নতুন ব্যাচ তৈরি করুন</h3>
+                        <form id="add-batch-form" class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                            <input type="text" id="bt-name" required placeholder="ব্যাচের নাম (যেমন: Morning Alpha)" class="px-3 py-2.5 border rounded-xl text-sm">
+                            <input type="text" id="bt-class" required placeholder="শ্রেণি ও বিভাগ" class="px-3 py-2.5 border rounded-xl text-sm">
+                            <select id="bt-teacher" class="px-3 py-2.5 border rounded-xl text-sm bg-white">
+                                ${appData.teachers.map(t => `<option value="${t.name}">${t.name}</option>`).join('')}
+                            </select>
+                            <input type="text" id="bt-time" required placeholder="সময়সূচি (যেমন: শনি-সোম সকাল ৮টা)" class="sm:col-span-2 px-3 py-2.5 border rounded-xl text-sm">
+                            <button type="submit" class="bg-primary text-white font-bold py-2.5 rounded-xl text-sm">+ Create Batch</button>
+                        </form>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        ${appData.batches.map((b, i) => `
+                            <div class="bg-white p-5 rounded-2xl border shadow-sm flex justify-between items-center">
+                                <div>
+                                    <h4 class="font-bold text-lg text-secondary">${b.name}</h4>
+                                    <p class="text-xs text-slate-500">${b.className} • শিক্ষক: ${b.teacher}</p>
+                                    <p class="text-xs text-primary font-semibold mt-1"><i class="fa-regular fa-clock"></i> ${b.schedule}</p>
+                                </div>
+                                <button onclick="appData.batches.splice(${i},1); switchAdminTab('batches');" class="text-red-500"><i class="fa-solid fa-trash"></i></button>
+                            </div>
+                        `).join('')}
+                    </div>
+                `;
+                document.getElementById('add-batch-form').onsubmit = function(e) {
+                    e.preventDefault();
+                    appData.batches.push({
+                        id: Date.now(),
+                        name: document.getElementById('bt-name').value,
+                        className: document.getElementById('bt-class').value,
+                        group: "General",
+                        teacher: document.getElementById('bt-teacher').value,
+                        schedule: document.getElementById('bt-time').value
+                    });
+                    showToast("ব্যাচ তৈরি সম্পন্ন!");
+                    switchAdminTab('batches');
+                };
+            }
+
+            // ATTENDANCE & WHATSAPP
+            else if (tab === 'attendance') {
+                title.innerText = "Attendance & Parent WhatsApp Alert";
+                const today = new Date().toISOString().split('T')[0];
+                area.innerHTML = `
+                    <div class="bg-white p-6 rounded-2xl border shadow-sm">
+                        <div class="flex flex-wrap gap-4 items-center mb-6">
+                            <div>
+                                <label class="text-xs font-bold block mb-1">ব্যাচ নির্বাচন</label>
+                                <select id="att-batch" onchange="renderAttendanceTable()" class="px-4 py-2 border rounded-xl text-sm bg-white">
+                                    ${appData.batches.map(b => `<option value="${b.name}">${b.name}</option>`).join('')}
+                                </select>
+                            </div>
+                            <div>
+                                <label class="text-xs font-bold block mb-1">তারিখ</label>
+                                <input type="date" id="att-date" value="${today}" class="px-4 py-2 border rounded-xl text-sm">
+                            </div>
+                        </div>
+                        <div id="att-list-container"></div>
+                    </div>
+                `;
+                renderAttendanceTable();
+            }
+
+            // CLASS ROUTINE
+            else if (tab === 'routine') {
+                title.innerText = "Class Routine Management";
+                area.innerHTML = `
+                    <div class="bg-white p-6 rounded-2xl border shadow-sm">
+                        <h3 class="font-bold mb-4">নতুন রুটিন যুক্ত করুন</h3>
+                        <form id="add-routine-form" class="grid grid-cols-1 sm:grid-cols-5 gap-3">
+                            <select id="rt-batch" class="px-3 py-2 border rounded-xl text-sm bg-white">${appData.batches.map(b => `<option value="${b.name}">${b.name}</option>`).join('')}</select>
+                            <input type="text" id="rt-day" required placeholder="বার (Saturday)" class="px-3 py-2 border rounded-xl text-sm">
+                            <input type="text" id="rt-time" required placeholder="সময় (10:00 AM)" class="px-3 py-2 border rounded-xl text-sm">
+                            <input type="text" id="rt-sub" required placeholder="বিষয়" class="px-3 py-2 border rounded-xl text-sm">
+                            <button type="submit" class="bg-primary text-white font-bold py-2 rounded-xl text-sm">+ Add</button>
+                        </form>
+                    </div>
+                    <div class="bg-white p-6 rounded-2xl border shadow-sm">
+                        <table class="w-full text-left text-sm">
+                            <thead class="bg-slate-50"><tr><th class="p-3">ব্যাচ</th><th class="p-3">বার</th><th class="p-3">সময়</th><th class="p-3">বিষয়</th><th class="p-3">Action</th></tr></thead>
+                            <tbody>
+                                ${appData.routines.map((r, i) => `<tr class="border-t"><td class="p-3 font-bold">${r.batch}</td><td class="p-3">${r.day}</td><td class="p-3">${r.time}</td><td class="p-3">${r.subject}</td><td class="p-3"><button onclick="appData.routines.splice(${i},1); switchAdminTab('routine');" class="text-red-500"><i class="fa-solid fa-trash"></i></button></td></tr>`).join('')}
+                            </tbody>
+                        </table>
+                    </div>
+                `;
+                document.getElementById('add-routine-form').onsubmit = function(e) {
+                    e.preventDefault();
+                    appData.routines.push({
+                        id: Date.now(),
+                        batch: document.getElementById('rt-batch').value,
+                        day: document.getElementById('rt-day').value,
+                        time: document.getElementById('rt-time').value,
+                        subject: document.getElementById('rt-sub').value,
+                        teacher: "Assigned Faculty"
+                    });
+                    showToast("রুটিন সংরক্ষিত হয়েছে!");
+                    switchAdminTab('routine');
+                };
+            }
+
+            // ONLINE CLASS
+            else if (tab === 'online-class') {
+                title.innerText = "Online Class Management (Google Meet)";
+                area.innerHTML = `
+                    <div class="bg-white p-6 rounded-2xl border shadow-sm">
+                        <h3 class="font-bold mb-4">নতুন অনলাইন ক্লাস সিডিউল করুন</h3>
+                        <form id="add-oc-form" class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                            <select id="oc-batch" class="px-3 py-2.5 border rounded-xl text-sm bg-white">${appData.batches.map(b => `<option value="${b.name}">${b.name}</option>`).join('')}</select>
+                            <input type="date" id="oc-date" required class="px-3 py-2.5 border rounded-xl text-sm">
+                            <input type="text" id="oc-time" required placeholder="সময় (যেমন: রাত ৮:৩০)" class="px-3 py-2.5 border rounded-xl text-sm">
+                            <input type="text" id="oc-sub" required placeholder="ক্লাসের বিষয়" class="px-3 py-2.5 border rounded-xl text-sm">
+                            <input type="url" id="oc-link" required placeholder="Google Meet Link (https://meet.google.com/...)" class="px-3 py-2.5 border rounded-xl text-sm">
+                            <button type="submit" class="bg-emerald-600 text-white font-bold py-2.5 rounded-xl text-sm">+ Publish Class</button>
+                        </form>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        ${appData.onlineClasses.map((c, i) => `
+                            <div class="bg-white p-5 rounded-2xl border shadow-sm flex justify-between items-center">
+                                <div>
+                                    <span class="text-xs bg-emerald-100 text-emerald-700 font-bold px-2.5 py-0.5 rounded">${c.batch}</span>
+                                    <h4 class="font-bold text-base mt-1">${c.subject}</h4>
+                                    <p class="text-xs text-slate-500">${c.date} • ${c.time}</p>
+                                    <a href="${c.link}" target="_blank" class="inline-block mt-2 text-xs font-bold text-primary underline">Join Google Meet &rarr;</a>
+                                </div>
+                                <button onclick="appData.onlineClasses.splice(${i},1); switchAdminTab('online-class');" class="text-red-500"><i class="fa-solid fa-trash"></i></button>
+                            </div>
+                        `).join('')}
+                    </div>
+                `;
+                document.getElementById('add-oc-form').onsubmit = function(e) {
+                    e.preventDefault();
+                    appData.onlineClasses.push({
+                        id: Date.now(),
+                        batch: document.getElementById('oc-batch').value,
+                        date: document.getElementById('oc-date').value,
+                        time: document.getElementById('oc-time').value,
+                        subject: document.getElementById('oc-sub').value,
+                        link: document.getElementById('oc-link').value
+                    });
+                    showToast("অনলাইন ক্লাস যুক্ত হয়েছে!");
+                    switchAdminTab('online-class');
+                };
+            }
+
+            // HOMEWORK
+            else if (tab === 'homework') {
+                title.innerText = "Daily Homework & Submissions";
+                area.innerHTML = `
+                    <div class="bg-white p-6 rounded-2xl border shadow-sm">
+                        <h3 class="font-bold mb-4">নতুন হোমওয়ার্ক প্রকাশ করুন</h3>
+                        <form id="add-hw-form" class="grid grid-cols-1 sm:grid-cols-4 gap-3">
+                            <select id="hw-batch" class="px-3 py-2 border rounded-xl text-sm bg-white">${appData.batches.map(b => `<option value="${b.name}">${b.name}</option>`).join('')}</select>
+                            <input type="text" id="hw-sub" required placeholder="বিষয়" class="px-3 py-2 border rounded-xl text-sm">
+                            <input type="date" id="hw-dead" required class="px-3 py-2 border rounded-xl text-sm">
+                            <input type="text" id="hw-title" required placeholder="হোমওয়ার্কের বিবরণ *" class="px-3 py-2 border rounded-xl text-sm">
+                            <button type="submit" class="sm:col-span-4 bg-primary text-white font-bold py-2.5 rounded-xl text-sm">Publish Homework</button>
+                        </form>
+                    </div>
+                    <div class="space-y-4">
+                        ${appData.homeworks.map(h => `
+                            <div class="bg-white p-5 rounded-2xl border shadow-sm">
+                                <div class="flex justify-between"><span class="text-xs font-bold text-primary">${h.batch} - ${h.subject}</span><span class="text-xs text-red-500">Deadline: ${h.deadline}</span></div>
+                                <h4 class="font-bold text-base mt-1">${h.title}</h4>
+                                <p class="text-xs text-slate-500 mt-2">জমা পড়েছে: ${h.submissions.length} টি</p>
+                            </div>
+                        `).join('')}
+                    </div>
+                `;
+                document.getElementById('add-hw-form').onsubmit = function(e) {
+                    e.preventDefault();
+                    appData.homeworks.push({
+                        id: Date.now(),
+                        batch: document.getElementById('hw-batch').value,
+                        subject: document.getElementById('hw-sub').value,
+                        deadline: document.getElementById('hw-dead').value,
+                        title: document.getElementById('hw-title').value,
+                        submissions: []
+                    });
+                    showToast("হোমওয়ার্ক প্রকাশিত হয়েছে!");
+                    switchAdminTab('homework');
+                };
+            }
+
+            // FEES
+            else if (tab === 'fees') {
+                title.innerText = "Student Fees & Accounts";
+                area.innerHTML = `
+                    <div class="bg-white p-6 rounded-2xl border shadow-sm overflow-x-auto">
+                        <table class="w-full text-left text-sm">
+                            <thead class="bg-slate-50"><tr><th class="p-3">ID & নাম</th><th class="p-3">মাসিক ফি</th><th class="p-3">পরিশোধিত</th><th class="p-3">বকেয়া (Due)</th><th class="p-3">Action</th></tr></thead>
+                            <tbody>
+                                ${appData.students.map((s, idx) => {
+                                    const due = s.monthlyFee - s.paidAmount;
+                                    return `
+                                    <tr class="border-t">
+                                        <td class="p-3 font-semibold">${s.name} (${s.id})</td>
+                                        <td class="p-3">৳ ${s.monthlyFee}</td>
+                                        <td class="p-3 text-emerald-600 font-bold">৳ ${s.paidAmount}</td>
+                                        <td class="p-3 text-red-600 font-bold">৳ ${due}</td>
+                                        <td class="p-3 flex gap-2">
+                                            ${due > 0 ? `<button onclick="appData.students[${idx}].paidAmount = appData.students[${idx}].monthlyFee; showToast('ফি পরিশোধ রেকর্ড হয়েছে!'); switchAdminTab('fees');" class="bg-emerald-600 text-white px-3 py-1 rounded-lg text-xs font-bold">Mark Paid</button>` : '<span class="text-xs bg-emerald-100 text-emerald-700 px-2 py-1 rounded font-bold">Paid</span>'}
+                                            ${due > 0 ? `<button onclick="openWhatsAppChat('${s.phone}', 'আসসালামু আলাইকুম, আপনার সন্তান ${s.name}-এর মাসিক ফি ৳${due} বকেয়া রয়েছে। অনুগ্রহ করে পরিশোধ করবেন। - NextGen Academy')" class="bg-amber-500 text-white px-2.5 py-1 rounded-lg text-xs"><i class="fa-brands fa-whatsapp"></i> Due Alert</button>` : ''}
+                                        </td>
+                                    </tr>`;
+                                }).join('')}
+                            </tbody>
+                        </table>
+                    </div>
+                `;
+            }
+
+            // SALARY
+            else if (tab === 'salary') {
+                title.innerText = "Teacher Salary Management";
+                area.innerHTML = `
+                    <div class="bg-white p-6 rounded-2xl border shadow-sm overflow-x-auto">
+                        <table class="w-full text-left text-sm">
+                            <thead class="bg-slate-50"><tr><th class="p-3">শিক্ষক</th><th class="p-3">নির্ধারিত বেতন</th><th class="p-3">প্রদানকৃত</th><th class="p-3">বকেয়া</th><th class="p-3">Action</th></tr></thead>
+                            <tbody>
+                                ${appData.teachers.map((t, idx) => {
+                                    const due = t.salary - t.paidSalary;
+                                    return `<tr class="border-t">
+                                        <td class="p-3 font-bold">${t.name}</td>
+                                        <td class="p-3">৳ ${t.salary}</td>
+                                        <td class="p-3 text-emerald-600 font-bold">৳ ${t.paidSalary}</td>
+                                        <td class="p-3 text-red-600 font-bold">৳ ${due}</td>
+                                        <td class="p-3">${due > 0 ? `<button onclick="appData.teachers[${idx}].paidSalary = appData.teachers[${idx}].salary; showToast('বেতন প্রদান সম্পন্ন!'); switchAdminTab('salary');" class="bg-primary text-white px-3 py-1 rounded-lg text-xs font-bold">Pay Full Salary</button>` : '<span class="text-xs text-emerald-600 font-bold">Cleared</span>'}</td>
+                                    </tr>`;
+                                }).join('')}
+                            </tbody>
+                        </table>
+                    </div>
+                `;
+            }
+
+            // EXAMS
+            else if (tab === 'exams') {
+                title.innerText = "Exam & Result Management";
+                area.innerHTML = `
+                    <div class="bg-white p-6 rounded-2xl border shadow-sm">
+                        <h3 class="font-bold mb-4">নতুন পরীক্ষার ফলাফল যুক্ত করুন</h3>
+                        <form id="add-res-form" class="grid grid-cols-1 sm:grid-cols-5 gap-3">
+                            <input type="text" id="rs-exam" required placeholder="পরীক্ষার নাম" class="px-3 py-2 border rounded-xl text-sm">
+                            <select id="rs-stu" class="px-3 py-2 border rounded-xl text-sm bg-white">${appData.students.map(s => `<option value="${s.id}">${s.name} (${s.id})</option>`).join('')}</select>
+                            <input type="text" id="rs-sub" required placeholder="বিষয়" class="px-3 py-2 border rounded-xl text-sm">
+                            <input type="number" id="rs-marks" required placeholder="প্রাপ্ত নম্বর (১০০ তে)" class="px-3 py-2 border rounded-xl text-sm">
+                            <button type="submit" class="bg-primary text-white font-bold py-2 rounded-xl text-sm">+ Save Result</button>
+                        </form>
+                    </div>
+                    <div class="bg-white p-6 rounded-2xl border shadow-sm overflow-x-auto">
+                        <table class="w-full text-left text-sm">
+                            <thead class="bg-slate-50"><tr><th class="p-3">পরীক্ষা</th><th class="p-3">Student ID</th><th class="p-3">বিষয়</th><th class="p-3">নম্বর</th><th class="p-3">গ্রেড</th></tr></thead>
+                            <tbody>
+                                ${appData.results.map(r => `<tr class="border-t"><td class="p-3 font-semibold">${r.examName}</td><td class="p-3">${r.studentId}</td><td class="p-3">${r.subject}</td><td class="p-3 font-bold">${r.marks}/${r.total}</td><td class="p-3 text-primary font-bold">${r.grade}</td></tr>`).join('')}
+                            </tbody>
+                        </table>
+                    </div>
+                `;
+                document.getElementById('add-res-form').onsubmit = function(e) {
+                    e.preventDefault();
+                    const marks = Number(document.getElementById('rs-marks').value);
+                    const grade = marks >= 80 ? "A+" : marks >= 70 ? "A" : marks >= 60 ? "A-" : "B";
+                    appData.results.push({
+                        id: Date.now(),
+                        examName: document.getElementById('rs-exam').value,
+                        studentId: document.getElementById('rs-stu').value,
+                        subject: document.getElementById('rs-sub').value,
+                        marks: marks, total: 100, grade: grade
+                    });
+                    showToast("ফলাফল যুক্ত হয়েছে!");
+                    switchAdminTab('exams');
+                };
+            }
+
+            // NOTICES
+            else if (tab === 'notices') {
+                title.innerText = "Notices Management (Public & Student Portal)";
+                area.innerHTML = `
+                    <div class="bg-white p-6 rounded-2xl border shadow-sm">
+                        <h3 class="font-bold mb-4">নতুন নোটিশ প্রকাশ করুন</h3>
+                        <form id="add-notice-form" class="space-y-3">
+                            <input type="text" id="nt-title" required placeholder="নোটিশের শিরোনাম *" class="w-full px-4 py-2.5 border rounded-xl text-sm">
+                            <textarea id="nt-desc" required placeholder="বিস্তারিত বিবরণ *" class="w-full px-4 py-2.5 border rounded-xl text-sm"></textarea>
+                            <button type="submit" class="bg-primary text-white font-bold px-6 py-2.5 rounded-xl text-sm">Publish Notice</button>
+                        </form>
+                    </div>
+                    <div class="space-y-3">
+                        ${appData.notices.map((n, i) => `
+                            <div class="bg-white p-4 rounded-2xl border flex justify-between items-center">
+                                <div><h4 class="font-bold">${n.title} <span class="text-xs text-slate-400">(${n.date})</span></h4><p class="text-xs text-slate-600">${n.desc}</p></div>
+                                <button onclick="appData.notices.splice(${i},1); switchAdminTab('notices');" class="text-red-500"><i class="fa-solid fa-trash"></i></button>
+                            </div>
+                        `).join('')}
+                    </div>
+                `;
+                document.getElementById('add-notice-form').onsubmit = function(e) {
+                    e.preventDefault();
+                    appData.notices.unshift({
+                        id: Date.now(),
+                        title: document.getElementById('nt-title').value,
+                        desc: document.getElementById('nt-desc').value,
+                        date: new Date().toISOString().split('T')[0]
+                    });
+                    showToast("নোটিশ প্রকাশিত হয়েছে!");
+                    switchAdminTab('notices');
+                };
+            }
+
+            // REPORTS
+            else if (tab === 'reports') {
+                title.innerText = "Comprehensive Academy Reports";
+                area.innerHTML = `
+                    <div class="bg-white p-6 rounded-2xl border shadow-sm space-y-4">
+                        <div class="flex justify-between items-center">
+                            <h3 class="font-bold text-lg">একাডেমি সার্বিক রিপোর্ট (Print / Export)</h3>
+                            <button onclick="window.print()" class="bg-secondary text-white px-4 py-2 rounded-xl text-xs font-bold"><i class="fa-solid fa-print mr-1"></i> Print Report</button>
+                        </div>
+                        <div id="printable-area" class="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2">
+                            <div class="p-4 border rounded-xl">
+                                <h4 class="font-bold text-primary mb-2">শিক্ষার্থী ও ফি রিপোর্ট</h4>
+                                <p class="text-sm">মোট শিক্ষার্থী: ${appData.students.length} জন</p>
+                                <p class="text-sm">মোট আদায়কৃত ফি: ৳ ${appData.students.reduce((a,b)=>a+b.paidAmount,0)}</p>
+                            </div>
+                            <div class="p-4 border rounded-xl">
+                                <h4 class="font-bold text-emerald-600 mb-2">শিক্ষক ও বেতন রিপোর্ট</h4>
+                                <p class="text-sm">মোট শিক্ষক: ${appData.teachers.length} জন</p>
+                                <p class="text-sm">মোট বেতন প্রদান: ৳ ${appData.teachers.reduce((a,b)=>a+b.paidSalary,0)}</p>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }
+
+            // SETTINGS
+            else if (tab === 'settings') {
+                title.innerText = "Website & Social Media Settings";
+                const s = appData.settings;
+                area.innerHTML = `
+                    <form id="settings-form" class="bg-white p-6 rounded-2xl border shadow-sm space-y-4 max-w-3xl">
+                        <div class="p-4 bg-blue-50/60 border border-blue-200 rounded-2xl flex flex-wrap items-center gap-4">
+                            <div class="w-16 h-16 rounded-2xl bg-white border flex items-center justify-center overflow-hidden shadow-sm">
+                                ${s.logo ? `<img src="${s.logo}" class="w-full h-full object-cover">` : `<i class="fa-solid fa-graduation-cap text-2xl text-primary"></i>`}
+                            </div>
+                            <div class="flex-1 min-w-[200px]">
+                                <label class="block text-xs font-bold text-secondary mb-1"><i class="fa-solid fa-image text-primary mr-1"></i> একাডেমির লোগো আপলোড করুন (Website & ID Card)</label>
+                                <input type="file" id="set-logo-file" accept="image/*" class="text-xs w-full">
+                                ${s.logo ? `<button type="button" onclick="appData.settings.logo=''; switchAdminTab('settings'); showToast('লোগো রিমুভ করা হয়েছে');" class="text-[11px] text-red-600 font-bold mt-1 underline">Remove Logo</button>` : ''}
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div><label class="text-xs font-bold">একাডেমির নাম</label><input type="text" id="set-name" value="${s.name}" class="w-full px-3 py-2 border rounded-xl text-sm mt-1"></div>
+                            <div><label class="text-xs font-bold">পরিচালকের নাম</label><input type="text" id="set-director" value="${s.director}" class="w-full px-3 py-2 border rounded-xl text-sm mt-1"></div>
+                            <div><label class="text-xs font-bold">ট্যাগলাইন</label><input type="text" id="set-tag" value="${s.tagline}" class="w-full px-3 py-2 border rounded-xl text-sm mt-1"></div>
+                            <div><label class="text-xs font-bold">ফোন নম্বরসমূহ</label><input type="text" id="set-phone" value="${s.phone}" class="w-full px-3 py-2 border rounded-xl text-sm mt-1"></div>
+                            <div><label class="text-xs font-bold">WhatsApp নম্বর (880 সহ)</label><input type="text" id="set-wa" value="${s.whatsapp}" class="w-full px-3 py-2 border rounded-xl text-sm mt-1"></div>
+                            <div><label class="text-xs font-bold">ইমেইল</label><input type="email" id="set-email" value="${s.email}" class="w-full px-3 py-2 border rounded-xl text-sm mt-1"></div>
+                            <div><label class="text-xs font-bold">Facebook Link</label><input type="url" id="set-fb" value="${s.facebook}" class="w-full px-3 py-2 border rounded-xl text-sm mt-1"></div>
+                            <div><label class="text-xs font-bold">YouTube Link</label><input type="url" id="set-yt" value="${s.youtube}" class="w-full px-3 py-2 border rounded-xl text-sm mt-1"></div>
+                        </div>
+                        <div><label class="text-xs font-bold">ঠিকানা</label><input type="text" id="set-addr" value="${s.address}" class="w-full px-3 py-2 border rounded-xl text-sm mt-1"></div>
+                        <div><label class="text-xs font-bold">About Us বিবরণ</label><textarea id="set-about" class="w-full px-3 py-2 border rounded-xl text-sm mt-1">${s.about}</textarea></div>
+                        <div class="flex gap-6 pt-2">
+                            <label class="flex items-center space-x-2 text-sm font-semibold"><input type="checkbox" id="set-clock" ${s.showClock ? 'checked' : ''}> <span>Bangladesh Clock চালু রাখুন</span></label>
+                            <label class="flex items-center space-x-2 text-sm font-semibold"><input type="checkbox" id="set-calc" ${s.showCalculator ? 'checked' : ''}> <span>Calculator চালু রাখুন</span></label>
+                        </div>
+                        <button type="submit" class="bg-primary text-white font-bold px-6 py-3 rounded-xl text-sm">Save Website Settings</button>
+                    </form>
+                `;
+                document.getElementById('settings-form').onsubmit = async function(e) {
+                    e.preventDefault();
+                    const logoInput = document.getElementById('set-logo-file');
+                    if (logoInput && logoInput.files && logoInput.files[0]) {
+                        s.logo = await readPhotoFile(logoInput, "LOGO");
+                    }
+                    s.name = document.getElementById('set-name').value;
+                    s.director = document.getElementById('set-director').value;
+                    s.tagline = document.getElementById('set-tag').value;
+                    s.phone = document.getElementById('set-phone').value;
+                    s.whatsapp = document.getElementById('set-wa').value;
+                    s.email = document.getElementById('set-email').value;
+                    s.facebook = document.getElementById('set-fb').value;
+                    s.youtube = document.getElementById('set-yt').value;
+                    s.address = document.getElementById('set-addr').value;
+                    s.about = document.getElementById('set-about').value;
+                    s.showClock = document.getElementById('set-clock').checked;
+                    s.showCalculator = document.getElementById('set-calc').checked;
+                    showToast("লোগো ও ওয়েবসাইট সেটিংস সফলভাবে আপডেট হয়েছে!");
+                    switchAdminTab('settings');
+                };
+            }
+        }
+
+        function renderAttendanceTable() {
+            const batch = document.getElementById('att-batch').value;
+            const date = document.getElementById('att-date').value;
+            const batchStudents = appData.students.filter(s => s.batch === batch);
+            const container = document.getElementById('att-list-container');
+
+            if (batchStudents.length === 0) {
+                container.innerHTML = `<p class="text-sm text-slate-500">এই ব্যাচে কোনো শিক্ষার্থী নেই।</p>`;
+                return;
+            }
+
+            container.innerHTML = `
+                <table class="w-full text-left text-sm">
+                    <thead class="bg-slate-50"><tr><th class="p-3">Student</th><th class="p-3">Status</th><th class="p-3">Parent WhatsApp</th></tr></thead>
+                    <tbody>
+                        ${batchStudents.map(s => {
+                            const existing = appData.attendance.find(a => a.studentId === s.id && a.date === date);
+                            const status = existing ? existing.status : 'Present';
+                            return `<tr class="border-t">
+                                <td class="p-3 font-semibold">${s.name} (${s.id})</td>
+                                <td class="p-3">
+                                    <select onchange="saveStudentAttendance('${s.id}', '${batch}', '${date}', this.value)" class="px-3 py-1.5 border rounded-lg text-xs font-bold bg-white">
+                                        <option value="Present" ${status==='Present'?'selected':''}>Present</option>
+                                        <option value="Absent" ${status==='Absent'?'selected':''}>Absent</option>
+                                        <option value="Late" ${status==='Late'?'selected':''}>Late</option>
+                                        <option value="Leave" ${status==='Leave'?'selected':''}>Leave</option>
+                                    </select>
+                                </td>
+                                <td class="p-3">
+                                    <button onclick="openWhatsAppChat('${s.phone}', 'সম্মানিত অভিভাবক, আপনার সন্তান ${s.name} আজ (${date}) ${batch} ব্যাচের ক্লাসে অনুপস্থিত (Absent) রয়েছে। - ${appData.settings.name}')" class="bg-emerald-500 hover:bg-emerald-600 text-white px-3 py-1.5 rounded-lg text-xs font-bold">
+                                        <i class="fa-brands fa-whatsapp mr-1"></i> Send Absent Alert
+                                    </button>
+                                </td>
+                            </tr>`;
+                        }).join('')}
+                    </tbody>
+                </table>
+            `;
+        }
+
+        function saveStudentAttendance(studentId, batch, date, status) {
+            const idx = appData.attendance.findIndex(a => a.studentId === studentId && a.date === date);
+            if (idx > -1) appData.attendance[idx].status = status;
+            else appData.attendance.push({ date, batch, studentId, status });
+            showToast(`উপস্থিতি আপডেট: ${studentId} (${status})`);
+        }
+
+        // UNIVERSAL ID CARD GENERATOR (FOR BOTH STUDENTS & TEACHERS WITH PHOTO)
+        function generateIDCard(role, personId) {
+            const headerBg = document.getElementById('card-header-bg');
+            const badge = document.getElementById('card-role-badge');
+            const idBadge = document.getElementById('card-id');
+            const detailsBox = document.getElementById('card-details-box');
+            const cardLogo = document.getElementById('card-academy-logo');
+            if (appData.settings.logo) {
+                cardLogo.src = appData.settings.logo;
+                cardLogo.classList.remove('hidden');
+            } else {
+                cardLogo.classList.add('hidden');
+            }
+            document.getElementById('card-academy-name').innerText = appData.settings.name;
+
+            if (role === 'student') {
+                const s = appData.students.find(st => st.id === personId);
+                if (!s) return;
+                headerBg.className = "bg-primary text-white py-4 px-3 flex flex-col items-center";
+                badge.innerText = "STUDENT IDENTITY CARD";
+                badge.className = "text-[10px] font-bold tracking-wider uppercase text-blue-100";
+                document.getElementById('card-photo').src = s.photo;
+                document.getElementById('card-name').innerText = s.name;
+                idBadge.className = "inline-block bg-blue-50 text-primary font-bold text-xs px-3 py-1 rounded-full mt-1";
+                idBadge.innerText = "ID: " + s.id;
+                detailsBox.innerHTML = `
+                    <p><strong>Class:</strong> ${s.className}</p>
+                    <p><strong>Group:</strong> ${s.group}</p>
+                    <p><strong>Batch:</strong> ${s.batch}</p>
+                    <p><strong>Guardian:</strong> ${s.phone}</p>
+                `;
+            } else if (role === 'teacher') {
+                const t = appData.teachers.find(tc => tc.id === personId);
+                if (!t) return;
+                headerBg.className = "bg-emerald-800 text-white py-4 px-3 flex flex-col items-center";
+                badge.innerText = "FACULTY & STAFF ID CARD";
+                badge.className = "text-[10px] font-bold tracking-wider uppercase text-emerald-200";
+                document.getElementById('card-photo').src = t.photo;
+                document.getElementById('card-name').innerText = t.name;
+                idBadge.className = "inline-block bg-emerald-50 text-emerald-700 font-bold text-xs px-3 py-1 rounded-full mt-1";
+                idBadge.innerText = "ID: " + t.id;
+                detailsBox.innerHTML = `
+                    <p><strong>Subject / Role:</strong> ${t.subject}</p>
+                    <p><strong>Mobile:</strong> ${t.phone}</p>
+                    <p><strong>Email:</strong> ${t.email}</p>
+                    <p><strong>Status:</strong> Active Faculty</p>
+                `;
+            }
+            document.getElementById('idcard-modal').classList.remove('hidden');
+        }
+
+        // --- 6. STUDENT PORTAL RENDERER ---
+        function renderStudentPortal() {
+            const s = currentUser;
+            document.getElementById('stu-portal-name').innerText = s.name;
+            document.getElementById('stu-portal-id').innerText = `ID: ${s.id} | Batch: ${s.batch}`;
+
+            const myAttendance = appData.attendance.filter(a => a.studentId === s.id);
+            const myResults = appData.results.filter(r => r.studentId === s.id);
+            const myRoutine = appData.routines.filter(r => r.batch === s.batch);
+            const myClasses = appData.onlineClasses.filter(c => c.batch === s.batch);
+            const myHomeworks = appData.homeworks.filter(h => h.batch === s.batch);
+            const due = s.monthlyFee - s.paidAmount;
+
+            document.getElementById('student-portal-content').innerHTML = `
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+                    <div class="bg-white p-5 rounded-2xl border shadow-sm flex items-center space-x-4">
+                        <img src="${s.photo}" class="w-16 h-16 rounded-full object-cover border-2 border-primary">
+                        <div>
+                            <h3 class="font-bold text-base">${s.name}</h3>
+                            <p class="text-xs text-slate-500">${s.className} (${s.group})</p>
+                            <button onclick="generateIDCard('student', '${s.id}')" class="mt-1.5 bg-blue-50 text-primary px-2.5 py-1 rounded-lg text-xs font-bold"><i class="fa-solid fa-id-card mr-1"></i> View My ID Card</button>
+                        </div>
+                    </div>
+                    <div class="bg-white p-5 rounded-2xl border shadow-sm">
+                        <p class="text-xs text-slate-400 font-bold">ফি ও বকেয়া (Fee Summary)</p>
+                        <p class="text-sm mt-1">মাসিক ফি: ৳${s.monthlyFee} | পরিশোধ: <span class="text-emerald-600 font-bold">৳${s.paidAmount}</span></p>
+                        <p class="text-sm font-bold text-red-600">বকেয়া: ৳${due}</p>
+                    </div>
+                    <div class="bg-white p-5 rounded-2xl border shadow-sm">
+                        <p class="text-xs text-slate-400 font-bold">উপস্থিতি রেকর্ড (Attendance)</p>
+                        <p class="text-2xl font-extrabold text-primary mt-1">${myAttendance.length} দিন</p>
+                        <p class="text-xs text-slate-500">সর্বশেষ: ${myAttendance.length ? myAttendance[myAttendance.length-1].status : 'N/A'}</p>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <div class="bg-white p-6 rounded-2xl border shadow-sm">
+                        <h3 class="font-bold text-lg text-emerald-700 mb-3"><i class="fa-solid fa-video mr-2"></i> অনলাইন ক্লাস (Google Meet)</h3>
+                        ${myClasses.map(c => `
+                            <div class="p-3 bg-emerald-50 rounded-xl border border-emerald-100 mb-2 flex justify-between items-center">
+                                <div><h4 class="font-bold text-sm">${c.subject}</h4><p class="text-xs text-slate-600">${c.date} • ${c.time}</p></div>
+                                <a href="${c.link}" target="_blank" class="bg-emerald-600 text-white px-4 py-2 rounded-xl text-xs font-bold">Join Class</a>
+                            </div>
+                        `).join('') || '<p class="text-xs text-slate-500">কোনো অনলাইন ক্লাস নেই।</p>'}
+
+                        <h3 class="font-bold text-lg text-secondary mt-6 mb-3"><i class="fa-solid fa-calendar-days mr-2 text-primary"></i> ক্লাস রুটিন</h3>
+                        ${myRoutine.map(r => `<div class="text-xs p-2.5 bg-slate-50 rounded-lg mb-1.5 flex justify-between"><span><strong>${r.day}</strong> (${r.time})</span><span class="font-bold text-primary">${r.subject}</span></div>`).join('')}
+                    </div>
+
+                    <div class="bg-white p-6 rounded-2xl border shadow-sm">
+                        <h3 class="font-bold text-lg text-primary mb-3"><i class="fa-solid fa-file-pen mr-2"></i> ডেইলি হোমওয়ার্ক ও সাবমিশন</h3>
+                        ${myHomeworks.map(hw => {
+                            const sub = hw.submissions.find(x => x.studentId === s.id);
+                            return `
+                            <div class="p-4 border rounded-xl mb-3 bg-slate-50">
+                                <div class="flex justify-between text-xs font-bold"><span class="text-primary">${hw.subject}</span><span class="text-red-500">Deadline: ${hw.deadline}</span></div>
+                                <h4 class="font-bold text-sm mt-1">${hw.title}</h4>
+                                ${sub ? `
+                                    <div class="mt-2 p-2.5 bg-emerald-50 border border-emerald-200 rounded-lg text-xs">
+                                        <p class="font-bold text-emerald-800">আপনার উত্তর: ${sub.answer}</p>
+                                        <p class="text-blue-700 font-semibold mt-1">শিক্ষকের ফিডব্যাক: ${sub.feedback || 'পর্যালোচনাধীন (Pending Review)'}</p>
+                                    </div>
+                                ` : `
+                                    <div class="mt-2 flex gap-2">
+                                        <input type="text" id="hw-ans-${hw.id}" placeholder="আপনার উত্তর বা নোট লিংক লিখুন..." class="flex-1 px-3 py-1.5 border rounded-lg text-xs bg-white">
+                                        <button onclick="submitStudentHomework(${hw.id})" class="bg-primary text-white px-3 py-1.5 rounded-lg text-xs font-bold">Submit</button>
+                                    </div>
+                                `}
+                            </div>`;
+                        }).join('')}
+                    </div>
+                </div>
+
+                <div class="bg-white p-6 rounded-2xl border shadow-sm">
+                    <h3 class="font-bold text-lg text-secondary mb-3"><i class="fa-solid fa-award text-accent mr-2"></i> পরীক্ষার ফলাফল (Marksheet)</h3>
+                    <table class="w-full text-left text-sm">
+                        <thead class="bg-slate-50"><tr><th class="p-2.5">পরীক্ষা</th><th class="p-2.5">বিষয়</th><th class="p-2.5">প্রাপ্ত নম্বর</th><th class="p-2.5">গ্রেড</th></tr></thead>
+                        <tbody>
+                            ${myResults.map(r => `<tr class="border-t"><td class="p-2.5 font-semibold">${r.examName}</td><td class="p-2.5">${r.subject}</td><td class="p-2.5 font-bold">${r.marks}/${r.total}</td><td class="p-2.5 text-primary font-extrabold">${r.grade}</td></tr>`).join('') || '<tr><td colspan="4" class="p-3 text-xs text-slate-500">কোনো ফলাফল প্রকাশিত হয়নি।</td></tr>'}
+                        </tbody>
+                    </table>
+                </div>
+            `;
+        }
+
+        function submitStudentHomework(hwId) {
+            const ans = document.getElementById(`hw-ans-${hwId}`).value.trim();
+            if (!ans) return showToast("অনুগ্রহ করে উত্তর লিখুন!", "error");
+            const hw = appData.homeworks.find(h => h.id === hwId);
+            hw.submissions.push({ studentId: currentUser.id, studentName: currentUser.name, answer: ans, feedback: "" });
+            showToast("হোমওয়ার্ক সফলভাবে জমা হয়েছে!");
+            renderStudentPortal();
+        }
+
+        // --- 7. TEACHER PORTAL RENDERER ---
+        function renderTeacherPortal() {
+            const t = currentUser;
+            document.getElementById('tch-portal-name').innerText = t.name;
+            document.getElementById('tch-portal-sub').innerText = `Subject: ${t.subject} | ID: ${t.id}`;
+
+            document.getElementById('teacher-portal-content').innerHTML = `
+                <!-- Teacher Profile & ID Card Header -->
+                <div class="bg-white p-5 rounded-2xl border shadow-sm flex flex-wrap justify-between items-center gap-4">
+                    <div class="flex items-center space-x-4">
+                        <img src="${t.photo}" class="w-16 h-16 rounded-full object-cover border-2 border-emerald-600">
+                        <div>
+                            <h3 class="font-bold text-lg text-secondary">${t.name}</h3>
+                            <p class="text-xs text-slate-500">${t.subject} • ID: ${t.id}</p>
+                        </div>
+                    </div>
+                    <button onclick="generateIDCard('teacher', '${t.id}')" class="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2.5 rounded-xl text-xs font-bold shadow">
+                        <i class="fa-solid fa-id-card mr-1.5"></i> View & Print My ID Card
+                    </button>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <div class="bg-white p-6 rounded-2xl border shadow-sm space-y-6">
+                        <div>
+                            <h3 class="font-bold text-lg text-emerald-700 mb-3"><i class="fa-solid fa-video mr-2"></i> নতুন অনলাইন ক্লাস তৈরি (Google Meet)</h3>
+                            <form id="tch-oc-form" class="space-y-3">
+                                <select id="toc-batch" class="w-full px-3 py-2 border rounded-xl text-sm bg-white">${appData.batches.map(b => `<option value="${b.name}">${b.name}</option>`).join('')}</select>
+                                <div class="grid grid-cols-2 gap-2">
+                                    <input type="date" id="toc-date" required class="px-3 py-2 border rounded-xl text-sm">
+                                    <input type="text" id="toc-time" required placeholder="সময় (রাত ৮:০০)" class="px-3 py-2 border rounded-xl text-sm">
+                                </div>
+                                <input type="text" id="toc-sub" required placeholder="টপিক / বিষয়" class="w-full px-3 py-2 border rounded-xl text-sm">
+                                <input type="url" id="toc-link" required placeholder="Google Meet Link" class="w-full px-3 py-2 border rounded-xl text-sm">
+                                <button type="submit" class="w-full bg-emerald-600 text-white font-bold py-2.5 rounded-xl text-sm">Publish Live Class</button>
+                            </form>
+                        </div>
+
+                        <div class="pt-4 border-t">
+                            <h3 class="font-bold text-lg text-primary mb-3"><i class="fa-solid fa-file-pen mr-2"></i> ডেইলি হোমওয়ার্ক প্রদান</h3>
+                            <form id="tch-hw-form" class="space-y-3">
+                                <select id="thw-batch" class="w-full px-3 py-2 border rounded-xl text-sm bg-white">${appData.batches.map(b => `<option value="${b.name}">${b.name}</option>`).join('')}</select>
+                                <input type="date" id="thw-dead" required class="w-full px-3 py-2 border rounded-xl text-sm">
+                                <input type="text" id="thw-title" required placeholder="হোমওয়ার্কের বিবরণ লিখুন..." class="w-full px-3 py-2 border rounded-xl text-sm">
+                                <button type="submit" class="w-full bg-primary text-white font-bold py-2.5 rounded-xl text-sm">Assign Homework</button>
+                            </form>
+                        </div>
+                    </div>
+
+                    <div class="bg-white p-6 rounded-2xl border shadow-sm">
+                        <h3 class="font-bold text-lg text-secondary mb-4"><i class="fa-solid fa-check-double text-primary mr-2"></i> শিক্ষার্থীদের Homework Submission রিভিউ</h3>
+                        <div class="space-y-4">
+                            ${appData.homeworks.map(hw => `
+                                <div class="p-4 border rounded-xl bg-slate-50">
+                                    <h4 class="font-bold text-sm text-primary">${hw.batch} - ${hw.title}</h4>
+                                    <div class="mt-2 space-y-2">
+                                        ${hw.submissions.map((sub, sIdx) => `
+                                            <div class="p-3 bg-white rounded-lg border text-xs">
+                                                <p class="font-bold">${sub.studentName} (${sub.studentId})</p>
+                                                <p class="text-slate-600 my-1">উত্তর: ${sub.answer}</p>
+                                                <div class="flex gap-2 mt-2">
+                                                    <input type="text" id="fb-${hw.id}-${sIdx}" value="${sub.feedback}" placeholder="ফিডব্যাক ও নম্বর দিন..." class="flex-1 px-2.5 py-1 border rounded">
+                                                    <button onclick="saveTeacherFeedback(${hw.id}, ${sIdx})" class="bg-emerald-600 text-white px-3 py-1 rounded font-bold">Save</button>
+                                                </div>
+                                            </div>
+                                        `).join('') || '<p class="text-xs text-slate-400">এখনো কেউ জমা দেয়নি।</p>'}
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            document.getElementById('tch-oc-form').onsubmit = function(e) {
+                e.preventDefault();
+                appData.onlineClasses.push({
+                    id: Date.now(), batch: document.getElementById('toc-batch').value,
+                    date: document.getElementById('toc-date').value, time: document.getElementById('toc-time').value,
+                    subject: document.getElementById('toc-sub').value, link: document.getElementById('toc-link').value
+                });
+                showToast("অনলাইন ক্লাস প্রকাশিত হয়েছে!");
+                this.reset();
+            };
+
+            document.getElementById('tch-hw-form').onsubmit = function(e) {
+                e.preventDefault();
+                appData.homeworks.push({
+                    id: Date.now(), batch: document.getElementById('thw-batch').value, subject: t.subject,
+                    deadline: document.getElementById('thw-dead').value, title: document.getElementById('thw-title').value, submissions: []
+                });
+                showToast("হোমওয়ার্ক প্রকাশিত হয়েছে!");
+                renderTeacherPortal();
+            };
+        }
+
+        function saveTeacherFeedback(hwId, subIdx) {
+            const fb = document.getElementById(`fb-${hwId}-${subIdx}`).value;
+            const hw = appData.homeworks.find(h => h.id === hwId);
+            hw.submissions[subIdx].feedback = fb;
+            showToast("ফিডব্যাক সংরক্ষিত হয়েছে!");
+        }
+
+        window.onload = renderPublicWebsite;
+    </script>
+</body>
+</html>
+```
