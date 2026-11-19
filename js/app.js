@@ -38,7 +38,7 @@ function buildIdCardHtml(student) {
       <div class="flex items-center justify-between border-b pb-2 mb-3">
         <div>
           <p class="text-xs font-bold uppercase text-indigo-600">${appState.academy.name}</p>
-          <p class="text-[11px] text-slate-500">Official Student ID Card</p>
+          <p class="text-[11px] text-slate-500">${appState.academy.address}</p>
         </div>
         <span class="px-2.5 py-1 text-xs font-bold rounded bg-indigo-100 text-indigo-700">${student.id}</span>
       </div>
@@ -50,8 +50,11 @@ function buildIdCardHtml(student) {
         <p><strong>Verify Code:</strong> ${student.verificationCode || 'NGA-VER-01'}</p>
       </div>
       <div class="mt-4 pt-3 border-t flex items-end justify-between text-[11px] text-slate-500">
-        <span>${appState.academy.phone}</span>
-        <span class="font-semibold text-slate-800 border-t border-slate-400 pt-1">Authorized Seal & Sign</span>
+        <div>
+          <p>${appState.academy.phone}</p>
+          <p>${appState.academy.email}</p>
+        </div>
+        <span class="font-semibold text-slate-800 border-t border-slate-400 pt-1">${appState.academy.director}</span>
       </div>
     </div>
   `;
@@ -64,6 +67,7 @@ function buildReceiptHtml(fee) {
         <div>
           <h3 class="text-lg font-extrabold text-indigo-700">${appState.academy.name}</h3>
           <p class="text-xs text-slate-500">${appState.academy.address}</p>
+          <p class="text-[11px] text-slate-500">Email: ${appState.academy.email} | Tel: ${appState.academy.phone}</p>
         </div>
         <div class="text-right text-xs">
           <p class="font-bold">Receipt: ${fee.receiptNo}</p>
@@ -82,9 +86,9 @@ function buildReceiptHtml(fee) {
         <span>Total Paid Amount</span>
         <span>৳${fee.amount}</span>
       </div>
-      <div class="flex justify-between text-xs text-slate-500 pt-4 border-t">
-        <span>Help: ${appState.academy.phone}</span>
-        <span class="font-semibold text-slate-800">Authorized Signature & Seal</span>
+      <div class="flex justify-between items-end text-xs text-slate-500 pt-4 border-t">
+        <span>${appState.academy.email}</span>
+        <span class="font-semibold text-slate-800 border-t border-slate-400 pt-1">${appState.academy.director}</span>
       </div>
     </div>
   `;
@@ -131,6 +135,12 @@ function renderPublicSite() {
           <p class="text-slate-600 dark:text-slate-300 text-sm md:text-base">
             ${bn ? appState.academy.taglineBn : appState.academy.taglineEn}
           </p>
+          <div class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/70 border border-slate-200 dark:border-slate-700 text-xs md:text-sm space-y-1 text-slate-700 dark:text-slate-200">
+            <p><strong>${bn ? 'পরিচালক:' : 'Director:'}</strong> ${appState.academy.director}</p>
+            <p><strong>${bn ? 'ঠিকানা:' : 'Address:'}</strong> ${appState.academy.address}</p>
+            <p><strong>${bn ? 'মোবাইল:' : 'Phone:'}</strong> ${appState.academy.phone}</p>
+            <p><strong>${bn ? 'ইমেইল:' : 'Email:'}</strong> ${appState.academy.email}</p>
+          </div>
           <div class="flex flex-wrap gap-3 pt-2">
             <button id="open-login-modal-btn" type="button" class="coffer-btn-primary px-5 py-2.5 rounded-2xl text-sm font-bold">
               ${bn ? 'পোর্টালে লগইন করুন' : 'Portal Login'}
@@ -206,6 +216,22 @@ function renderPublicSite() {
   `;
 }
 
+function renderFooter() {
+  const bn = appState.lang === 'bn';
+  return `
+    <footer class="coffer-card rounded-3xl px-6 py-4 text-xs text-slate-600 dark:text-slate-300 flex flex-col md:flex-row md:items-center md:justify-between gap-2">
+      <div>
+        <span class="font-extrabold text-slate-900 dark:text-white">${appState.academy.name}</span> — ${appState.academy.address}
+      </div>
+      <div class="flex flex-wrap gap-x-4 gap-y-1">
+        <span>${bn ? 'পরিচালক:' : 'Director:'} <strong>${appState.academy.director}</strong></span>
+        <span>${bn ? 'মোবাইল:' : 'Phone:'} <strong>${appState.academy.phone}</strong></span>
+        <span>${bn ? 'ইমেইল:' : 'Email:'} <strong>${appState.academy.email}</strong></span>
+      </div>
+    </footer>
+  `;
+}
+
 function bindActiveForms() {
   document.querySelectorAll('form').forEach((form) => {
     form.setAttribute('action', 'javascript:void(0)');
@@ -266,7 +292,7 @@ function renderApp() {
           <span class="w-9 h-9 rounded-2xl coffer-pill-active flex items-center justify-center font-extrabold text-sm">NG</span>
           <div>
             <p class="font-extrabold text-sm md:text-base leading-none">${appState.academy.name}</p>
-            <p class="text-[11px] text-slate-500 mt-0.5">${bn ? 'বাংলা / English ERP' : 'Bilingual ERP System'}</p>
+            <p class="text-[11px] text-slate-500 mt-0.5">${appState.academy.address}</p>
           </div>
         </button>
 
@@ -287,6 +313,8 @@ function renderApp() {
       </header>
 
       ${bodyHtml}
+
+      ${renderFooter()}
     </div>
   `;
 
