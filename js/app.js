@@ -146,7 +146,7 @@ function renderPublicSite() {
 
         <div class="lg:col-span-5 coffer-card rounded-3xl p-6">
           <h2 class="text-lg font-extrabold mb-3 text-slate-900 dark:text-white">${bn ? 'অনলাইন ভর্তি আবেদন' : 'Online Admission'}</h2>
-          <form id="public-admission-form" action="javascript:void(0)" class="space-y-3">
+          <form id="public-admission-form" action="javascript:void(0)" method="post" class="space-y-3">
             <input name="name" required placeholder="${bn ? 'শিক্ষার্থীর পূর্ণ নাম' : 'Student Full Name'}" class="coffer-input" />
             <input name="phone" required placeholder="${bn ? 'মোবাইল নম্বর' : 'Mobile Number'}" class="coffer-input" />
             <div class="grid grid-cols-3 gap-2">
@@ -209,12 +209,27 @@ function renderPublicSite() {
 function bindActiveForms() {
   document.querySelectorAll('form').forEach((form) => {
     form.setAttribute('action', 'javascript:void(0)');
+    form.setAttribute('method', 'post');
     form.onsubmit = function (ev) {
-      ev.preventDefault();
-      ev.stopPropagation();
+      if (ev) {
+        ev.preventDefault();
+        ev.stopPropagation();
+      }
       processFormSubmission(form);
       return false;
     };
+
+    const submitBtn = form.querySelector('button[type="submit"]');
+    if (submitBtn) {
+      submitBtn.onclick = function (ev) {
+        if (ev) {
+          ev.preventDefault();
+          ev.stopPropagation();
+        }
+        processFormSubmission(form);
+        return false;
+      };
+    }
   });
 }
 
@@ -283,7 +298,7 @@ function showLoginModal() {
   openModal(
     bn ? 'পোর্টাল লগইন' : 'Portal Login',
     `
-      <form id="login-modal-form" action="javascript:void(0)" class="space-y-3">
+      <form id="login-modal-form" action="javascript:void(0)" method="post" class="space-y-3">
         <div>
           <label class="block text-xs font-bold mb-1">${bn ? 'ইউজার ID' : 'User ID'}</label>
           <input id="login-userid-input" name="userId" required placeholder="admin / TCH-01 / STU-101" class="coffer-input" />
@@ -312,7 +327,7 @@ function showRecoveryModal() {
   openModal(
     bn ? 'পাসওয়ার্ড পুনরুদ্ধার' : 'Password Recovery',
     `
-      <form id="recovery-modal-form" action="javascript:void(0)" class="space-y-3">
+      <form id="recovery-modal-form" action="javascript:void(0)" method="post" class="space-y-3">
         <p class="text-xs text-slate-500">${bn ? 'আপনার Student/Teacher ID অথবা মোবাইল নম্বর লিখুন।' : 'Enter your Student/Teacher ID or phone number.'}</p>
         <input id="recovery-query-input" name="query" required placeholder="e.g. STU-101 or 01811223344" class="coffer-input" />
         <div id="recovery-result" class="text-xs font-semibold"></div>
@@ -618,7 +633,7 @@ document.addEventListener('click', (e) => {
       openModal(
         `Edit Student (${st.id})`,
         `
-          <form id="edit-student-form" action="javascript:void(0)" data-student-id="${st.id}" class="space-y-3">
+          <form id="edit-student-form" action="javascript:void(0)" method="post" data-student-id="${st.id}" class="space-y-3">
             <input name="name" value="${st.name}" required class="coffer-input" />
             <input name="phone" value="${st.phone}" required class="coffer-input" />
             <div class="grid grid-cols-2 gap-2">
