@@ -1,24 +1,8 @@
-const TeacherPortal = {
-  render(state, teacher) {
-    const bn = state.lang === 'bn';
-    return `
-      <div class="space-y-6">
-        <div class="neu-card rounded-3xl p-6">
-          <h2 class="text-xl font-extrabold">${teacher.name} (${teacher.id})</h2>
-          <p class="text-xs text-slate-500 mt-1">${bn ? 'বিষয়:' : 'Subject:'} ${teacher.subject} • ${bn ? 'ব্যাচ:' : 'Batch:'} ${teacher.batch}</p>
-        </div>
-
-        <div class="neu-card rounded-3xl p-6 space-y-4">
-          <h3 class="text-lg font-extrabold">${bn ? 'পরীক্ষার নম্বর ও GPA এন্ট্রি' : 'Exam Marks & GPA Entry'}</h3>
-          <form id="teacher-exam-form" class="grid grid-cols-1 sm:grid-cols-5 gap-2.5">
-            <input name="title" required placeholder="Exam Title" class="neu-input" />
-            <select name="studentClass" class="neu-input text-xs"><option>Class 8</option><option>Class 9</option><option selected>Class 10</option><option>Class 11</option><option>Class 12</option></select>
-            <input name="obtainedMarks" type="number" max="100" min="0" required placeholder="Marks" class="neu-input" />
-            <input name="answerKey" placeholder="Answer Key" class="neu-input" />
-            <button type="submit" class="neu-btn-primary px-4 py-2 rounded-xl text-xs">+ Save Result</button>
-          </form>
-        </div>
-      </div>
-    `;
-  }
-};
+import {listRecords} from "./store.js";
+import {escapeHTML,formatDate} from "./utils.js";
+export async function renderTeacher(root,{user,profile}){
+ const [courses,notices]=await Promise.all([listRecords("courses"),listRecords("notices")]);
+ root.innerHTML=`<div class="app-shell role-teacher"><aside class="sidebar"><div class="sidebar-brand"><span class="brand-mark">N</span><div><b>NextGen</b><small>ACADEMY</small></div></div><nav class="side-nav"><span class="nav-caption">TEACHER SPACE</span><a class="nav-link active" href="#">▦ <span>ড্যাশবোর্ড</span></a><a class="nav-link" href="#courses">▤ <span>আমার কোর্স</span></a><a class="nav-link" href="#notices">◉ <span>নোটিশ</span></a></nav><div class="sidebar-bottom"><div class="profile-mini"><span class="avatar">${escapeHTML((profile.name||"T")[0])}</span><div><b>${escapeHTML(profile.name||"Teacher")}</b><small>শিক্ষক</small></div></div><button id="logout-btn" class="btn btn-soft btn-block">↪ লগআউট</button></div></aside><main class="dashboard-main"><header class="topbar"><button id="mobile-menu-btn" class="btn btn-soft mobile-menu">☰</button><div class="topbar-title">Teacher Dashboard</div><div class="topbar-actions"><button id="theme-btn" class="icon-btn">◐</button><span class="avatar">${escapeHTML((profile.name||"T")[0])}</span></div></header><div class="dashboard-content"><div class="welcome-row"><div><span class="eyebrow">TEACHER PORTAL</span><h1>স্বাগতম, ${escapeHTML(profile.name||"শিক্ষক")} 👋</h1><p class="muted">আপনার কোর্স ও একাডেমির আপডেট দেখুন।</p></div><span class="pill">Teacher</span></div><div class="stats-grid">${stat("📚","প্রকাশিত কোর্স",courses.length)}${stat("📢","সর্বশেষ নোটিশ",notices.length)}</div><section class="neu-card panel"><h2 class="section-title">কোর্স তালিকা</h2>${items(courses,"title","এখনো কোনো কোর্স নেই")}</section><section class="neu-card panel"><h2 class="section-title">একাডেমির নোটিশ</h2>${items(notices,"title","কোনো নোটিশ নেই")}</section></div></main></div>`;
+}
+function stat(icon,label,value){return `<article class="neu-card stat-card"><div class="stat-icon">${icon}</div><div><strong>${value}</strong><span>${label}</span></div></article>`;}
+function items(data,key,empty){return data.length?`<ul class="simple-list">${data.map(x=>`<li><span>${escapeHTML(x[key]||"—")}</span><small>${formatDate(x.createdAt)}</small></li>`).join("")}</ul>`:`<p class="muted empty-state">${empty}</p>`;}
