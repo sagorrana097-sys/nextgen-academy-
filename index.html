@@ -4,6 +4,9 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>NextGen Academy — ERP & Learning Portal</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
@@ -11,16 +14,86 @@
       theme: {
         extend: {
           colors: {
-            cofferBg: '#f4f3fa',
-            cofferDark: '#0f1018',
-            cofferPurple: '#6d4aff',
-            cofferLavender: '#ede9fe'
+            cofferBg: '#f2f1f9',
+            cofferDark: '#0e1017',
+            cofferPurple: '#6d4aff'
           }
         }
       }
     };
   </script>
   <link rel="stylesheet" href="css/style.css" />
+  <style>
+    body {
+      font-family: 'Plus Jakarta Sans', 'Hind Siliguri', sans-serif !important;
+      background-color: #f2f1f9 !important;
+      color: #1e293b !important;
+    }
+    .dark body {
+      background-color: #0e1017 !important;
+      color: #f1f5f9 !important;
+    }
+    .coffer-card {
+      background: #ffffff !important;
+      border: 1px solid #e2e8f0 !important;
+      box-shadow: 0 12px 28px -10px rgba(79, 70, 229, 0.14), 0 2px 6px rgba(15, 23, 42, 0.05) !important;
+    }
+    .dark .coffer-card {
+      background: #171924 !important;
+      border: 1px solid #282c40 !important;
+      box-shadow: 0 14px 30px -12px rgba(0, 0, 0, 0.75) !important;
+    }
+    .coffer-btn-primary {
+      background: linear-gradient(135deg, #6d4aff 0%, #7c3aed 100%) !important;
+      color: #ffffff !important;
+      border: none !important;
+      box-shadow: 0 8px 18px -6px rgba(109, 74, 255, 0.65) !important;
+      cursor: pointer;
+    }
+    .coffer-btn-primary:hover {
+      filter: brightness(1.07);
+    }
+    .coffer-btn-secondary {
+      background: #eef2ff !important;
+      color: #4338ca !important;
+      border: 1.5px solid #c7d2fe !important;
+      cursor: pointer;
+    }
+    .dark .coffer-btn-secondary {
+      background: #23273d !important;
+      color: #c4b5fd !important;
+      border: 1.5px solid #3730a3 !important;
+    }
+    .coffer-pill-active {
+      background: linear-gradient(135deg, #6d4aff 0%, #7c3aed 100%) !important;
+      color: #ffffff !important;
+      box-shadow: 0 8px 18px -6px rgba(109, 74, 255, 0.6) !important;
+    }
+    .coffer-input {
+      width: 100%;
+      padding: 0.65rem 0.9rem;
+      border-radius: 0.9rem;
+      border: 1.5px solid #cbd5e1 !important;
+      background-color: #ffffff !important;
+      color: #0f172a !important;
+      font-size: 0.875rem;
+      outline: none;
+    }
+    .coffer-input:focus {
+      border-color: #6d4aff !important;
+      box-shadow: 0 0 0 3px rgba(109, 74, 255, 0.18) !important;
+    }
+    .dark .coffer-input {
+      background-color: #0f111a !important;
+      border-color: #334155 !important;
+      color: #f8fafc !important;
+    }
+    @media print {
+      body * { visibility: hidden; }
+      #print-area, #print-area * { visibility: visible; }
+      #print-area { position: absolute; left: 0; top: 0; width: 100%; }
+    }
+  </style>
 </head>
 <body class="bg-cofferBg text-slate-800 dark:bg-cofferDark dark:text-slate-100 min-h-screen transition-colors duration-200">
   <div id="app"></div>
