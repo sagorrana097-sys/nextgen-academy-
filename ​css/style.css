@@ -31,7 +31,7 @@ body {
 
 .coffer-btn-primary {
   background: linear-gradient(135deg, #6d4aff 0%, #7c3aed 100%);
-  color: #ffffff !important;
+  color: #ffffff;
   box-shadow: 0 8px 18px -6px rgba(109, 74, 255, 0.6);
   transition: transform 0.15s ease, box-shadow 0.15s ease, filter 0.15s ease;
 }
@@ -44,7 +44,7 @@ body {
 
 .coffer-btn-secondary {
   background: #eef2ff;
-  color: #4338ca !important;
+  color: #4338ca;
   border: 1px solid #c7d2fe;
   transition: background-color 0.15s ease;
 }
@@ -55,13 +55,13 @@ body {
 
 .dark .coffer-btn-secondary {
   background: #23273d;
-  color: #c4b5fd !important;
+  color: #c4b5fd;
   border: 1px solid #3730a3;
 }
 
 .coffer-pill-active {
   background: linear-gradient(135deg, #6d4aff 0%, #7c3aed 100%);
-  color: #ffffff !important;
+  color: #ffffff;
   box-shadow: 0 8px 18px -6px rgba(109, 74, 255, 0.55);
 }
 
