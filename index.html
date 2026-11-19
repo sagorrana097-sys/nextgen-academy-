@@ -36,101 +36,144 @@
         }
         .sidebar-scroll::-webkit-scrollbar { width: 5px; }
         .sidebar-scroll::-webkit-scrollbar-thumb { background: #334155; border-radius: 10px; }
+
+        /* Neumorphic Soft UI Styles matching reference screenshot */
+        .neu-bg {
+            background-color: #e6ebf1;
+        }
+        .neu-card {
+            background: #e6ebf1;
+            box-shadow: 12px 12px 24px #c5cbd3, -12px -12px 24px #ffffff;
+            border-radius: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.6);
+        }
+        .neu-card-sm {
+            background: #e6ebf1;
+            box-shadow: 6px 6px 14px #c5cbd3, -6px -6px 14px #ffffff;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+        }
+        .neu-inset {
+            background: #e6ebf1;
+            box-shadow: inset 5px 5px 10px #c5cbd3, inset -5px -5px 10px #ffffff;
+            border-radius: 15px;
+            border: none;
+            outline: none;
+        }
+        .neu-btn {
+            background: #e6ebf1;
+            box-shadow: 6px 6px 12px #c5cbd3, -6px -6px 12px #ffffff;
+            border-radius: 15px;
+            transition: all 0.2s ease;
+        }
+        .neu-btn:active {
+            box-shadow: inset 4px 4px 8px #c5cbd3, inset -4px -4px 8px #ffffff;
+        }
+        .neu-circle {
+            background: #e6ebf1;
+            box-shadow: 8px 8px 16px #c5cbd3, -8px -8px 16px #ffffff;
+            border-radius: 50%;
+        }
     </style>
 </head>
-<body class="bg-slate-50 text-slate-800 antialiased">
+<body class="neu-bg text-slate-800 antialiased">
 
     <!-- Toast Notification Container -->
     <div id="toast-container" class="fixed bottom-5 right-5 z-[100] flex flex-col gap-2"></div>
 
     <!-- =====================================================================
-         VIEW 1: PUBLIC WEBSITE (সবার জন্য উন্মুক্ত মূল ওয়েবসাইট)
+         VIEW 1: PUBLIC WEBSITE (সবার জন্য উন্মুক্ত মূল ওয়েবসাইট - Neumorphic Soft UI)
     ====================================================================== -->
     <div id="public-view" class="block">
         <!-- Top Utility Bar -->
-        <div class="bg-secondary text-white text-xs sm:text-sm py-2 px-4 border-b border-slate-800">
+        <div class="bg-slate-800 text-white text-xs sm:text-sm py-2 px-4 border-b border-slate-700">
             <div class="max-w-7xl mx-auto flex flex-wrap justify-between items-center gap-2">
                 <div class="flex items-center space-x-2 text-slate-300">
                     <i class="fa-solid fa-location-dot text-amber-400"></i>
                     <span id="top-bar-address" class="truncate max-w-[220px] sm:max-w-none">জয়দেবপুর, গাজীপুর</span>
                 </div>
-                <div class="text-xs text-slate-300 flex items-center space-x-3">
-                    <span><i class="fa-solid fa-phone-volume text-emerald-400 mr-1"></i> হটলাইন: <span id="top-bar-phone">01792818005</span></span>
-                    <span class="hidden sm:inline bg-emerald-500/25 text-emerald-300 px-2 py-0.5 rounded text-[10px] font-bold"><i class="fa-solid fa-wifi mr-1"></i> Online & Offline Active</span>
+                <div class="flex items-center space-x-4">
+                    <div class="text-xs text-slate-300 flex items-center space-x-3">
+                        <span><i class="fa-solid fa-phone-volume text-emerald-400 mr-1"></i> হটলাইন: <span id="top-bar-phone">01792818005</span></span>
+                    </div>
+                    <!-- Language Switcher -->
+                    <button onclick="toggleAppLanguage()" id="lang-switch-btn" class="bg-blue-600/40 hover:bg-blue-600 text-blue-200 hover:text-white px-2.5 py-1 rounded text-xs font-bold transition">
+                        🌐 English / বাংলা
+                    </button>
                 </div>
             </div>
         </div>
 
-        <!-- Modern Header -->
-        <header class="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-slate-200 shadow-sm">
+        <!-- Modern Neumorphic Header -->
+        <header class="sticky top-0 z-40 neu-bg/95 backdrop-blur-md border-b border-white/50 shadow-sm">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 lg:py-0 lg:h-20 flex flex-col lg:flex-row justify-between items-center gap-3">
                 <div class="w-full lg:w-auto flex items-center justify-between">
                     <a href="#" class="flex items-center space-x-3 group min-w-0">
-                        <div id="pub-logo-box" class="w-11 h-11 sm:w-12 sm:h-12 shrink-0 bg-gradient-to-tr from-blue-600 to-indigo-600 rounded-2xl flex items-center justify-center text-white text-lg sm:text-xl shadow-lg shadow-blue-500/30 overflow-hidden transform group-hover:scale-105 transition">
+                        <div id="pub-logo-box" class="w-11 h-11 sm:w-12 sm:h-12 shrink-0 neu-circle flex items-center justify-center text-primary text-lg sm:text-xl transform group-hover:scale-105 transition">
                             <i id="pub-logo-icon" class="fa-solid fa-graduation-cap"></i>
-                            <img id="pub-logo-img" src="" alt="Logo" class="hidden w-full h-full object-cover">
                         </div>
                         <div class="min-w-0">
-                            <span id="pub-academy-name" class="font-heading font-extrabold text-base sm:text-xl text-secondary block leading-tight truncate">NEXTGEN ACADEMY</span>
+                            <span id="pub-academy-name" class="font-heading font-extrabold text-base sm:text-xl text-slate-800 block leading-tight truncate">NEXTGEN ACADEMY</span>
                             <span id="pub-academy-tagline" class="text-[11px] sm:text-xs font-bold text-primary tracking-wide block truncate">আন্তর্জাতিক মানের আধুনিক কোচিং সেন্টার</span>
                         </div>
                     </a>
-                    <div class="flex items-center gap-2 lg:hidden">
-                        <a id="pub-header-fb" href="#" target="_blank" class="w-9 h-9 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center text-base"><i class="fa-brands fa-facebook-f"></i></a>
-                        <a id="pub-header-wa" href="#" target="_blank" class="w-9 h-9 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-base"><i class="fa-brands fa-whatsapp"></i></a>
-                    </div>
                 </div>
 
                 <nav class="hidden lg:flex space-x-6 font-semibold text-sm text-slate-600">
-                    <a href="#pub-home" class="hover:text-primary transition">হোম</a>
-                    <a href="#pub-classes" class="hover:text-primary transition">ক্লাস ও সাবজেক্ট (1-12)</a>
-                    <a href="#pub-courses" class="hover:text-primary transition">স্পেশাল কোর্স</a>
-                    <a href="#pub-notices" class="hover:text-primary transition">নোটিশ বোর্ড</a>
-                    <a href="#pub-admission" class="hover:text-primary transition">ভর্তি আবেদন</a>
+                    <a href="#pub-home" data-i18n="nav_home" class="hover:text-primary transition">হোম</a>
+                    <a href="#pub-classes" data-i18n="nav_classes" class="hover:text-primary transition">ক্লাস ও সাবজেক্ট (1-12)</a>
+                    <a href="#pub-courses" data-i18n="nav_courses" class="hover:text-primary transition">স্পেশাল কোর্স</a>
+                    <a href="#pub-notices" data-i18n="nav_notices" class="hover:text-primary transition">নোটিশ বোর্ড</a>
+                    <a href="#pub-admission" data-i18n="nav_admission" class="hover:text-primary transition">ভর্তি আবেদন</a>
                 </nav>
 
-                <div class="w-full lg:w-auto grid grid-cols-3 lg:flex items-center gap-2 sm:gap-2.5 pt-2 lg:pt-0 border-t lg:border-t-0 border-slate-100">
-                    <button onclick="openLoginModal('admin')" class="w-full lg:w-auto justify-center group relative inline-flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-bold text-white bg-gradient-to-r from-blue-600 to-indigo-600 shadow-sm">
-                        <i class="fa-solid fa-user-shield text-amber-300"></i> <span>Admin</span>
+                <div class="w-full lg:w-auto grid grid-cols-3 lg:flex items-center gap-2.5 pt-2 lg:pt-0 border-t lg:border-t-0 border-slate-300/50">
+                    <button onclick="openLoginModal('admin')" class="w-full lg:w-auto justify-center neu-btn inline-flex items-center gap-1.5 px-4 py-2.5 text-xs font-bold text-primary hover:text-blue-700">
+                        <i class="fa-solid fa-user-shield"></i> <span>Admin</span>
                     </button>
-                    <button onclick="openLoginModal('teacher')" class="w-full lg:w-auto justify-center group relative inline-flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-bold text-white bg-gradient-to-r from-emerald-600 to-teal-600 shadow-sm">
-                        <i class="fa-solid fa-chalkboard-user text-emerald-200"></i> <span>Teacher</span>
+                    <button onclick="openLoginModal('teacher')" class="w-full lg:w-auto justify-center neu-btn inline-flex items-center gap-1.5 px-4 py-2.5 text-xs font-bold text-emerald-600 hover:text-emerald-700">
+                        <i class="fa-solid fa-chalkboard-user"></i> <span>Teacher</span>
                     </button>
-                    <button onclick="openLoginModal('student')" class="w-full lg:w-auto justify-center group relative inline-flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-bold text-white bg-gradient-to-r from-amber-500 to-orange-500 shadow-sm">
-                        <i class="fa-solid fa-user-graduate text-white"></i> <span>Student</span>
+                    <button onclick="openLoginModal('student')" class="w-full lg:w-auto justify-center neu-btn inline-flex items-center gap-1.5 px-4 py-2.5 text-xs font-bold text-amber-600 hover:text-amber-700">
+                        <i class="fa-solid fa-user-graduate"></i> <span>Student</span>
                     </button>
                 </div>
             </div>
         </header>
 
-        <!-- Hero Section -->
-        <section id="pub-home" class="bg-gradient-to-br from-slate-900 via-blue-950 to-slate-900 text-white py-14 lg:py-24">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+        <!-- Hero Section with Soft Neumorphic Aesthetics -->
+        <section id="pub-home" class="relative overflow-hidden py-14 lg:py-24">
+            <!-- Floating Background Soft Circles -->
+            <div class="hidden md:block absolute top-10 left-10 w-36 h-36 neu-circle pointer-events-none opacity-80"></div>
+            <div class="hidden md:block absolute bottom-10 right-16 w-44 h-44 neu-circle pointer-events-none opacity-80"></div>
+
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center relative z-10">
                 <div class="space-y-6">
-                    <span class="inline-block bg-blue-500/20 border border-blue-400/30 text-blue-200 text-xs font-semibold px-4 py-1.5 rounded-full">
+                    <span class="inline-block neu-card-sm text-primary text-xs font-bold px-4 py-2" data-i18n="hero_badge">
                         🌟 ১ম থেকে ১২ম শ্রেণি পর্যন্ত অফলাইন ও অনলাইন কোচিং
                     </span>
-                    <h1 class="font-heading text-3xl sm:text-5xl font-extrabold leading-tight">
+                    <h1 class="font-heading text-3xl sm:text-5xl font-extrabold text-slate-800 leading-tight" data-i18n="hero_title">
                         আপনার সন্তানের উজ্জ্বল ভবিষ্যৎ গড়ার বিশ্বস্ত প্রতিষ্ঠান
                     </h1>
-                    <p class="text-slate-300 text-base sm:text-lg leading-relaxed">
+                    <p class="text-slate-600 text-base sm:text-lg leading-relaxed" data-i18n="hero_desc">
                         অভিজ্ঞ শিক্ষক, ডিজিটাল ক্লাসরুম, বিকাশ-নগদ-রকেট ও কার্ড ফি পেমেন্ট, মানি রিসিট প্রিন্ট এবং উইকলি-মান্থলি পরীক্ষা সিস্টেম।
                     </p>
                     <div class="flex flex-wrap gap-4 pt-2">
-                        <a href="#pub-admission" class="bg-primary hover:bg-blue-600 text-white px-7 py-3.5 rounded-xl font-bold shadow-lg transition">
+                        <a href="#pub-admission" class="neu-btn text-primary hover:text-blue-700 px-7 py-3.5 font-extrabold text-sm tracking-wide uppercase" data-i18n="btn_apply">
                             অনলাইন ভর্তি আবেদন <i class="fa-solid fa-arrow-right ml-2"></i>
                         </a>
-                        <a href="#pub-classes" class="bg-white/10 hover:bg-white/20 text-white px-7 py-3.5 rounded-xl font-bold border border-white/20 transition">
+                        <a href="#pub-classes" class="neu-btn text-slate-700 px-7 py-3.5 font-bold text-sm" data-i18n="btn_classes">
                             ক্লাস ও সাবজেক্টসমূহ
                         </a>
                     </div>
                 </div>
 
-                <!-- Live Notice Board Card -->
-                <div id="pub-notices" class="bg-white text-slate-800 rounded-3xl p-6 sm:p-8 shadow-2xl border border-slate-100">
-                    <div class="flex items-center justify-between border-b border-slate-100 pb-4 mb-4">
-                        <h3 class="font-heading font-bold text-xl text-secondary flex items-center">
-                            <i class="fa-solid fa-bullhorn text-accent mr-2.5"></i> নোটিশ বোর্ড (Notice Board)
+                <!-- Live Notice Board Card (Neumorphic) -->
+                <div id="pub-notices" class="neu-card p-6 sm:p-8">
+                    <div class="flex items-center justify-between border-b border-slate-300/60 pb-4 mb-4">
+                        <h3 class="font-heading font-bold text-xl text-slate-800 flex items-center">
+                            <span class="w-9 h-9 neu-circle flex items-center justify-center text-amber-500 mr-3 text-sm"><i class="fa-solid fa-bullhorn"></i></span>
+                            <span data-i18n="notice_board_title">নোটিশ বোর্ড (Notice Board)</span>
                         </h3>
                         <span class="text-xs bg-red-100 text-red-600 font-bold px-2.5 py-1 rounded-full animate-pulse">LIVE</span>
                     </div>
@@ -140,78 +183,96 @@
         </section>
 
         <!-- Classes & Subjects (1-12) Section -->
-        <section id="pub-classes" class="py-16 bg-white">
+        <section id="pub-classes" class="py-16">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="text-center max-w-3xl mx-auto mb-12">
-                    <span class="text-primary font-bold text-sm uppercase">একাডেমিক কারিকুলাম (Class 1 to 12)</span>
-                    <h2 class="font-heading text-3xl font-bold text-secondary mt-1">শ্রেণিভিত্তিক বিভাগ ও সাবজেক্টসমূহ</h2>
-                    <p class="text-slate-600 mt-2">প্রাথমিক, মাধ্যমিক ও উচ্চ মাধ্যমিক স্তরের সকল বিষয়ের জন্য রয়েছে আলাদা বিশেষজ্ঞ শিক্ষক প্যানেল।</p>
+                    <span class="text-primary font-bold text-sm uppercase" data-i18n="curriculum_sub">একাডেমিক কারিকুলাম (Class 1 to 12)</span>
+                    <h2 class="font-heading text-3xl font-bold text-slate-800 mt-1" data-i18n="curriculum_title">শ্রেণিভিত্তিক বিভাগ ও সাবজেক্টসমূহ</h2>
+                    <p class="text-slate-600 mt-2" data-i18n="curriculum_desc">প্রাথমিক, মাধ্যমিক ও উচ্চ মাধ্যমিক স্তরের সকল বিষয়ের জন্য রয়েছে আলাদা বিশেষজ্ঞ শিক্ষক প্যানেল।</p>
                 </div>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    <div class="p-6 bg-slate-50 rounded-2xl border border-slate-200">
-                        <div class="w-10 h-10 bg-blue-100 text-primary rounded-xl flex items-center justify-center font-bold mb-3"><i class="fa-solid fa-child"></i></div>
-                        <h3 class="font-bold text-lg text-secondary">Primary Section (Class 1 - 5)</h3>
-                        <p class="text-xs text-slate-500 mt-1 mb-3">বাংলা, ইংরেজি, গণিত, বিজ্ঞান, ধর্ম ও নৈতিক শিক্ষা, বাংলাদেশ ও বিশ্বপরিচয়।</p>
-                        <span class="text-xs bg-blue-50 text-primary font-semibold px-2.5 py-1 rounded">Basics & Foundation</span>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div class="p-6 neu-card-sm">
+                        <div class="w-12 h-12 neu-circle text-primary flex items-center justify-center font-bold mb-4"><i class="fa-solid fa-child text-lg"></i></div>
+                        <h3 class="font-bold text-lg text-slate-800">Primary Section (Class 1 - 5)</h3>
+                        <p class="text-xs text-slate-600 mt-2 mb-4">বাংলা, ইংরেজি, গণিত, বিজ্ঞান, ধর্ম ও নৈতিক শিক্ষা, বাংলাদেশ ও বিশ্বপরিচয়।</p>
+                        <span class="text-xs neu-inset text-primary font-bold px-3 py-1.5 inline-block">Basics & Foundation</span>
                     </div>
-                    <div class="p-6 bg-slate-50 rounded-2xl border border-slate-200">
-                        <div class="w-10 h-10 bg-emerald-100 text-emerald-600 rounded-xl flex items-center justify-center font-bold mb-3"><i class="fa-solid fa-book-open-reader"></i></div>
-                        <h3 class="font-bold text-lg text-secondary">Secondary Section (Class 6 - 10)</h3>
-                        <p class="text-xs text-slate-500 mt-1 mb-3">বিজ্ঞান, মানবিক ও ব্যবসায় শিক্ষা (পদার্থ, রসায়ন, উচ্চতর গণিত, হিসাববিজ্ঞান, অর্থনীতি)।</p>
-                        <span class="text-xs bg-emerald-50 text-emerald-700 font-semibold px-2.5 py-1 rounded">SSC Academic Care</span>
+                    <div class="p-6 neu-card-sm">
+                        <div class="w-12 h-12 neu-circle text-emerald-600 flex items-center justify-center font-bold mb-4"><i class="fa-solid fa-book-open-reader text-lg"></i></div>
+                        <h3 class="font-bold text-lg text-slate-800">Secondary Section (Class 6 - 10)</h3>
+                        <p class="text-xs text-slate-600 mt-2 mb-4">বিজ্ঞান, মানবিক ও ব্যবসায় শিক্ষা (পদার্থ, রসায়ন, উচ্চতর গণিত, হিসাববিজ্ঞান, অর্থনীতি)।</p>
+                        <span class="text-xs neu-inset text-emerald-700 font-bold px-3 py-1.5 inline-block">SSC Academic Care</span>
                     </div>
-                    <div class="p-6 bg-slate-50 rounded-2xl border border-slate-200">
-                        <div class="w-10 h-10 bg-amber-100 text-amber-600 rounded-xl flex items-center justify-center font-bold mb-3"><i class="fa-solid fa-graduation-cap"></i></div>
-                        <h3 class="font-bold text-lg text-secondary">Higher Secondary (Class 11 - 12)</h3>
-                        <p class="text-xs text-slate-500 mt-1 mb-3">বিজ্ঞান (Physics, Chem, Math, Bio), আর্টস ও কমার্স (Accounting, Finance, Management)।</p>
-                        <span class="text-xs bg-amber-50 text-amber-700 font-semibold px-2.5 py-1 rounded">HSC & Admission Prep</span>
+                    <div class="p-6 neu-card-sm">
+                        <div class="w-12 h-12 neu-circle text-amber-600 flex items-center justify-center font-bold mb-4"><i class="fa-solid fa-graduation-cap text-lg"></i></div>
+                        <h3 class="font-bold text-lg text-slate-800">Higher Secondary (Class 11 - 12)</h3>
+                        <p class="text-xs text-slate-600 mt-2 mb-4">বিজ্ঞান (Physics, Chem, Math, Bio), আর্টস ও কমার্স (Accounting, Finance, Management)।</p>
+                        <span class="text-xs neu-inset text-amber-700 font-bold px-3 py-1.5 inline-block">HSC & Admission Prep</span>
                     </div>
                 </div>
             </div>
         </section>
 
         <!-- Courses Section -->
-        <section id="pub-courses" class="py-16 bg-slate-50">
+        <section id="pub-courses" class="py-16">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="text-center max-w-2xl mx-auto mb-12">
-                    <span class="text-primary font-bold text-sm uppercase">স্পেশাল কোর্স</span>
-                    <h2 class="font-heading text-3xl font-bold text-secondary mt-1">চলমান স্পেশাল প্রোগ্রামসমূহ</h2>
+                    <span class="text-primary font-bold text-sm uppercase" data-i18n="courses_sub">স্পেশাল কোর্স</span>
+                    <h2 class="font-heading text-3xl font-bold text-slate-800 mt-1" data-i18n="courses_title">চলমান স্পেশাল প্রোগ্রামসমূহ</h2>
                 </div>
                 <div id="public-course-grid" class="grid grid-cols-1 md:grid-cols-3 gap-8"></div>
             </div>
         </section>
 
-        <!-- Admission & Payment Info Section -->
-        <section id="pub-admission" class="py-16 bg-white">
+        <!-- Admission & Payment Info Section (Neumorphic Card Design) -->
+        <section id="pub-admission" class="py-16 relative">
             <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="bg-slate-900 text-white rounded-3xl overflow-hidden shadow-xl grid grid-cols-1 lg:grid-cols-5">
-                    <div class="lg:col-span-2 bg-primary p-8 flex flex-col justify-between">
+                <div class="neu-card overflow-hidden grid grid-cols-1 lg:grid-cols-5 p-2 sm:p-4">
+                    <div class="lg:col-span-2 p-6 sm:p-8 flex flex-col justify-between border-b lg:border-b-0 lg:border-r border-slate-300/60">
                         <div>
-                            <h3 class="font-heading text-2xl font-bold mb-3">ভর্তি ও ফি পরিশোধ মাধ্যম</h3>
-                            <p class="text-blue-100 text-sm mb-6">অনলাইন বা অফলাইনে ফি পরিশোধের জন্য আমাদের মার্চেন্ট বা পার্সোনাল নম্বরসমূহ:</p>
-                            <div class="space-y-3 text-sm bg-blue-900/40 p-4 rounded-2xl border border-blue-400/30">
-                                <p><i class="fa-solid fa-wallet text-amber-300 mr-2"></i> <strong>বিকাশ/নগদ:</strong> <span id="info-phone">01792818005</span></p>
-                                <p><i class="fa-solid fa-credit-card text-amber-300 mr-2"></i> <strong>রকেট / ব্যাংক কার্ড:</strong> উপলব্ধ</p>
-                                <p class="text-xs text-blue-200 pt-2 border-t border-blue-500/30">পেমেন্ট করার পর রিসিট নম্বর দিয়ে মানি রিসিট প্রিন্ট করা যাবে।</p>
+                            <div class="w-14 h-14 neu-circle flex items-center justify-center text-primary text-2xl mb-5">
+                                <i class="fa-solid fa-wallet"></i>
                             </div>
-                        </div>
-                        <div class="pt-6 flex space-x-3">
-                            <a id="pub-fb-link" href="#" target="_blank" class="w-9 h-9 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20"><i class="fa-brands fa-facebook-f"></i></a>
-                            <a id="pub-yt-link" href="#" target="_blank" class="w-9 h-9 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20"><i class="fa-brands fa-youtube"></i></a>
-                            <a id="pub-wa-link" href="#" target="_blank" class="w-9 h-9 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20"><i class="fa-brands fa-whatsapp"></i></a>
+                            <h3 class="font-heading text-2xl font-extrabold text-slate-800 mb-3" data-i18n="admission_box_title">ভর্তি ও ফি পরিশোধ মাধ্যম</h3>
+                            <p class="text-slate-600 text-sm mb-6" data-i18n="admission_box_desc">অনলাইন বা অফলাইনে ফি পরিশোধের জন্য আমাদের মার্চেন্ট বা পার্সোনাল নম্বরসমূহ:</p>
+                            <div class="space-y-3 text-sm neu-inset p-4">
+                                <p class="text-slate-700"><i class="fa-solid fa-wallet text-primary mr-2"></i> <strong>বিকাশ/নগদ:</strong> <span id="info-phone">01792818005</span></p>
+                                <p class="text-slate-700"><i class="fa-solid fa-credit-card text-emerald-600 mr-2"></i> <strong>রকেট / ব্যাংক কার্ড:</strong> উপলব্ধ</p>
+                                <p class="text-xs text-slate-500 pt-2 border-t border-slate-300/60">পেমেন্ট করার পর রিসিট নম্বর দিয়ে মানি রিসিট প্রিন্ট করা যাবে।</p>
+                            </div>
                         </div>
                     </div>
-                    <div class="lg:col-span-3 p-8 bg-white text-slate-800">
-                        <h4 class="font-bold text-xl text-secondary mb-4">অনলাইন ভর্তি ফর্ম</h4>
-                        <form id="public-admission-form" class="space-y-4">
-                            <input type="text" id="inq-name" required placeholder="শিক্ষার্থীর নাম *" class="w-full px-4 py-3 rounded-xl border border-slate-300 text-sm">
-                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                                <input type="tel" id="inq-phone" required placeholder="অভিভাবকের WhatsApp নম্বর *" class="w-full px-4 py-3 rounded-xl border border-slate-300 text-sm">
-                                <input type="text" id="inq-class" required placeholder="শ্রেণি (যেমন: Class 10 Science)" class="w-full px-4 py-3 rounded-xl border border-slate-300 text-sm">
+                    <div class="lg:col-span-3 p-6 sm:p-8">
+                        <div class="text-center mb-6">
+                            <div class="w-16 h-16 neu-circle mx-auto flex items-center justify-center text-primary text-2xl mb-3">
+                                <i class="fa-solid fa-user-plus"></i>
                             </div>
-                            <select id="inq-course" class="w-full px-4 py-3 rounded-xl border border-slate-300 text-sm bg-white"></select>
-                            <button type="submit" class="w-full bg-primary hover:bg-blue-700 text-white font-bold py-3.5 rounded-xl shadow-md transition">
-                                আবেদন জমা দিন
+                            <h4 class="font-extrabold text-2xl text-slate-800" data-i18n="admission_form_title">অনলাইন ভর্তি ফর্ম</h4>
+                            <p class="text-xs text-slate-500 mt-1">Start your academic journey with us</p>
+                        </div>
+                        <form id="public-admission-form" class="space-y-4">
+                            <input type="text" id="inq-name" required placeholder="শিক্ষার্থীর নাম (Full Name) *" class="w-full px-4 py-3.5 neu-inset text-sm text-slate-700 placeholder-slate-400">
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                <input type="tel" id="inq-phone" required placeholder="অভিভাবকের WhatsApp নম্বর *" class="w-full px-4 py-3.5 neu-inset text-sm text-slate-700 placeholder-slate-400">
+                                <select id="inq-class" required class="w-full px-4 py-3.5 neu-inset text-sm text-slate-700 font-medium">
+                                    <option value="">শ্রেণি নির্বাচন করুন *</option>
+                                    <option value="Class 1">Class 1</option>
+                                    <option value="Class 2">Class 2</option>
+                                    <option value="Class 3">Class 3</option>
+                                    <option value="Class 4">Class 4</option>
+                                    <option value="Class 5">Class 5</option>
+                                    <option value="Class 6">Class 6</option>
+                                    <option value="Class 7">Class 7</option>
+                                    <option value="Class 8">Class 8</option>
+                                    <option value="Class 9">Class 9</option>
+                                    <option value="Class 10">Class 10</option>
+                                    <option value="Class 11">Class 11</option>
+                                    <option value="Class 12">Class 12</option>
+                                </select>
+                            </div>
+                            <select id="inq-course" class="w-full px-4 py-3.5 neu-inset text-sm text-slate-700"></select>
+                            <button type="submit" class="w-full neu-btn text-primary hover:text-blue-700 font-extrabold py-4 text-sm tracking-wider uppercase mt-2" data-i18n="btn_submit_app">
+                                আবেদন জমা দিন (SUBMIT APPLICATION)
                             </button>
                         </form>
                     </div>
@@ -219,66 +280,97 @@
             </div>
         </section>
 
-        <footer class="bg-secondary text-slate-400 py-8 text-center text-xs">
+        <footer class="bg-slate-800 text-slate-400 py-8 text-center text-xs mt-10">
             <p>&copy; 2026 <span id="footer-academy-name">NextGen Academy</span> | অফলাইন ও অনলাইন ইআরপি সিস্টেম। All Rights Reserved.</p>
         </footer>
     </div>
 
-    <!-- STUNNING SMART LOGIN MODAL -->
-    <div id="login-modal" class="hidden fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-md flex items-center justify-center p-4">
-        <div class="bg-slate-900 border border-slate-700/80 text-white rounded-3xl max-w-md w-full p-8 shadow-2xl relative overflow-hidden transform transition-all">
-            <div class="absolute -top-24 -right-24 w-48 h-48 bg-blue-600/30 rounded-full blur-3xl pointer-events-none"></div>
-            <div class="absolute -bottom-24 -left-24 w-48 h-48 bg-emerald-600/30 rounded-full blur-3xl pointer-events-none"></div>
+    <!-- NEUMORPHIC SOFT UI LOGIN MODAL (Exact Match to Reference Image) -->
+    <div id="login-modal" class="hidden fixed inset-0 z-50 neu-bg/95 backdrop-blur-md flex items-center justify-center p-4 overflow-y-auto">
+        <!-- Decorative Floating Neumorphic Spheres -->
+        <div class="hidden sm:block fixed top-16 left-16 w-40 h-40 neu-circle pointer-events-none"></div>
+        <div class="hidden sm:block fixed top-24 right-24 w-20 h-20 neu-circle pointer-events-none"></div>
+        <div class="hidden sm:block fixed bottom-16 right-16 w-44 h-44 neu-circle pointer-events-none"></div>
 
-            <div class="flex justify-between items-center mb-6 relative z-10">
-                <div class="flex items-center space-x-3">
-                    <div id="login-modal-icon-box" class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-blue-600 to-indigo-600 flex items-center justify-center text-xl shadow-lg shadow-blue-500/30">
-                        <i id="login-icon" class="fa-solid fa-user-shield text-amber-300"></i>
-                    </div>
-                    <div>
-                        <h3 id="login-title" class="font-heading font-extrabold text-xl">Admin Portal Login</h3>
-                        <p class="text-xs text-slate-400">NextGen Academy Secure ERP</p>
-                    </div>
+        <div class="neu-card max-w-md w-full p-8 sm:p-10 relative z-10 my-auto">
+            <!-- Top Back / Close Circle Button -->
+            <button onclick="closeLoginModal()" class="w-10 h-10 neu-circle text-slate-500 hover:text-red-500 flex items-center justify-center absolute top-6 right-6 transition" title="Close">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <!-- Centered User Avatar Circle matching Screenshot -->
+            <div class="text-center mb-6">
+                <div id="login-modal-icon-box" class="w-20 h-20 neu-circle mx-auto flex items-center justify-center text-3xl text-primary mb-4">
+                    <i id="login-icon" class="fa-solid fa-user"></i>
                 </div>
-                <button onclick="closeLoginModal()" class="w-8 h-8 rounded-xl bg-slate-800 text-slate-400 hover:text-white flex items-center justify-center transition">
-                    <i class="fa-solid fa-xmark"></i>
-                </button>
+                <h3 id="login-title" class="font-heading font-extrabold text-2xl text-slate-800">Admin Login</h3>
+                <p class="text-xs text-slate-500 mt-1">Start your session with us</p>
             </div>
 
-            <!-- Role Selector Tabs -->
-            <div class="grid grid-cols-3 gap-2 mb-6 bg-slate-950/60 p-1.5 rounded-2xl border border-slate-800 relative z-10">
-                <button type="button" onclick="switchLoginRole('admin')" id="tab-btn-admin" class="py-2 rounded-xl text-xs font-bold transition bg-primary text-white shadow">Admin</button>
-                <button type="button" onclick="switchLoginRole('teacher')" id="tab-btn-teacher" class="py-2 rounded-xl text-xs font-bold transition text-slate-400 hover:text-white">Teacher</button>
-                <button type="button" onclick="switchLoginRole('student')" id="tab-btn-student" class="py-2 rounded-xl text-xs font-bold transition text-slate-400 hover:text-white">Student</button>
+            <!-- Role Selector Pills -->
+            <div class="grid grid-cols-3 gap-2.5 mb-6 p-1.5 neu-inset">
+                <button type="button" onclick="switchLoginRole('admin')" id="tab-btn-admin" class="py-2 rounded-xl text-xs font-bold transition neu-btn text-primary">Admin</button>
+                <button type="button" onclick="switchLoginRole('teacher')" id="tab-btn-teacher" class="py-2 rounded-xl text-xs font-bold transition text-slate-500 hover:text-slate-800">Teacher</button>
+                <button type="button" onclick="switchLoginRole('student')" id="tab-btn-student" class="py-2 rounded-xl text-xs font-bold transition text-slate-500 hover:text-slate-800">Student</button>
             </div>
 
-            <form id="smart-login-form" onsubmit="handleSmartLogin(event)" class="space-y-4 relative z-10">
+            <form id="smart-login-form" class="space-y-4">
                 <input type="hidden" id="login-role-input" value="admin">
                 
                 <div>
-                    <label class="block text-xs font-bold text-slate-300 mb-1.5">User ID / Phone / Email</label>
-                    <div class="relative">
-                        <span class="absolute inset-y-0 left-0 pl-3.5 flex items-center text-slate-500"><i class="fa-solid fa-user"></i></span>
-                        <input type="text" id="login-userid" required placeholder="admin" class="w-full pl-10 pr-4 py-3 bg-slate-950 border border-slate-800 rounded-xl text-sm text-white focus:outline-none focus:border-primary transition">
-                    </div>
+                    <input type="text" id="login-userid" required placeholder="User ID / Phone (e.g. admin)" class="w-full px-5 py-3.5 neu-inset text-sm text-slate-700 placeholder-slate-400">
                 </div>
 
-                <div>
-                    <label class="block text-xs font-bold text-slate-300 mb-1.5">Secure Password / PIN</label>
-                    <div class="relative">
-                        <span class="absolute inset-y-0 left-0 pl-3.5 flex items-center text-slate-500"><i class="fa-solid fa-lock"></i></span>
-                        <input type="password" id="login-pass" required placeholder="••••" class="w-full pl-10 pr-4 py-3 bg-slate-950 border border-slate-800 rounded-xl text-sm text-white focus:outline-none focus:border-primary transition" value="1234">
-                    </div>
+                <div class="relative">
+                    <input type="password" id="login-pass" required placeholder="Password" class="w-full px-5 py-3.5 pr-12 neu-inset text-sm text-slate-700 placeholder-slate-400" value="1234">
+                    <button type="button" onclick="togglePasswordVisibility()" class="absolute inset-y-0 right-0 pr-4 flex items-center text-slate-500 hover:text-primary">
+                        <i id="pass-eye-icon" class="fa-solid fa-eye"></i>
+                    </button>
                 </div>
 
-                <div class="flex items-center justify-between text-xs text-slate-400 pt-1">
-                    <span id="demo-cred-hint" class="text-amber-400/90 font-mono text-[11px]"><i class="fa-solid fa-circle-info mr-1"></i> Demo ID: admin / Pass: 1234</span>
+                <div class="flex items-center justify-between text-xs px-1">
+                    <span id="demo-cred-hint" class="text-slate-500 font-mono text-[11px]">ID: admin | Pass: 1234</span>
+                    <button type="button" onclick="openForgotPassword()" class="text-primary font-bold hover:underline">পাসওয়ার্ড ভুলে গেছেন?</button>
                 </div>
 
-                <button type="submit" class="w-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-bold py-3.5 rounded-xl shadow-lg transition flex items-center justify-center gap-2">
-                    <i class="fa-solid fa-right-to-bracket"></i> <span>লগইন করুন</span>
+                <button type="submit" class="w-full neu-btn text-primary hover:text-blue-700 font-extrabold py-4 text-sm tracking-wider uppercase mt-2">
+                    <span data-i18n="btn_login">LOG IN NOW</span>
                 </button>
             </form>
+
+            <!-- Bottom Back Arrow Circle matching Screenshot -->
+            <div class="mt-6 text-center">
+                <p class="text-xs text-slate-500 mb-3">Back to main website</p>
+                <button type="button" onclick="closeLoginModal()" class="w-11 h-11 neu-circle mx-auto flex items-center justify-center text-primary hover:scale-105 transition">
+                    <i class="fa-solid fa-arrow-left"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- FORGOT PASSWORD MODAL (Neumorphic) -->
+    <div id="forgot-password-modal" class="hidden fixed inset-0 z-50 bg-slate-900/50 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="neu-card max-w-sm w-full p-7 relative">
+            <div class="flex justify-between items-center mb-4 pb-2 border-b border-slate-300/60">
+                <h3 class="font-bold text-base text-slate-800"><i class="fa-solid fa-key text-primary mr-1.5"></i> পাসওয়ার্ড পুনরুদ্ধার</h3>
+                <button onclick="document.getElementById('forgot-password-modal').classList.add('hidden')" class="w-8 h-8 neu-circle text-slate-500 hover:text-red-500 flex items-center justify-center"><i class="fa-solid fa-xmark text-xs"></i></button>
+            </div>
+            <p class="text-xs text-slate-600 mb-4">আপনার রেজিস্টার্ড <strong>Student ID</strong> অথবা <strong>WhatsApp নম্বর</strong> এখানে লিখুন:</p>
+            <input type="text" id="recover-input" placeholder="যেমন: STU-101 বা 01792818005" class="w-full px-4 py-3 neu-inset text-sm mb-4 text-slate-700">
+            <button onclick="recoverPasswordAction()" class="w-full neu-btn text-primary font-extrabold py-3 text-xs uppercase tracking-wider">পাসওয়ার্ড চেক করুন</button>
+        </div>
+    </div>
+
+    <!-- FORGOT PASSWORD MODAL -->
+    <div id="forgot-password-modal" class="hidden fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-md flex items-center justify-center p-4">
+        <div class="bg-slate-900 border border-slate-700/80 text-white rounded-3xl max-w-sm w-full p-6 shadow-2xl relative">
+            <div class="flex justify-between items-center mb-4 pb-2 border-b border-slate-800">
+                <h3 class="font-bold text-base text-amber-400"><i class="fa-solid fa-key mr-1.5"></i> পাসওয়ার্ড পুনরুদ্ধার (Recovery)</h3>
+                <button onclick="document.getElementById('forgot-password-modal').classList.add('hidden')" class="text-slate-400 hover:text-white"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <p class="text-xs text-slate-300 mb-3">আপনার রেজিস্টার্ড **Student ID** অথবা **WhatsApp নম্বর** এখানে লিখুন:</p>
+            <input type="text" id="recover-input" placeholder="যেমন: STU-101 বা 01792818005" class="w-full p-3 bg-slate-950 border border-slate-800 rounded-xl text-sm mb-4 text-white">
+            <button onclick="recoverPasswordAction()" class="w-full bg-primary hover:bg-blue-600 text-white font-bold py-2.5 rounded-xl text-sm">পাসওয়ার্ড চেক করুন</button>
         </div>
     </div>
 
@@ -294,12 +386,14 @@
                 </div>
                 <nav class="p-3 space-y-1 text-sm max-h-[calc(100vh-8rem)] overflow-y-auto sidebar-scroll">
                     <button onclick="switchAdminTab('dashboard')" class="admin-nav-btn w-full flex items-center px-3 py-2.5 rounded-xl bg-primary text-white font-semibold"><i class="fa-solid fa-gauge w-6"></i> Dashboard</button>
+                    <button onclick="switchAdminTab('inquiries')" class="admin-nav-btn w-full flex items-center px-3 py-2.5 rounded-xl hover:bg-slate-800"><i class="fa-solid fa-user-plus w-6"></i> Admission Inquiries</button>
                     <button onclick="switchAdminTab('students')" class="admin-nav-btn w-full flex items-center px-3 py-2.5 rounded-xl hover:bg-slate-800"><i class="fa-solid fa-user-graduate w-6"></i> Students & ID Card</button>
                     <button onclick="switchAdminTab('teachers')" class="admin-nav-btn w-full flex items-center px-3 py-2.5 rounded-xl hover:bg-slate-800"><i class="fa-solid fa-chalkboard-user w-6"></i> Teachers</button>
                     <button onclick="switchAdminTab('fees')" class="admin-nav-btn w-full flex items-center px-3 py-2.5 rounded-xl hover:bg-slate-800"><i class="fa-solid fa-money-bill-wave w-6"></i> Fee Collection & Receipt</button>
-                    <button onclick="switchAdminTab('exams')" class="admin-nav-btn w-full flex items-center px-3 py-2.5 rounded-xl hover:bg-slate-800"><i class="fa-solid fa-award w-6"></i> Exams (Weekly/Monthly)</button>
-                    <button onclick="switchAdminTab('notices')" class="admin-nav-btn w-full flex items-center px-3 py-2.5 rounded-xl hover:bg-slate-800"><i class="fa-solid fa-bullhorn w-6"></i> Notices</button>
-                    <button onclick="switchAdminTab('settings')" class="admin-nav-btn w-full flex items-center px-3 py-2.5 rounded-xl hover:bg-slate-800"><i class="fa-solid fa-gear w-6"></i> Website Settings (Edit All)</button>
+                    <button onclick="switchAdminTab('exams')" class="admin-nav-btn w-full flex items-center px-3 py-2.5 rounded-xl hover:bg-slate-800"><i class="fa-solid fa-award w-6"></i> পরীক্ষা নিয়ন্ত্রণ (Exams)</button>
+                    <button onclick="switchAdminTab('notices')" class="admin-nav-btn w-full flex items-center px-3 py-2.5 rounded-xl hover:bg-slate-800"><i class="fa-solid fa-bullhorn w-6"></i> নোটিশ বোর্ড (Notices)</button>
+                    <button onclick="switchAdminTab('textbooks')" class="admin-nav-btn w-full flex items-center px-3 py-2.5 rounded-xl hover:bg-slate-800"><i class="fa-solid fa-book w-6"></i> পাঠ্যপুস্তক (Textbooks)</button>
+                    <button onclick="switchAdminTab('settings')" class="admin-nav-btn w-full flex items-center px-3 py-2.5 rounded-xl hover:bg-slate-800"><i class="fa-solid fa-gear w-6"></i> Website Settings</button>
                 </nav>
             </div>
             <div class="p-3 border-t border-slate-800">
@@ -461,8 +555,74 @@
         </div>
     </div>
 
-    <!-- JAVASCRIPT ENGINE -->
+    <!-- JAVASCRIPT ENGINE & BILINGUAL DICTIONARY -->
     <script>
+        const translations = {
+            bn: {
+                nav_home: "হোম",
+                nav_classes: "ক্লাস ও সাবজেক্ট (1-12)",
+                nav_courses: "স্পেশাল কোর্স",
+                nav_notices: "নোটিশ বোর্ড",
+                nav_admission: "ভর্তি আবেদন",
+                hero_badge: "🌟 ১ম থেকে ১২ম শ্রেণি পর্যন্ত অফলাইন ও অনলাইন কোচিং",
+                hero_title: "আপনার সন্তানের উজ্জ্বল ভবিষ্যৎ গড়ার বিশ্বস্ত প্রতিষ্ঠান",
+                hero_desc: "অভিজ্ঞ শিক্ষক, ডিজিটাল ক্লাসরুম, বিকাশ-নগদ-রকেট ও কার্ড ফি পেমেন্ট, মানি রিসিট প্রিন্ট এবং উইকলি-মান্থলি পরীক্ষা সিস্টেম।",
+                btn_apply: "অনলাইন ভর্তি আবেদন",
+                btn_classes: "ক্লাস ও সাবজেক্টসমূহ",
+                notice_board_title: "নোটিশ বোর্ড (Notice Board)",
+                curriculum_sub: "একাডেমিক কারিকুলাম (Class 1 to 12)",
+                curriculum_title: "শ্রেণিভিত্তিক বিভাগ ও সাবজেক্টসমূহ",
+                curriculum_desc: "প্রাথমিক, মাধ্যমিক ও উচ্চ মাধ্যমিক স্তরের সকল বিষয়ের জন্য রয়েছে আলাদা বিশেষজ্ঞ শিক্ষক প্যানেল।",
+                courses_sub: "স্পেশাল কোর্স",
+                courses_title: "চলমান স্পেশাল প্রোগ্রামসমূহ",
+                admission_box_title: "ভর্তি ও ফি পরিশোধ মাধ্যম",
+                admission_box_desc: "অনলাইন বা অফলাইনে ফি পরিশোধের জন্য আমাদের মার্চেন্ট বা পার্সোনাল নম্বরসমূহ:",
+                admission_form_title: "অনলাইন ভর্তি ফর্ম",
+                btn_submit_app: "আবেদন জমা দিন",
+                btn_login: "লগইন করুন"
+            },
+            en: {
+                nav_home: "Home",
+                nav_classes: "Classes & Subjects (1-12)",
+                nav_courses: "Special Courses",
+                nav_notices: "Notice Board",
+                nav_admission: "Admission",
+                hero_badge: "🌟 Offline & Online Coaching from Class 1 to 12",
+                hero_title: "A Trusted Institution to Shape Your Child's Bright Future",
+                hero_desc: "Experienced faculty, digital classrooms, bKash/Nagad/Rocket/Card payments, money receipt generator, and weekly/monthly exams.",
+                btn_apply: "Apply Online",
+                btn_classes: "Classes & Subjects",
+                notice_board_title: "Notice Board",
+                curriculum_sub: "Academic Curriculum (Class 1 to 12)",
+                curriculum_title: "Classwise Streams & Subjects",
+                curriculum_desc: "Dedicated expert faculty panels for Primary, Secondary, and Higher Secondary levels.",
+                courses_sub: "Special Courses",
+                courses_title: "Ongoing Special Programs",
+                admission_box_title: "Admission & Fee Channels",
+                admission_box_desc: "Our merchant or personal numbers for offline/online fee payments:",
+                admission_form_title: "Online Admission Form",
+                btn_submit_app: "Submit Application",
+                btn_login: "Login Now"
+            }
+        };
+
+        let currentLang = 'bn';
+
+        function toggleAppLanguage() {
+            currentLang = currentLang === 'bn' ? 'en' : 'bn';
+            document.documentElement.lang = currentLang;
+            applyTranslations();
+            showToast(currentLang === 'en' ? "Switched to English Language" : "বাংলা ভাষায় পরিবর্তিত হয়েছে");
+        }
+
+        function applyTranslations() {
+            const t = translations[currentLang];
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (t[key]) el.innerHTML = t[key];
+            });
+        }
+
         const defaultAppData = {
             settings: {
                 name: "NEXTGEN ACADEMY",
@@ -494,6 +654,11 @@
             notices: [
                 { id: 1, title: "১ম থেকে ১২ম শ্রেণির নতুন ব্যাচে ভর্তি চলছে!", date: "2026-11-18", desc: "বিকাশ, নগদ, রকেট বা ব্যাংক কার্ডের মাধ্যমে ফি পরিশোধ করে মানি রিসিট সংগ্রহ করুন।" }
             ],
+            textbooks: [
+                { id: 1, className: "Class 10", name: "পদার্থবিজ্ঞান (Physics - SSC)" },
+                { id: 2, className: "Class 10", name: "রসায়ন (Chemistry - SSC)" },
+                { id: 3, className: "Class 12", name: "উচ্চতর গণিত ১ম পত্র (Higher Math - HSC)" }
+            ],
             inquiries: []
         };
 
@@ -513,11 +678,6 @@
             document.getElementById('top-bar-phone').innerText = s.phone;
             document.getElementById('info-phone').innerText = s.phone;
             document.getElementById('rcpt-addr').innerText = `${s.address} | হটলাইন: ${s.phone}`;
-            document.getElementById('pub-header-fb').href = s.facebook;
-            document.getElementById('pub-header-wa').href = `https://wa.me/${s.whatsapp}`;
-            document.getElementById('pub-fb-link').href = s.facebook;
-            document.getElementById('pub-yt-link').href = s.youtube;
-            document.getElementById('pub-wa-link').href = `https://wa.me/${s.whatsapp}`;
         }
 
         function showToast(msg, type = "success") {
@@ -565,41 +725,73 @@
             document.getElementById('login-modal').classList.add('hidden');
         }
 
+        function openForgotPassword() {
+            document.getElementById('forgot-password-modal').classList.remove('hidden');
+        }
+
+        function recoverPasswordAction() {
+            const val = document.getElementById('recover-input').value.trim();
+            if (!val) {
+                showToast("অনুগ্রহ করে আইডি বা ফোন নম্বর লিখুন", "error");
+                return;
+            }
+            const foundStu = appData.students.find(s => s.id.toLowerCase() === val.toLowerCase() || s.phone === val);
+            const foundTch = appData.teachers.find(t => t.id.toLowerCase() === val.toLowerCase() || t.phone === val);
+
+            if (foundStu) {
+                alert(`সফল! আপনার অ্যাকাউন্ট পাওয়া গেছে।\nStudent ID: ${foundStu.id}\nপাসওয়ার্ড (Password): ${foundStu.pass}`);
+                document.getElementById('forgot-password-modal').classList.add('hidden');
+            } else if (foundTch) {
+                alert(`সফল! আপনার অ্যাকাউন্ট পাওয়া গেছে।\nTeacher ID: ${foundTch.id}\nপাসওয়ার্ড (Password): ${foundTch.pass}`);
+                document.getElementById('forgot-password-modal').classList.add('hidden');
+            } else {
+                showToast("এই তথ্য দিয়ে কোনো অ্যাকাউন্ট পাওয়া যায়নি!", "error");
+            }
+        }
+
         function switchLoginRole(role) {
             ['admin', 'teacher', 'student'].forEach(r => {
                 const btn = document.getElementById(`tab-btn-${r}`);
                 if (r === role) {
-                    btn.className = `py-2 rounded-xl text-xs font-bold transition shadow ${role==='admin'?'bg-blue-600 text-white':role==='teacher'?'bg-emerald-600 text-white':'bg-amber-600 text-white'}`;
+                    btn.className = `py-2 rounded-xl text-xs font-extrabold transition neu-btn ${role==='admin'?'text-primary':role==='teacher'?'text-emerald-600':'text-amber-600'}`;
                 } else {
-                    btn.className = `py-2 rounded-xl text-xs font-bold transition text-slate-400 hover:text-white`;
+                    btn.className = `py-2 rounded-xl text-xs font-bold transition text-slate-500 hover:text-slate-800`;
                 }
             });
 
             document.getElementById('login-role-input').value = role;
-            const iconBox = document.getElementById('login-modal-icon-box');
             const icon = document.getElementById('login-icon');
             const title = document.getElementById('login-title');
             const useridInput = document.getElementById('login-userid');
             const hint = document.getElementById('demo-cred-hint');
 
             if (role === 'admin') {
-                iconBox.className = "w-12 h-12 rounded-2xl bg-gradient-to-tr from-blue-600 to-indigo-600 flex items-center justify-center text-xl shadow-lg shadow-blue-500/30";
-                icon.className = "fa-solid fa-user-shield text-amber-300";
-                title.innerText = "Admin Portal Login";
+                icon.className = "fa-solid fa-user-shield text-primary";
+                title.innerText = "Admin Login";
                 useridInput.value = "admin";
-                hint.innerHTML = `<i class="fa-solid fa-circle-info mr-1"></i> Demo ID: admin / Pass: 1234`;
+                hint.innerText = `ID: admin | Pass: 1234`;
             } else if (role === 'teacher') {
-                iconBox.className = "w-12 h-12 rounded-2xl bg-gradient-to-tr from-emerald-600 to-teal-600 flex items-center justify-center text-xl shadow-lg shadow-emerald-500/30";
-                icon.className = "fa-solid fa-chalkboard-user text-emerald-200";
-                title.innerText = "Teacher Portal Login";
+                icon.className = "fa-solid fa-chalkboard-user text-emerald-600";
+                title.innerText = "Teacher Login";
                 useridInput.value = "TCH-01";
-                hint.innerHTML = `<i class="fa-solid fa-circle-info mr-1"></i> Demo ID: TCH-01 / Pass: 1234`;
+                hint.innerText = `ID: TCH-01 | Pass: 1234`;
             } else {
-                iconBox.className = "w-12 h-12 rounded-2xl bg-gradient-to-tr from-amber-500 to-orange-500 flex items-center justify-center text-xl shadow-lg shadow-amber-500/30";
-                icon.className = "fa-solid fa-user-graduate text-white";
-                title.innerText = "Student Portal Login";
+                icon.className = "fa-solid fa-user-graduate text-amber-600";
+                title.innerText = "Student Login";
                 useridInput.value = "STU-101";
-                hint.innerHTML = `<i class="fa-solid fa-circle-info mr-1"></i> Demo ID: STU-101 / Pass: 1234`;
+                hint.innerText = `ID: STU-101 | Pass: 1234`;
+            }
+        }
+
+        function togglePasswordVisibility() {
+            const passInput = document.getElementById('login-pass');
+            const eyeIcon = document.getElementById('pass-eye-icon');
+            if (passInput.type === 'password') {
+                passInput.type = 'text';
+                eyeIcon.className = 'fa-solid fa-eye-slash text-primary';
+            } else {
+                passInput.type = 'password';
+                eyeIcon.className = 'fa-solid fa-eye';
             }
         }
 
@@ -646,24 +838,28 @@
 
         function renderPublicWebsite() {
             applySettingsToUI();
+            applyTranslations();
             document.getElementById('public-notice-list').innerHTML = appData.notices.map(n => `
-                <div class="p-3 bg-slate-50 rounded-xl border border-slate-100">
-                    <span class="text-[10px] text-primary font-bold">${n.date}</span>
-                    <h4 class="font-bold text-sm text-secondary">${n.title}</h4>
-                    <p class="text-xs text-slate-600 mt-0.5">${n.desc}</p>
+                <div class="p-3.5 neu-inset flex justify-between items-start">
+                    <div>
+                        <span class="text-[10px] text-primary font-bold">${n.date}</span>
+                        <h4 class="font-bold text-sm text-slate-800">${n.title}</h4>
+                        <p class="text-xs text-slate-600 mt-0.5">${n.desc}</p>
+                    </div>
+                    <a href="https://wa.me/?text=${encodeURIComponent(n.title + "\n" + n.desc)}" target="_blank" class="w-8 h-8 neu-circle flex items-center justify-center text-emerald-600 hover:text-emerald-700 shrink-0 ml-2"><i class="fa-brands fa-whatsapp"></i></a>
                 </div>
             `).join('');
 
             document.getElementById('public-course-grid').innerHTML = appData.courses.map(c => `
-                <div class="bg-white p-6 rounded-2xl border shadow-sm flex flex-col justify-between">
+                <div class="p-6 neu-card-sm flex flex-col justify-between">
                     <div>
-                        <span class="text-xs bg-blue-50 text-primary font-bold px-2.5 py-1 rounded-full">${c.className}</span>
-                        <h3 class="font-bold text-xl text-secondary mt-3">${c.name}</h3>
-                        <p class="text-xs text-slate-500 mt-2">${c.desc}</p>
+                        <span class="text-xs neu-inset text-primary font-bold px-3 py-1 inline-block">${c.className}</span>
+                        <h3 class="font-bold text-xl text-slate-800 mt-3">${c.name}</h3>
+                        <p class="text-xs text-slate-600 mt-2">${c.desc}</p>
                     </div>
-                    <div class="mt-6 pt-4 border-t flex justify-between items-center">
+                    <div class="mt-6 pt-4 border-t border-slate-300/60 flex justify-between items-center">
                         <span class="font-extrabold text-emerald-600">ফি: ৳ ${c.fee}</span>
-                        <a href="#pub-admission" class="bg-primary text-white text-xs px-4 py-2 rounded-xl font-bold">ভর্তি হন</a>
+                        <a href="#pub-admission" class="neu-btn text-primary text-xs px-4 py-2 font-extrabold">ভর্তি হন</a>
                     </div>
                 </div>
             `).join('');
@@ -674,14 +870,17 @@
 
         document.getElementById('public-admission-form').addEventListener('submit', function(e) {
             e.preventDefault();
+            const tempId = "STU-" + (101 + appData.students.length + appData.inquiries.length);
             appData.inquiries.push({
+                id: tempId,
                 name: document.getElementById('inq-name').value,
                 phone: document.getElementById('inq-phone').value,
                 className: document.getElementById('inq-class').value,
                 course: document.getElementById('inq-course').value
             });
             saveAppData();
-            showToast("অনলাইন ভর্তি আবেদন সফলভাবে জমা হয়েছে!");
+            showToast(`আবেদন সফল! আপনার আইডি: ${tempId} এবং পাসওয়ার্ড: 1234`);
+            alert(`ধন্যবাদ! আপনার অনলাইন ভর্তি আবেদন জমা হয়েছে।\nআপনার জেনারেটেড স্টুডেন্ট আইডি: ${tempId}\nপাসওয়ার্ড: 1234 (এই আইডি ও পাসওয়ার্ড দিয়ে আপনি স্টুডেন্ট পোর্টালে লগইন করতে পারবেন)।`);
             this.reset();
         });
 
@@ -719,43 +918,66 @@
                         <div class="bg-emerald-600 text-white p-5 rounded-2xl shadow"><p class="text-xs text-emerald-100 font-bold">Fee Collected</p><h3 class="text-3xl font-bold mt-1">৳ ${totalCollected}</h3></div>
                         <div class="bg-white p-5 rounded-2xl border shadow-sm"><p class="text-xs text-slate-400 font-bold">Admission Inquiries</p><h3 class="text-3xl font-bold text-amber-500 mt-1">${appData.inquiries.length}</h3></div>
                     </div>
+                `;
+            } else if (tab === 'inquiries') {
+                title.innerText = "Admission Inquiries (অনলাইন আবেদনসমূহ)";
+                area.innerHTML = `
                     <div class="bg-white p-6 rounded-2xl border shadow-sm">
-                        <h3 class="font-bold text-base text-secondary mb-3">সাম্প্রতিক ভর্তি আবেদনসমূহ</h3>
-                        <div class="space-y-2">
-                            ${appData.inquiries.length === 0 ? '<p class="text-xs text-slate-500">কোনো আবেদন নেই।</p>' : appData.inquiries.map(i => `
-                                <div class="p-3 bg-slate-50 rounded-xl flex justify-between items-center text-xs">
-                                    <div><strong>${i.name}</strong> (${i.className}) - ফোন: ${i.phone}</div>
-                                    <span class="bg-blue-100 text-primary px-2 py-1 rounded">${i.course}</span>
-                                </div>
-                            `).join('')}
-                        </div>
+                        <h3 class="font-bold text-base mb-4">পাবলিক সাইট থেকে করা আবেদনসমূহ</h3>
+                        ${appData.inquiries.length === 0 ? '<p class="text-sm text-slate-500">কোনো নতুন আবেদন নেই।</p>' : `
+                            <div class="space-y-3">
+                                ${appData.inquiries.map((iq, idx) => `
+                                    <div class="p-4 bg-slate-50 rounded-xl border flex justify-between items-center text-sm">
+                                        <div>
+                                            <strong>${iq.name}</strong> (ID: ${iq.id})<br>
+                                            <span class="text-xs text-slate-500">শ্রেণি: ${iq.className} | কোর্স: ${iq.course} | WhatsApp: ${iq.phone}</span>
+                                        </div>
+                                        <button onclick="approveInquiry(${idx})" class="bg-emerald-600 text-white px-4 py-2 rounded-xl text-xs font-bold">Approve & Create Student</button>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        `}
                     </div>
                 `;
             } else if (tab === 'students') {
-                title.innerText = "Students & ID Card";
+                title.innerText = "Students & ID Card Management";
                 area.innerHTML = `
                     <div class="bg-white p-6 rounded-2xl border shadow-sm mb-4">
-                        <h3 class="font-bold mb-3">নতুন শিক্ষার্থী যুক্ত করুন (1-12 Classes & Streams)</h3>
+                        <h3 class="font-bold mb-3">নতুন শিক্ষার্থী যুক্ত করুন বা কাস্টম আইডি দিন</h3>
                         <form id="add-stu-form" class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                            <input type="text" id="s-id" placeholder="Custom ID (যেমন: STU-105, খালি রাখলে অটো)" class="p-2.5 border rounded-xl text-sm">
                             <input type="text" id="s-name" required placeholder="শিক্ষার্থীর নাম" class="p-2.5 border rounded-xl text-sm">
-                            <input type="text" id="s-class" required placeholder="শ্রেণি (যেমন: Class 10)" class="p-2.5 border rounded-xl text-sm">
-                            <input type="text" id="s-group" required placeholder="গ্রুপ (Science / Arts / Commerce)" class="p-2.5 border rounded-xl text-sm">
+                            <select id="s-class" required class="p-2.5 border rounded-xl text-sm bg-white font-medium">
+                                <option value="">শ্রেণি নির্বাচন করুন</option>
+                                <option value="Class 1">Class 1</option><option value="Class 2">Class 2</option><option value="Class 3">Class 3</option><option value="Class 4">Class 4</option><option value="Class 5">Class 5</option><option value="Class 6">Class 6</option><option value="Class 7">Class 7</option><option value="Class 8">Class 8</option><option value="Class 9">Class 9</option><option value="Class 10">Class 10</option><option value="Class 11">Class 11</option><option value="Class 12">Class 12</option>
+                            </select>
+                            <select id="s-group" required class="p-2.5 border rounded-xl text-sm bg-white font-medium">
+                                <option value="">বিভাগ / গ্রুপ নির্বাচন করুন</option>
+                                <option value="Science">Science (বিজ্ঞান)</option>
+                                <option value="Arts">Arts (মানবিক)</option>
+                                <option value="Commerce">Commerce (ব্যবসায় শিক্ষা)</option>
+                                <option value="General">General (সাধারণ)</option>
+                            </select>
                             <input type="text" id="s-guardian" required placeholder="অভিভাবকের নাম" class="p-2.5 border rounded-xl text-sm">
                             <input type="text" id="s-phone" required placeholder="WhatsApp নম্বর" class="p-2.5 border rounded-xl text-sm">
-                            <input type="number" id="s-fee" required placeholder="মাসিক ফি (টাকা)" class="p-2.5 border rounded-xl text-sm">
+                            <input type="number" id="s-fee" required placeholder="মাসিক ফি (টাকা)" class="p-2.5 border rounded-xl text-sm" value="2000">
                             <button type="submit" class="sm:col-span-3 bg-primary text-white py-3 rounded-xl text-sm font-bold">+ Save Student & Generate ID</button>
                         </form>
                     </div>
                     <div class="bg-white p-6 rounded-2xl border shadow-sm overflow-x-auto">
                         <table class="w-full text-left text-sm">
-                            <thead class="bg-slate-50"><tr><th class="p-3">ID & নাম</th><th class="p-3">শ্রেণি ও বিভাগ</th><th class="p-3">অভিভাবক ও ফোন</th><th class="p-3">ID Card</th></tr></thead>
+                            <thead class="bg-slate-50"><tr><th class="p-3">ID & নাম</th><th class="p-3">শ্রেণি ও বিভাগ</th><th class="p-3">অভিভাবক ও ফোন</th><th class="p-3">Actions</th></tr></thead>
                             <tbody>
-                                ${appData.students.map(s => `
+                                ${appData.students.map((s, idx) => `
                                     <tr class="border-t">
                                         <td class="p-3"><strong>${s.id}</strong><br>${s.name}</td>
                                         <td class="p-3">${s.className} (${s.group})</td>
                                         <td class="p-3">${s.guardian}<br>${s.phone}</td>
-                                        <td class="p-3"><button onclick="printStudentID('${s.id}')" class="bg-blue-100 text-primary px-3 py-1.5 rounded-lg text-xs font-bold">Print ID Card</button></td>
+                                        <td class="p-3 flex gap-2">
+                                            <button onclick="printStudentID('${s.id}')" class="bg-blue-100 text-primary px-3 py-1.5 rounded-lg text-xs font-bold">ID Card</button>
+                                            <button onclick="editStudent(${idx})" class="bg-amber-100 text-amber-700 px-3 py-1.5 rounded-lg text-xs font-bold">Edit</button>
+                                            <button onclick="appData.students.splice(${idx},1); saveAppData(); switchAdminTab('students'); showToast('ডিলিট হয়েছে');" class="bg-red-100 text-red-600 px-3 py-1.5 rounded-lg text-xs font-bold">Delete</button>
+                                        </td>
                                     </tr>
                                 `).join('')}
                             </tbody>
@@ -764,8 +986,10 @@
                 `;
                 document.getElementById('add-stu-form').onsubmit = function(e) {
                     e.preventDefault();
+                    const customId = document.getElementById('s-id').value.trim();
+                    const finalId = customId !== "" ? customId : "STU-" + (101 + appData.students.length);
                     appData.students.push({
-                        id: "STU-" + (101 + appData.students.length),
+                        id: finalId,
                         pass: "1234",
                         name: document.getElementById('s-name').value,
                         className: document.getElementById('s-class').value,
@@ -778,7 +1002,7 @@
                         photo: "https://placehold.co/150x150/2563eb/ffffff?text=Student"
                     });
                     saveAppData();
-                    showToast("শিক্ষার্থী সফলভাবে যুক্ত হয়েছে!");
+                    showToast("শিক্ষার্থী সফলভাবে সংরক্ষিত হয়েছে!");
                     switchAdminTab('students');
                 };
             } else if (tab === 'teachers') {
@@ -832,31 +1056,37 @@
                     </div>
                 `;
             } else if (tab === 'exams') {
-                title.innerText = "Exams (Weekly, Monthly & Surprise Tests)";
+                title.innerText = "পরীক্ষা নিয়ন্ত্রণ (সাপ্তাহিক, মাসিক ও সারপ্রাইজ টেস্ট)";
                 area.innerHTML = `
                     <div class="bg-white p-6 rounded-2xl border shadow-sm mb-6">
                         <h3 class="font-bold mb-3">নতুন পরীক্ষা শিডিউল করুন</h3>
                         <form id="add-exam-form" class="grid grid-cols-1 sm:grid-cols-4 gap-3">
                             <input type="text" id="ex-title" required placeholder="পরীক্ষার নাম (যেমন: ফিজিক্স উইকলি টেস্ট)" class="p-2.5 border rounded-xl text-sm">
                             <select id="ex-type" class="p-2.5 border rounded-xl text-sm bg-white font-medium">
-                                <option value="Weekly">Weekly Exam</option>
-                                <option value="Monthly">Monthly Exam</option>
-                                <option value="Surprise">Surprise Test</option>
+                                <option value="Weekly">Weekly Exam (সাপ্তাহিক)</option>
+                                <option value="Monthly">Monthly Exam (মাসিক)</option>
+                                <option value="Surprise">Surprise Test (সারপ্রাইজ)</option>
                             </select>
-                            <input type="text" id="ex-class" required placeholder="শ্রেণি (যেমন: Class 10)" class="p-2.5 border rounded-xl text-sm">
+                            <select id="ex-class" required class="p-2.5 border rounded-xl text-sm bg-white font-medium">
+                                <option value="">শ্রেণি নির্বাচন করুন</option>
+                                <option value="Class 1">Class 1</option><option value="Class 2">Class 2</option><option value="Class 3">Class 3</option><option value="Class 4">Class 4</option><option value="Class 5">Class 5</option><option value="Class 6">Class 6</option><option value="Class 7">Class 7</option><option value="Class 8">Class 8</option><option value="Class 9">Class 9</option><option value="Class 10">Class 10</option><option value="Class 11">Class 11</option><option value="Class 12">Class 12</option>
+                            </select>
                             <input type="number" id="ex-marks" required placeholder="পূর্ণমান (যেমন: 50)" class="p-2.5 border rounded-xl text-sm">
                             <button type="submit" class="sm:col-span-4 bg-primary text-white py-3 rounded-xl text-sm font-bold">+ Create Exam & Timer</button>
                         </form>
                     </div>
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                        ${appData.exams.map(ex => `
+                        ${appData.exams.map((ex, i) => `
                             <div class="bg-white p-5 rounded-2xl border shadow-sm flex flex-col justify-between">
                                 <div>
                                     <span class="text-xs bg-amber-50 text-amber-700 font-bold px-2 py-0.5 rounded">${ex.type} Test</span>
                                     <h4 class="font-bold text-base text-secondary mt-2">${ex.title}</h4>
                                     <p class="text-xs text-slate-500 mt-1">শ্রেণি: ${ex.class} | পূর্ণমান: ${ex.marks} | সময়: ${ex.duration}</p>
                                 </div>
-                                <span class="mt-4 text-xs font-bold text-emerald-600 bg-emerald-50 px-2 py-1 rounded text-center">Active Online / Offline</span>
+                                <div class="mt-4 pt-3 border-t flex justify-between items-center">
+                                    <span class="text-xs font-bold text-emerald-600 bg-emerald-50 px-2 py-1 rounded">Active</span>
+                                    <button onclick="appData.exams.splice(${i},1); saveAppData(); switchAdminTab('exams'); showToast('পরীক্ষা ডিলিট হয়েছে');" class="text-xs bg-red-100 text-red-600 px-2.5 py-1 rounded font-bold">Delete</button>
+                                </div>
                             </div>
                         `).join('')}
                     </div>
@@ -876,7 +1106,7 @@
                     switchAdminTab('exams');
                 };
             } else if (tab === 'notices') {
-                title.innerText = "Notice Board Management";
+                title.innerText = "নোটিশ বোর্ড ম্যানেজমেন্ট ও হোয়াটসঅ্যাপ শেয়ার";
                 area.innerHTML = `
                     <div class="bg-white p-6 rounded-2xl border shadow-sm mb-6">
                         <h3 class="font-bold mb-3">নতুন নোটিশ প্রকাশ করুন</h3>
@@ -885,6 +1115,24 @@
                             <textarea id="n-desc" required placeholder="বিস্তারিত বিবরণ..." class="w-full p-2.5 border rounded-xl text-sm h-24"></textarea>
                             <button type="submit" class="bg-primary text-white px-6 py-2.5 rounded-xl text-sm font-bold">Publish Notice</button>
                         </form>
+                    </div>
+                    <div class="bg-white p-6 rounded-2xl border shadow-sm">
+                        <h3 class="font-bold mb-4">প্রকাশিত নোটিশসমূহ</h3>
+                        <div class="space-y-3">
+                            ${appData.notices.map((n, i) => `
+                                <div class="p-4 bg-slate-50 rounded-xl border flex justify-between items-start text-sm">
+                                    <div>
+                                        <span class="text-xs text-primary font-bold">${n.date}</span>
+                                        <h4 class="font-bold text-secondary">${n.title}</h4>
+                                        <p class="text-xs text-slate-600 mt-1">${n.desc}</p>
+                                    </div>
+                                    <div class="flex gap-2 shrink-0">
+                                        <a href="https://wa.me/?text=${encodeURIComponent(n.title + "\n" + n.desc)}" target="_blank" class="bg-emerald-600 text-white px-3 py-1.5 rounded-lg text-xs font-bold flex items-center gap-1"><i class="fa-brands fa-whatsapp"></i> WhatsApp</a>
+                                        <button onclick="appData.notices.splice(${i},1); saveAppData(); switchAdminTab('notices'); showToast('নোটিশ ডিলিট হয়েছে');" class="bg-red-100 text-red-600 px-3 py-1.5 rounded-lg text-xs font-bold">Delete</button>
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
                     </div>
                 `;
                 document.getElementById('add-notice-form').onsubmit = function(e) {
@@ -899,41 +1147,62 @@
                     showToast("নোটিশ প্রকাশিত হয়েছে!");
                     switchAdminTab('notices');
                 };
+            } else if (tab === 'textbooks') {
+                title.innerText = "ক্লাস ১ থেকে ১২ পাঠ্যপুস্তক ম্যানেজমেন্ট";
+                area.innerHTML = `
+                    <div class="bg-white p-6 rounded-2xl border shadow-sm mb-6">
+                        <h3 class="font-bold mb-3">নতুন পাঠ্যপুস্তক বা সাবজেক্ট যুক্ত করুন</h3>
+                        <form id="add-textbook-form" class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                            <select id="tb-class" required class="p-2.5 border rounded-xl text-sm bg-white font-medium">
+                                <option value="">শ্রেণি নির্বাচন করুন</option>
+                                <option value="Class 1">Class 1</option><option value="Class 2">Class 2</option><option value="Class 3">Class 3</option><option value="Class 4">Class 4</option><option value="Class 5">Class 5</option><option value="Class 6">Class 6</option><option value="Class 7">Class 7</option><option value="Class 8">Class 8</option><option value="Class 9">Class 9</option><option value="Class 10">Class 10</option><option value="Class 11">Class 11</option><option value="Class 12">Class 12</option>
+                            </select>
+                            <input type="text" id="tb-name" required placeholder="বই বা সাবজেক্টের নাম (যেমন: জীববিজ্ঞান)" class="p-2.5 border rounded-xl text-sm">
+                            <button type="submit" class="bg-primary text-white py-2.5 rounded-xl text-sm font-bold">+ বই যুক্ত করুন</button>
+                        </form>
+                    </div>
+                    <div class="bg-white p-6 rounded-2xl border shadow-sm">
+                        <h3 class="font-bold mb-3">সকল পাঠ্যপুস্তকের তালিকা</h3>
+                        <div class="space-y-2">
+                            ${appData.textbooks.map((tb, i) => `
+                                <div class="p-3 bg-slate-50 rounded-xl border flex justify-between items-center text-sm">
+                                    <div><strong>${tb.className}</strong>: ${tb.name}</div>
+                                    <button onclick="appData.textbooks.splice(${i},1); saveAppData(); switchAdminTab('textbooks'); showToast('বই ডিলিট হয়েছে');" class="bg-red-100 text-red-600 px-3 py-1.5 rounded-lg text-xs font-bold">Delete</button>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                `;
+                document.getElementById('add-textbook-form').onsubmit = function(e) {
+                    e.preventDefault();
+                    appData.textbooks.push({
+                        id: appData.textbooks.length + 1,
+                        className: document.getElementById('tb-class').value,
+                        name: document.getElementById('tb-name').value
+                    });
+                    saveAppData();
+                    showToast("পাঠ্যপুস্তক সফলভাবে যুক্ত হয়েছে!");
+                    switchAdminTab('textbooks');
+                };
             } else if (tab === 'settings') {
                 title.innerText = "Website Settings (No HTML Editing Needed)";
                 const s = appData.settings;
                 area.innerHTML = `
-                    <div class="bg-white p-6 rounded-2xl border shadow-sm max-w-2xl">
-                        <h3 class="font-bold text-base text-secondary mb-4">অ্যাডমিন প্যানেল থেকে সমস্ত তথ্য পরিবর্তন করুন</h3>
-                        <form id="settings-form" class="space-y-4">
-                            <div>
-                                <label class="block text-xs font-bold text-slate-600 mb-1">কোচিং সেন্টারের নাম</label>
-                                <input type="text" id="set-name" value="${s.name}" required class="w-full p-3 border rounded-xl text-sm">
-                            </div>
-                            <div>
-                                <label class="block text-xs font-bold text-slate-600 mb-1">ট্যাগলাইন / স্লোগান</label>
-                                <input type="text" id="set-tagline" value="${s.tagline}" required class="w-full p-3 border rounded-xl text-sm">
-                            </div>
-                            <div>
-                                <label class="block text-xs font-bold text-slate-600 mb-1">ঠিকানা</label>
-                                <input type="text" id="set-address" value="${s.address}" required class="w-full p-3 border rounded-xl text-sm">
-                            </div>
-                            <div>
-                                <label class="block text-xs font-bold text-slate-600 mb-1">হটলাইন / মোবাইল নম্বর</label>
-                                <input type="text" id="set-phone" value="${s.phone}" required class="w-full p-3 border rounded-xl text-sm">
-                            </div>
-                            <div class="grid grid-cols-2 gap-3">
-                                <div>
-                                    <label class="block text-xs font-bold text-slate-600 mb-1">Facebook Page Link</label>
-                                    <input type="text" id="set-fb" value="${s.facebook}" class="w-full p-3 border rounded-xl text-sm">
+                    <div class="space-y-6 max-w-2xl">
+                        <div class="bg-white p-6 rounded-2xl border shadow-sm">
+                            <h3 class="font-bold text-base text-secondary mb-4">কোচিং সেন্টারের সাধারণ তথ্য পরিবর্তন করুন</h3>
+                            <form id="settings-form" class="space-y-4">
+                                <div><label class="block text-xs font-bold text-slate-600 mb-1">কোচিং সেন্টারের নাম</label><input type="text" id="set-name" value="${s.name}" required class="w-full p-3 border rounded-xl text-sm"></div>
+                                <div><label class="block text-xs font-bold text-slate-600 mb-1">ট্যাগলাইন / স্লোগান</label><input type="text" id="set-tagline" value="${s.tagline}" required class="w-full p-3 border rounded-xl text-sm"></div>
+                                <div><label class="block text-xs font-bold text-slate-600 mb-1">ঠিকানা</label><input type="text" id="set-address" value="${s.address}" required class="w-full p-3 border rounded-xl text-sm"></div>
+                                <div><label class="block text-xs font-bold text-slate-600 mb-1">হটলাইন / মোবাইল নম্বর</label><input type="text" id="set-phone" value="${s.phone}" required class="w-full p-3 border rounded-xl text-sm"></div>
+                                <div class="grid grid-cols-2 gap-3">
+                                    <div><label class="block text-xs font-bold text-slate-600 mb-1">Facebook Page</label><input type="text" id="set-fb" value="${s.facebook}" class="w-full p-3 border rounded-xl text-sm"></div>
+                                    <div><label class="block text-xs font-bold text-slate-600 mb-1">WhatsApp Number</label><input type="text" id="set-wa" value="${s.whatsapp}" class="w-full p-3 border rounded-xl text-sm"></div>
                                 </div>
-                                <div>
-                                    <label class="block text-xs font-bold text-slate-600 mb-1">WhatsApp Number</label>
-                                    <input type="text" id="set-wa" value="${s.whatsapp}" class="w-full p-3 border rounded-xl text-sm">
-                                </div>
-                            </div>
-                            <button type="submit" class="bg-primary text-white px-6 py-3 rounded-xl text-sm font-bold shadow">Save Changes Instantly</button>
-                        </form>
+                                <button type="submit" class="bg-primary text-white px-6 py-3 rounded-xl text-sm font-bold shadow">Save General Settings</button>
+                            </form>
+                        </div>
                     </div>
                 `;
                 document.getElementById('settings-form').onsubmit = function(e) {
@@ -950,6 +1219,27 @@
             }
         }
 
+        function approveInquiry(idx) {
+            const iq = appData.inquiries[idx];
+            appData.students.push({
+                id: iq.id,
+                pass: "1234",
+                name: iq.name,
+                className: iq.className,
+                group: "General",
+                guardian: "অভিভাবক",
+                phone: iq.phone,
+                monthlyFee: 2000,
+                paidAmount: 0,
+                paymentMethod: "বিকাশ (Bkash)",
+                photo: "https://placehold.co/150x150/2563eb/ffffff?text=Student"
+            });
+            appData.inquiries.splice(idx, 1);
+            saveAppData();
+            switchAdminTab('inquiries');
+            showToast("অনলাইন আবেদন অ্যাপ্রুভ করা হয়েছে এবং স্টুডেন্ট তালিকায় যুক্ত করা হয়েছে!");
+        }
+
         function updatePaymentMethod(idx, val) {
             appData.students[idx].paymentMethod = val;
             saveAppData();
@@ -961,8 +1251,19 @@
             document.getElementById('card-name').innerText = s.name;
             document.getElementById('card-id').innerText = "ID: " + s.id;
             document.getElementById('card-photo').src = s.photo;
-            document.getElementById('card-details-box').innerHTML = `<p><strong>Class:</strong> ${s.className}</p><p><strong>Group:</strong> ${s.group}</p><p><strong>Guardian:</strong> ${s.phone}</p>`;
+            document.getElementById('card-details-box').innerHTML = `<p><strong>Class:</strong> ${s.className}</p><p><strong>Group:</strong> ${s.group}</p><p><strong>Phone:</strong> ${s.phone}</p>`;
             document.getElementById('idcard-modal').classList.remove('hidden');
+        }
+
+        function editStudent(idx) {
+            const s = appData.students[idx];
+            const newName = prompt("শিক্ষার্থীর নতুন নাম দিন:", s.name);
+            if (newName) {
+                appData.students[idx].name = newName;
+                saveAppData();
+                switchAdminTab('students');
+                showToast("শিক্ষার্থীর তথ্য আপডেট হয়েছে!");
+            }
         }
 
         function openMoneyReceipt(id) {
@@ -990,7 +1291,7 @@
                         <button onclick="openMoneyReceipt('${s.id}')" class="w-full bg-primary text-white py-2.5 rounded-xl text-xs font-bold mt-2"><i class="fa-solid fa-receipt mr-1"></i> মানি রিসিট প্রিন্ট করুন</button>
                     </div>
                     <div class="md:col-span-2 bg-white p-6 rounded-2xl border shadow-sm">
-                        <h3 class="font-bold text-lg text-secondary mb-3">চলমান অনলাইন পরীক্ষা (Online & Weekly/Monthly Exams)</h3>
+                        <h3 class="font-bold text-lg text-secondary mb-3">চলমান অনলাইন ও সাপ্তাহিক/মাসিক পরীক্ষা</h3>
                         <div class="space-y-3">
                             ${appData.exams.map(ex => `
                                 <div class="p-4 bg-slate-50 rounded-xl border flex justify-between items-center text-xs">
@@ -1014,11 +1315,7 @@
             document.getElementById('teacher-portal-content').innerHTML = `
                 <div class="bg-white p-6 rounded-2xl border shadow-sm space-y-4">
                     <h3 class="font-bold text-lg text-emerald-800">শিক্ষক ড্যাশবোর্ড: ${t.subject}</h3>
-                    <p class="text-sm text-slate-600">আপনি ১ম থেকে ১২ম শ্রেণির জন্য প্রশ্নপত্র তৈরি, উইকলি ও মান্থলি পরীক্ষা পরিচালনা এবং নম্বর এন্ট্রি করতে পারবেন।</p>
-                    <div class="p-4 bg-emerald-50 rounded-xl border border-emerald-200">
-                        <h4 class="font-bold text-sm text-emerald-900 mb-2">কোচিং লোগো যুক্ত অনলাইন প্রশ্ন ব্যাংক</h4>
-                        <p class="text-xs text-emerald-700">সিস্টেমে স্বয়ংক্রয়ভাবে আপনার প্রতিষ্ঠানের লোগো ও নামসহ প্রশ্নপত্র ও ফলাফল জেনারেট হচ্ছে।</p>
-                    </div>
+                    <p class="text-sm text-slate-600">আপনি ১ম থেকে ১২ম শ্রেণির জন্য প্রশ্নপত্র তৈরি, উইকলি ও মান্থলি পরীক্ষা পরিচালনা করতে পারবেন।</p>
                 </div>
             `;
         }
