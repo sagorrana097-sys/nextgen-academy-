@@ -1,4 +1,3 @@
-```html
 <!DOCTYPE html>
 <html lang="bn" class="scroll-smooth">
 <head>
@@ -38,10 +37,8 @@
         .sidebar-scroll::-webkit-scrollbar { width: 5px; }
         .sidebar-scroll::-webkit-scrollbar-thumb { background: #334155; border-radius: 10px; }
 
-        /* Neumorphic Soft UI Styles matching reference screenshot */
-        .neu-bg {
-            background-color: #e6ebf1;
-        }
+        /* Neumorphic Soft UI Styles */
+        .neu-bg { background-color: #e6ebf1; }
         .neu-card {
             background: #e6ebf1;
             box-shadow: 12px 12px 24px #c5cbd3, -12px -12px 24px #ffffff;
@@ -83,7 +80,7 @@
     <div id="toast-container" class="fixed bottom-5 right-5 z-[100] flex flex-col gap-2"></div>
 
     <!-- =====================================================================
-         VIEW 1: PUBLIC WEBSITE (সবার জন্য উন্মুক্ত মূল ওয়েবসাইট - Neumorphic Soft UI)
+         VIEW 1: PUBLIC WEBSITE (সবার জন্য উন্মুক্ত মূল ওয়েবসাইট)
     ====================================================================== -->
     <div id="public-view" class="block">
         <!-- Top Utility Bar -->
@@ -97,7 +94,6 @@
                     <div class="text-xs text-slate-300 flex items-center space-x-3">
                         <span><i class="fa-solid fa-phone-volume text-emerald-400 mr-1"></i> হটলাইন: <span id="top-bar-phone">01792818005</span></span>
                     </div>
-                    <!-- Language Switcher -->
                     <button onclick="toggleAppLanguage()" id="lang-switch-btn" class="bg-blue-600/40 hover:bg-blue-600 text-blue-200 hover:text-white px-2.5 py-1 rounded text-xs font-bold transition">
                         🌐 English / বাংলা
                     </button>
@@ -110,8 +106,8 @@
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 lg:py-0 lg:h-20 flex flex-col lg:flex-row justify-between items-center gap-3">
                 <div class="w-full lg:w-auto flex items-center justify-between">
                     <a href="#" class="flex items-center space-x-3 group min-w-0">
-                        <div id="pub-logo-box" class="w-11 h-11 sm:w-12 sm:h-12 shrink-0 neu-circle flex items-center justify-center text-primary text-lg sm:text-xl transform group-hover:scale-105 transition">
-                            <i id="pub-logo-icon" class="fa-solid fa-graduation-cap"></i>
+                        <div class="w-11 h-11 sm:w-12 sm:h-12 shrink-0 neu-circle flex items-center justify-center text-primary text-lg sm:text-xl transform group-hover:scale-105 transition">
+                            <i class="fa-solid fa-graduation-cap"></i>
                         </div>
                         <div class="min-w-0">
                             <span id="pub-academy-name" class="font-heading font-extrabold text-base sm:text-xl text-slate-800 block leading-tight truncate">NEXTGEN ACADEMY</span>
@@ -142,9 +138,8 @@
             </div>
         </header>
 
-        <!-- Hero Section with Soft Neumorphic Aesthetics -->
+        <!-- Hero Section -->
         <section id="pub-home" class="relative overflow-hidden py-14 lg:py-24">
-            <!-- Floating Background Soft Circles -->
             <div class="hidden md:block absolute top-10 left-10 w-36 h-36 neu-circle pointer-events-none opacity-80"></div>
             <div class="hidden md:block absolute bottom-10 right-16 w-44 h-44 neu-circle pointer-events-none opacity-80"></div>
 
@@ -169,7 +164,7 @@
                     </div>
                 </div>
 
-                <!-- Live Notice Board Card (Neumorphic) -->
+                <!-- Live Notice Board Card -->
                 <div id="pub-notices" class="neu-card p-6 sm:p-8">
                     <div class="flex items-center justify-between border-b border-slate-300/60 pb-4 mb-4">
                         <h3 class="font-heading font-bold text-xl text-slate-800 flex items-center">
@@ -225,7 +220,7 @@
             </div>
         </section>
 
-        <!-- Admission & Payment Info Section (Neumorphic Card Design) -->
+        <!-- Admission & Payment Info Section -->
         <section id="pub-admission" class="py-16 relative">
             <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="neu-card overflow-hidden grid grid-cols-1 lg:grid-cols-5 p-2 sm:p-4">
@@ -286,29 +281,25 @@
         </footer>
     </div>
 
-    <!-- NEUMORPHIC SOFT UI LOGIN MODAL (Exact Match to Reference Image) -->
+    <!-- NEUMORPHIC SOFT UI LOGIN MODAL -->
     <div id="login-modal" class="hidden fixed inset-0 z-50 neu-bg/95 backdrop-blur-md flex items-center justify-center p-4 overflow-y-auto">
-        <!-- Decorative Floating Neumorphic Spheres -->
         <div class="hidden sm:block fixed top-16 left-16 w-40 h-40 neu-circle pointer-events-none"></div>
         <div class="hidden sm:block fixed top-24 right-24 w-20 h-20 neu-circle pointer-events-none"></div>
         <div class="hidden sm:block fixed bottom-16 right-16 w-44 h-44 neu-circle pointer-events-none"></div>
 
         <div class="neu-card max-w-md w-full p-8 sm:p-10 relative z-10 my-auto">
-            <!-- Top Back / Close Circle Button -->
             <button onclick="closeLoginModal()" class="w-10 h-10 neu-circle text-slate-500 hover:text-red-500 flex items-center justify-center absolute top-6 right-6 transition" title="Close">
                 <i class="fa-solid fa-xmark"></i>
             </button>
 
-            <!-- Centered User Avatar Circle matching Screenshot -->
             <div class="text-center mb-6">
-                <div id="login-modal-icon-box" class="w-20 h-20 neu-circle mx-auto flex items-center justify-center text-3xl text-primary mb-4">
+                <div class="w-20 h-20 neu-circle mx-auto flex items-center justify-center text-3xl text-primary mb-4">
                     <i id="login-icon" class="fa-solid fa-user"></i>
                 </div>
                 <h3 id="login-title" class="font-heading font-extrabold text-2xl text-slate-800">Admin Login</h3>
                 <p class="text-xs text-slate-500 mt-1">Start your session with us</p>
             </div>
 
-            <!-- Role Selector Pills -->
             <div class="grid grid-cols-3 gap-2.5 mb-6 p-1.5 neu-inset">
                 <button type="button" onclick="switchLoginRole('admin')" id="tab-btn-admin" class="py-2 rounded-xl text-xs font-bold transition neu-btn text-primary">Admin</button>
                 <button type="button" onclick="switchLoginRole('teacher')" id="tab-btn-teacher" class="py-2 rounded-xl text-xs font-bold transition text-slate-500 hover:text-slate-800">Teacher</button>
@@ -317,29 +308,24 @@
 
             <form id="smart-login-form" class="space-y-4">
                 <input type="hidden" id="login-role-input" value="admin">
-                
                 <div>
                     <input type="text" id="login-userid" required placeholder="User ID / Phone (e.g. admin)" class="w-full px-5 py-3.5 neu-inset text-sm text-slate-700 placeholder-slate-400">
                 </div>
-
                 <div class="relative">
                     <input type="password" id="login-pass" required placeholder="Password" class="w-full px-5 py-3.5 pr-12 neu-inset text-sm text-slate-700 placeholder-slate-400" value="1234">
                     <button type="button" onclick="togglePasswordVisibility()" class="absolute inset-y-0 right-0 pr-4 flex items-center text-slate-500 hover:text-primary">
                         <i id="pass-eye-icon" class="fa-solid fa-eye"></i>
                     </button>
                 </div>
-
                 <div class="flex items-center justify-between text-xs px-1">
                     <span id="demo-cred-hint" class="text-slate-500 font-mono text-[11px]">ID: admin | Pass: 1234</span>
                     <button type="button" onclick="openForgotPassword()" class="text-primary font-bold hover:underline">পাসওয়ার্ড ভুলে গেছেন?</button>
                 </div>
-
                 <button type="submit" class="w-full neu-btn text-primary hover:text-blue-700 font-extrabold py-4 text-sm tracking-wider uppercase mt-2">
                     <span data-i18n="btn_login">LOG IN NOW</span>
                 </button>
             </form>
 
-            <!-- Bottom Back Arrow Circle matching Screenshot -->
             <div class="mt-6 text-center">
                 <p class="text-xs text-slate-500 mb-3">Back to main website</p>
                 <button type="button" onclick="closeLoginModal()" class="w-11 h-11 neu-circle mx-auto flex items-center justify-center text-primary hover:scale-105 transition">
@@ -349,7 +335,7 @@
         </div>
     </div>
 
-    <!-- FORGOT PASSWORD MODAL (Neumorphic) -->
+    <!-- FORGOT PASSWORD MODAL -->
     <div id="forgot-password-modal" class="hidden fixed inset-0 z-50 bg-slate-900/50 backdrop-blur-sm flex items-center justify-center p-4">
         <div class="neu-card max-w-sm w-full p-7 relative">
             <div class="flex justify-between items-center mb-4 pb-2 border-b border-slate-300/60">
@@ -394,7 +380,7 @@
         </div>
     </div>
 
-    <!-- UNIVERSAL EDIT MODAL (For Student, Exam, Notice) -->
+    <!-- UNIVERSAL EDIT MODAL -->
     <div id="universal-edit-modal" class="hidden fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4">
         <div class="bg-white rounded-3xl max-w-md w-full p-6 shadow-2xl">
             <div class="flex justify-between items-center pb-3 mb-4 border-b">
@@ -406,7 +392,7 @@
     </div>
 
     <!-- =====================================================================
-         VIEW 2: ADMIN PANEL (প্রশাসনিক প্যানেল - সম্পূর্ণ ডাইনামিক এডিটর)
+         VIEW 2: ADMIN PANEL
     ====================================================================== -->
     <div id="admin-view" class="hidden min-h-screen flex bg-slate-100">
         <aside id="admin-sidebar" class="w-64 bg-secondary text-slate-300 flex-shrink-0 flex flex-col justify-between fixed inset-y-0 left-0 z-30 transform -translate-x-full lg:translate-x-0 transition duration-200">
@@ -454,7 +440,7 @@
     </div>
 
     <!-- =====================================================================
-         VIEW 3: STUDENT PORTAL (অনলাইন পরীক্ষা ও মানি রিসিট)
+         VIEW 3: STUDENT PORTAL
     ====================================================================== -->
     <div id="student-view" class="hidden min-h-screen bg-slate-100">
         <div class="bg-slate-950 text-white text-xs py-2.5 px-4 sm:px-6 border-b border-slate-800 flex justify-between items-center">
@@ -480,7 +466,7 @@
     </div>
 
     <!-- =====================================================================
-         VIEW 4: TEACHER PORTAL (প্রশ্নপত্র ও এক্সাম ম্যানেজমেন্ট)
+         VIEW 4: TEACHER PORTAL
     ====================================================================== -->
     <div id="teacher-view" class="hidden min-h-screen bg-slate-100">
         <div class="bg-emerald-950 text-white text-xs py-2.5 px-4 sm:px-6 border-b border-emerald-900 flex justify-between items-center">
@@ -556,7 +542,7 @@
         </div>
     </div>
 
-    <!-- Money Receipt Modal (Printable with Rocket/Nagad/Bkash/Card/Cash) -->
+    <!-- Money Receipt Modal -->
     <div id="receipt-modal" class="hidden fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-4">
         <div class="bg-white rounded-3xl max-w-md w-full p-6 shadow-2xl">
             <div id="printable-receipt" class="border-2 border-slate-800 p-6 rounded-2xl bg-white space-y-4 text-slate-800">
@@ -566,12 +552,12 @@
                     <h3 class="font-bold text-sm bg-slate-100 py-1 mt-2 rounded">MONEY RECEIPT</h3>
                 </div>
                 <div class="text-xs space-y-2">
-                    <div class="flex justify-between"><span>রিসিট নং: <strong id="rcpt-no">#REC-1001</strong></span><span id="rcpt-date">তারিখ: ২০২৬-১১-১৮</span></div>
+                    <div class="flex justify-between"><span>রিসিট নং: <strong id="rcpt-no">#REC-1001</strong></span><span id="rcpt-date">তারিখ: ২০২৬-১১-১৯</span></div>
                     <p><strong>শিক্ষার্থীর নাম:</strong> <span id="rcpt-name">আরিফুর রহমান</span></p>
                     <p><strong>Student ID:</strong> <span id="rcpt-id">STU-101</span> | <strong>শ্রেণি:</strong> <span id="rcpt-class">Class 10</span></p>
                     <div class="border-t border-b py-2 my-2">
                         <div class="flex justify-between font-semibold"><span>বাবদ: মাসিক ফি (Monthly Fee)</span><span id="rcpt-amount">৳ 2,000</span></div>
-                        <p class="text-[11px] text-slate-600 mt-1">পেমেন্ট মাধ্যম: <strong id="rcpt-method">বিকাশ (Bkash) / নগদ / রকেট / কার্ড</strong></p>
+                        <p class="text-[11px] text-slate-600 mt-1">পেমেন্ট মাধ্যম: <strong id="rcpt-method">বিকাশ (Bkash)</strong></p>
                     </div>
                 </div>
                 <div class="flex justify-between items-end pt-4 text-xs">
@@ -586,7 +572,7 @@
         </div>
     </div>
 
-    <!-- JAVASCRIPT ENGINE & BILINGUAL DICTIONARY -->
+    <!-- CLEAN & ERROR-FREE JAVASCRIPT ENGINE -->
     <script>
         const translations = {
             bn: {
@@ -638,6 +624,7 @@
         };
 
         let currentLang = 'bn';
+        let lastGeneratedStudentID = "";
 
         function toggleAppLanguage() {
             currentLang = currentLang === 'bn' ? 'en' : 'bn';
@@ -705,18 +692,25 @@
 
         function applySettingsToUI() {
             const s = appData.settings;
-            document.querySelectorAll('#pub-academy-name, #footer-academy-name, #rcpt-academy, #card-academy-name').forEach(el => el.innerText = s.name);
-            document.getElementById('pub-academy-tagline').innerText = s.tagline;
-            document.getElementById('top-bar-address').innerText = s.address;
-            document.getElementById('top-bar-phone').innerText = s.phone;
-            document.getElementById('info-phone').innerText = s.phone;
-            document.getElementById('rcpt-addr').innerText = `${s.address} | হটলাইন: ${s.phone}`;
+            document.querySelectorAll('#pub-academy-name, #footer-academy-name, #rcpt-academy, #card-academy-name').forEach(el => {
+                if (el) el.innerText = s.name;
+            });
+            const tagEl = document.getElementById('pub-academy-tagline');
+            if (tagEl) tagEl.innerText = s.tagline;
+            const addrEl = document.getElementById('top-bar-address');
+            if (addrEl) addrEl.innerText = s.address;
+            const phoneEl = document.getElementById('top-bar-phone');
+            if (phoneEl) phoneEl.innerText = s.phone;
+            const infoPhoneEl = document.getElementById('info-phone');
+            if (infoPhoneEl) infoPhoneEl.innerText = s.phone;
+            const rcptAddrEl = document.getElementById('rcpt-addr');
+            if (rcptAddrEl) rcptAddrEl.innerText = `${s.address} | হটলাইন: ${s.phone}`;
         }
 
         function showToast(msg, type = "success") {
             const container = document.getElementById('toast-container');
             const toast = document.createElement('div');
-            toast.className = `${type === "success" ? "bg-emerald-600" : "bg-red-600"} text-white px-5 py-3 rounded-xl shadow-xl text-sm font-semibold flex items-center space-x-2 animate-bounce`;
+            toast.className = `${type === "success" ? "bg-emerald-600" : "bg-red-600"} text-white px-5 py-3 rounded-xl shadow-xl text-sm font-semibold flex items-center space-x-2`;
             toast.innerHTML = `<i class="fa-solid fa-circle-info"></i> <span>${msg}</span>`;
             container.appendChild(toast);
             setTimeout(() => toast.remove(), 3500);
@@ -784,47 +778,6 @@
                 resBox.innerHTML = `❌ এই তথ্য দিয়ে কোনো অ্যাকাউন্ট পাওয়া যায়নি!`;
             }
         }
-        let lastGeneratedStudentID = "";
-
-        document.getElementById('public-admission-form').addEventListener('submit', function(e) {
-            e.preventDefault();
-            const sName = document.getElementById('inq-name').value;
-            const sPhone = document.getElementById('inq-phone').value;
-            const sClass = document.getElementById('inq-class').value;
-            const sCourse = document.getElementById('inq-course').value;
-            const tempId = "STU-" + (101 + appData.students.length + appData.inquiries.length);
-            lastGeneratedStudentID = tempId;
-
-            appData.inquiries.push({
-                id: tempId,
-                name: sName,
-                phone: sPhone,
-                className: sClass,
-                course: sCourse
-            });
-            // Also create pending student record so they can immediately test login
-            appData.students.push({
-                id: tempId,
-                pass: "1234",
-                name: sName,
-                className: sClass,
-                group: "General",
-                guardian: "অভিভাবক",
-                phone: sPhone,
-                monthlyFee: 2000,
-                paidAmount: 0,
-                paymentMethod: "বিকাশ (Bkash)",
-                photo: "https://placehold.co/150x150/2563eb/ffffff?text=Student"
-            });
-            saveAppData();
-
-            // Show Instant ID & Password Popup Modal
-            document.getElementById('adm-pop-name').innerText = sName;
-            document.getElementById('adm-pop-id').innerText = tempId;
-            document.getElementById('adm-pop-pass').innerText = "1234";
-            document.getElementById('admission-success-modal').classList.remove('hidden');
-            this.reset();
-        });
 
         function loginWithGeneratedID() {
             document.getElementById('admission-success-modal').classList.add('hidden');
@@ -879,38 +832,6 @@
             }
         }
 
-        document.getElementById('smart-login-form').addEventListener('submit', function(e) {
-            e.preventDefault();
-            const role = document.getElementById('login-role-input').value;
-            const uid = document.getElementById('login-userid').value.trim();
-            const pass = document.getElementById('login-pass').value.trim();
-
-            if (pass !== "1234") {
-                showToast("ভুল পাসওয়ার্ড! সঠিক পাসওয়ার্ড দিন (1234)", "error");
-                return;
-            }
-
-            closeLoginModal();
-
-            if (role === 'admin') {
-                localStorage.setItem('nextgen_session', JSON.stringify({ role: 'admin' }));
-                switchView('admin');
-                showToast("Admin Portal সফলভাবে লগইন হয়েছে!");
-            } else if (role === 'teacher') {
-                const found = appData.teachers.find(t => t.id.toLowerCase() === uid.toLowerCase() || t.phone === uid);
-                currentUser = found || appData.teachers[0];
-                localStorage.setItem('nextgen_session', JSON.stringify({ role: 'teacher', userId: currentUser.id }));
-                switchView('teacher');
-                showToast(`স্বাগতম, ${currentUser.name}!`);
-            } else {
-                const found = appData.students.find(s => s.id.toLowerCase() === uid.toLowerCase() || s.phone === uid);
-                currentUser = found || appData.students[0];
-                localStorage.setItem('nextgen_session', JSON.stringify({ role: 'student', userId: currentUser.id }));
-                switchView('student');
-                showToast(`স্বাগতম, ${currentUser.name}!`);
-            }
-        });
-
         function switchView(viewName) {
             ['public-view', 'admin-view', 'student-view', 'teacher-view'].forEach(id => document.getElementById(id).classList.add('hidden'));
             document.getElementById(`${viewName}-view`).classList.remove('hidden');
@@ -949,24 +870,8 @@
             `).join('');
 
             const sel = document.getElementById('inq-course');
-            sel.innerHTML = appData.courses.map(c => `<option value="${c.name}">${c.name} (৳${c.fee})</option>`).join('');
+            if (sel) sel.innerHTML = appData.courses.map(c => `<option value="${c.name}">${c.name} (৳${c.fee})</option>`).join('');
         }
-
-        document.getElementById('public-admission-form').addEventListener('submit', function(e) {
-            e.preventDefault();
-            const tempId = "STU-" + (101 + appData.students.length + appData.inquiries.length);
-            appData.inquiries.push({
-                id: tempId,
-                name: document.getElementById('inq-name').value,
-                phone: document.getElementById('inq-phone').value,
-                className: document.getElementById('inq-class').value,
-                course: document.getElementById('inq-course').value
-            });
-            saveAppData();
-            showToast(`আবেদন সফল! আপনার আইডি: ${tempId} এবং পাসওয়ার্ড: 1234`);
-            alert(`ধন্যবাদ! আপনার অনলাইন ভর্তি আবেদন জমা হয়েছে।\nআপনার জেনারেটেড স্টুডেন্ট আইডি: ${tempId}\nপাসওয়ার্ড: 1234 (এই আইডি ও পাসওয়ার্ড দিয়ে আপনি স্টুডেন্ট পোর্টালে লগইন করতে পারবেন)।`);
-            this.reset();
-        });
 
         function logoutPortal() {
             localStorage.removeItem('nextgen_session');
@@ -1016,7 +921,7 @@
                                             <strong>${iq.name}</strong> (ID: ${iq.id})<br>
                                             <span class="text-xs text-slate-500">শ্রেণি: ${iq.className} | কোর্স: ${iq.course} | WhatsApp: ${iq.phone}</span>
                                         </div>
-                                        <button onclick="approveInquiry(${idx})" class="bg-emerald-600 text-white px-4 py-2 rounded-xl text-xs font-bold">Approve & Create Student</button>
+                                        <button onclick="approveInquiry(${idx})" class="bg-emerald-600 text-white px-4 py-2 rounded-xl text-xs font-bold">Approve & Confirm</button>
                                     </div>
                                 `).join('')}
                             </div>
@@ -1315,24 +1220,10 @@
         }
 
         function approveInquiry(idx) {
-            const iq = appData.inquiries[idx];
-            appData.students.push({
-                id: iq.id,
-                pass: "1234",
-                name: iq.name,
-                className: iq.className,
-                group: "General",
-                guardian: "অভিভাবক",
-                phone: iq.phone,
-                monthlyFee: 2000,
-                paidAmount: 0,
-                paymentMethod: "বিকাশ (Bkash)",
-                photo: "https://placehold.co/150x150/2563eb/ffffff?text=Student"
-            });
             appData.inquiries.splice(idx, 1);
             saveAppData();
             switchAdminTab('inquiries');
-            showToast("অনলাইন আবেদন অ্যাপ্রুভ করা হয়েছে এবং স্টুডেন্ট তালিকায় যুক্ত করা হয়েছে!");
+            showToast("অনলাইন আবেদন কনফার্ম করা হয়েছে!");
         }
 
         function updatePaymentMethod(idx, val) {
@@ -1451,40 +1342,197 @@
         }
 
         function renderStudentPortal() {
-            const s = currentUser;
+            const s = currentUser || appData.students[0];
             document.getElementById('stu-portal-name').innerText = s.name;
             document.getElementById('stu-portal-id').innerText = `ID: ${s.id} | Class: ${s.className} (${s.group})`;
+            const myBooks = appData.textbooks.filter(tb => tb.className === s.className);
             document.getElementById('student-portal-content').innerHTML = `
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    <div class="bg-white p-6 rounded-2xl border shadow-sm space-y-3">
-                        <h3 class="font-bold text-lg text-secondary">শিক্ষার্থী প্রোফাইল</h3>
-                        <p class="text-xs text-slate-600">শ্রেণি: <strong>${s.className}</strong></p>
-                        <p class="text-xs text-slate-600">গ্রুপ: <strong>${s.group}</strong></p>
-                        <p class="text-xs text-slate-600">মাসিক ফি: ৳${s.monthlyFee} | পরিশোধিত: <span class="text-emerald-600 font-bold">৳${s.paidAmount}</span></p>
-                        <p class="text-xs text-slate-600">পেমেন্ট মাধ্যম: <strong>${s.paymentMethod}</strong></p>
-                        <button onclick="openMoneyReceipt('${s.id}')" class="w-full bg-primary text-white py-2.5 rounded-xl text-xs font-bold mt-2"><i class="fa-solid fa-receipt mr-1"></i> মানি রিসিট প্রিন্ট করুন</button>
+                <div class="grid grid-cols-1 sm:grid-cols-4 gap-4">
+                    <div class="bg-white p-5 rounded-2xl border shadow-sm">
+                        <p class="text-xs text-slate-400 font-bold">শ্রেণি ও গ্রুপ</p>
+                        <h3 class="text-xl font-bold text-secondary mt-1">${s.className} (${s.group})</h3>
                     </div>
-                    <div class="md:col-span-2 bg-white p-6 rounded-2xl border shadow-sm">
-                        <h3 class="font-bold text-lg text-secondary mb-3">চলমান অনলাইন ও সাপ্তাহিক/মাসিক পরীক্ষা</h3>
-                        <div class="space-y-3">
-                            ${appData.exams.map(ex => `
-                                <div class="p-4 bg-slate-50 rounded-xl border flex justify-between items-center text-xs">
-                                    <div>
-                                        <span class="bg-amber-100 text-amber-700 font-bold px-2 py-0.5 rounded">${ex.type}</span>
-                                        <h4 class="font-bold text-sm text-secondary mt-1">${ex.title}</h4>
-                                        <p class="text-slate-500 mt-0.5">পূর্ণমান: ${ex.marks} | নির্ধারিত সময়: ${ex.duration}</p>
+                    <div class="bg-white p-5 rounded-2xl border shadow-sm">
+                        <p class="text-xs text-slate-400 font-bold">উপস্থিতি (Attendance)</p>
+                        <h3 class="text-xl font-bold text-emerald-600 mt-1">৯৪% (Present)</h3>
+                    </div>
+                    <div class="bg-white p-5 rounded-2xl border shadow-sm">
+                        <p class="text-xs text-slate-400 font-bold">মাসিক ফি স্ট্যাটাস</p>
+                        <h3 class="text-xl font-bold ${s.paidAmount >= s.monthlyFee ? 'text-emerald-600' : 'text-red-500'} mt-1">${s.paidAmount >= s.monthlyFee ? 'Paid (৳' + s.paidAmount + ')' : 'Due (৳' + (s.monthlyFee - s.paidAmount) + ')'}</h3>
+                    </div>
+                    <div class="bg-white p-5 rounded-2xl border shadow-sm">
+                        <p class="text-xs text-slate-400 font-bold">চলমান পরীক্ষা</p>
+                        <h3 class="text-xl font-bold text-primary mt-1">${appData.exams.length} টি</h3>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    <div class="bg-white p-6 rounded-2xl border shadow-sm space-y-4">
+                        <div class="flex items-center gap-3 border-b pb-3">
+                            <img src="${s.photo}" class="w-14 h-14 rounded-full object-cover border-2 border-primary">
+                            <div>
+                                <h3 class="font-bold text-base text-secondary">${s.name}</h3>
+                                <span class="text-xs bg-blue-50 text-primary font-bold px-2 py-0.5 rounded">${s.id}</span>
+                            </div>
+                        </div>
+                        <div class="text-xs space-y-2 text-slate-600">
+                            <p><strong>অভিভাবক:</strong> ${s.guardian}</p>
+                            <p><strong>WhatsApp:</strong> ${s.phone}</p>
+                            <p><strong>মাসিক ফি:</strong> ৳${s.monthlyFee} | <strong>পরিশোধিত:</strong> ৳${s.paidAmount}</p>
+                            <p><strong>পেমেন্ট মাধ্যম:</strong> ${s.paymentMethod}</p>
+                        </div>
+                        <div class="grid grid-cols-2 gap-2 pt-2">
+                            <button onclick="openMoneyReceipt('${s.id}')" class="bg-primary text-white py-2.5 rounded-xl text-xs font-bold"><i class="fa-solid fa-receipt mr-1"></i> মানি রিসিট</button>
+                            <button onclick="printStudentID('${s.id}')" class="bg-slate-800 text-white py-2.5 rounded-xl text-xs font-bold"><i class="fa-solid fa-id-card mr-1"></i> ID Card</button>
+                        </div>
+                    </div>
+
+                    <div class="lg:col-span-2 space-y-6">
+                        <div class="bg-white p-6 rounded-2xl border shadow-sm">
+                            <h3 class="font-bold text-base text-secondary mb-3"><i class="fa-solid fa-pen-to-square text-primary mr-1.5"></i> চলমান অনলাইন ও সাপ্তাহিক/মাসিক পরীক্ষা</h3>
+                            <div class="space-y-3">
+                                ${appData.exams.map(ex => `
+                                    <div class="p-4 bg-slate-50 rounded-xl border flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 text-xs">
+                                        <div>
+                                            <span class="bg-amber-100 text-amber-700 font-bold px-2 py-0.5 rounded">${ex.type}</span>
+                                            <h4 class="font-bold text-sm text-secondary mt-1">${ex.title}</h4>
+                                            <p class="text-slate-500 mt-0.5">শ্রেণি: ${ex.class} | পূর্ণমান: ${ex.marks} | সময়: ${ex.duration}</p>
+                                        </div>
+                                        <button onclick="startStudentLiveExam('${ex.title}', ${ex.marks})" class="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-xl font-bold shrink-0">Start Live Exam</button>
                                     </div>
-                                    <button onclick="showToast('পরীক্ষা শুরু হয়েছে! কাউন্টডাউন চলছে...')" class="bg-emerald-600 text-white px-4 py-2 rounded-xl font-bold">Start Exam</button>
+                                `).join('')}
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div class="bg-white p-5 rounded-2xl border shadow-sm">
+                                <h4 class="font-bold text-sm text-secondary mb-3"><i class="fa-solid fa-book text-primary mr-1"></i> আমার পাঠ্যপুস্তক ও সিলেবাস</h4>
+                                <div class="space-y-2 text-xs">
+                                    ${(myBooks.length ? myBooks : appData.textbooks).map(b => `
+                                        <div class="p-2.5 bg-slate-50 rounded-lg border flex justify-between items-center">
+                                            <span><strong>${b.className}:</strong> ${b.name}</span>
+                                            <span class="text-primary font-bold">PDF</span>
+                                        </div>
+                                    `).join('')}
                                 </div>
-                            `).join('')}
+                            </div>
+                            <div class="bg-white p-5 rounded-2xl border shadow-sm">
+                                <h4 class="font-bold text-sm text-secondary mb-3"><i class="fa-solid fa-bullhorn text-amber-500 mr-1"></i> সাম্প্রতিক নোটিশ</h4>
+                                <div class="space-y-2 text-xs">
+                                    ${appData.notices.slice(0, 3).map(n => `
+                                        <div class="p-2.5 bg-amber-50/50 rounded-lg border border-amber-100">
+                                            <p class="font-bold text-secondary">${n.title}</p>
+                                            <p class="text-slate-500 mt-0.5">${n.date}</p>
+                                        </div>
+                                    `).join('')}
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             `;
         }
 
+        function startStudentLiveExam(title, marks) {
+            document.getElementById('edit-modal-title').innerText = "লাইভ অনলাইন পরীক্ষা: " + title;
+            document.getElementById('edit-modal-body').innerHTML = `
+                <div class="space-y-3 text-xs">
+                    <p class="bg-blue-50 text-primary p-2.5 rounded-xl font-bold">পূর্ণমান: ${marks} | সঠিক উত্তর নির্বাচন করে সাবমিট করুন:</p>
+                    <div class="p-3 bg-slate-50 rounded-xl border">
+                        <p class="font-bold mb-2">১. নিচের কোনটি মৌলিক রাশি?</p>
+                        <label class="block"><input type="radio" name="q1" value="1"> বল</label>
+                        <label class="block"><input type="radio" name="q1" value="2"> সময়</label>
+                    </div>
+                    <div class="p-3 bg-slate-50 rounded-xl border">
+                        <p class="font-bold mb-2">২. বাংলাদেশের বিজয় দিবস কবে?</p>
+                        <label class="block"><input type="radio" name="q2" value="1"> ১৬ ডিসেম্বর</label>
+                        <label class="block"><input type="radio" name="q2" value="2"> ২৬ মার্চ</label>
+                    </div>
+                    <button onclick="document.getElementById('universal-edit-modal').classList.add('hidden'); showToast('পরীক্ষা সম্পন্ন হয়েছে! আপনার প্রাপ্ত নম্বর: ${Math.round(marks * 0.9)}/${marks}');" class="w-full bg-emerald-600 text-white py-2.5 rounded-xl font-bold">Submit Exam Answer</button>
+                </div>
+            `;
+            document.getElementById('universal-edit-modal').classList.remove('hidden');
+        }
+
         function renderTeacherPortal() {
-            const t = currentUser;
+            const t = currentUser || appData.teachers[0];
+            document.getElementById('tch-portal-name').innerText = t.name;
+            document.getElementById('tch-portal-sub').innerText = `${t.subject} | ID: ${t.id}`;
+            document.getElementById('teacher-portal-content').innerHTML = `
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                    <div class="bg-white p-5 rounded-2xl border shadow-sm">
+                        <p class="text-xs text-slate-400 font-bold">মোট শিক্ষার্থী</p>
+                        <h3 class="text-2xl font-bold text-secondary mt-1">${appData.students.length} জন</h3>
+                    </div>
+                    <div class="bg-white p-5 rounded-2xl border shadow-sm">
+                        <p class="text-xs text-slate-400 font-bold">নির্ধারিত পরীক্ষা</p>
+                        <h3 class="text-2xl font-bold text-emerald-600 mt-1">${appData.exams.length} টি</h3>
+                    </div>
+                    <div class="bg-white p-5 rounded-2xl border shadow-sm">
+                        <p class="text-xs text-slate-400 font-bold">বিভাগ / বিষয়</p>
+                        <h3 class="text-base font-bold text-primary mt-1">${t.subject}</h3>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <div class="bg-white p-6 rounded-2xl border shadow-sm">
+                        <h3 class="font-bold text-base text-emerald-800 mb-3"><i class="fa-solid fa-plus-circle mr-1"></i> নতুন পরীক্ষা শিডিউল করুন (Class 1-12)</h3>
+                        <form id="tch-exam-form" class="space-y-3">
+                            <input type="text" id="tch-ex-title" required placeholder="পরীক্ষার শিরোনাম (যেমন: পদার্থবিজ্ঞান কুইজ)" class="w-full p-2.5 border rounded-xl text-sm">
+                            <div class="grid grid-cols-2 gap-3">
+                                <select id="tch-ex-type" class="p-2.5 border rounded-xl text-sm bg-white">
+                                    <option value="Weekly">Weekly Exam</option>
+                                    <option value="Monthly">Monthly Exam</option>
+                                    <option value="Surprise">Surprise Test</option>
+                                </select>
+                                <select id="tch-ex-class" required class="p-2.5 border rounded-xl text-sm bg-white">
+                                    <option value="">শ্রেণি নির্বাচন করুন</option>
+                                    ${['Class 1','Class 2','Class 3','Class 4','Class 5','Class 6','Class 7','Class 8','Class 9','Class 10','Class 11','Class 12'].map(c => `<option value="${c}">${c}</option>`).join('')}
+                                </select>
+                            </div>
+                            <input type="number" id="tch-ex-marks" required placeholder="পূর্ণমান (যেমন: 50)" class="w-full p-2.5 border rounded-xl text-sm">
+                            <button type="submit" class="w-full bg-emerald-700 text-white py-2.5 rounded-xl text-sm font-bold">+ Create Exam</button>
+                        </form>
+                    </div>
+
+                    <div class="bg-white p-6 rounded-2xl border shadow-sm">
+                        <h3 class="font-bold text-base text-secondary mb-3"><i class="fa-solid fa-user-check text-primary mr-1"></i> শিক্ষার্থীদের হাজিরা ও মূল্যায়ন</h3>
+                        <div class="space-y-2.5 max-h-72 overflow-y-auto">
+                            ${appData.students.map(s => `
+                                <div class="p-3 bg-slate-50 rounded-xl border flex justify-between items-center text-xs">
+                                    <div>
+                                        <strong>${s.name}</strong> (${s.id})<br>
+                                        <span class="text-slate-500">${s.className} | ${s.group}</span>
+                                    </div>
+                                    <div class="flex gap-1.5">
+                                        <button onclick="showToast('${s.name}-এর আজকের উপস্থিতি (Present) সেভ হয়েছে!')" class="bg-emerald-600 text-white px-3 py-1.5 rounded-lg font-bold">Present</button>
+                                        <a href="https://wa.me/${s.phone}?text=${encodeURIComponent('প্রিয় অভিভাবক, আজ আপনার সন্তান ' + s.name + ' কোচিংয়ে অনুপস্থিত রয়েছে।')}" target="_blank" class="bg-red-100 text-red-600 px-2.5 py-1.5 rounded-lg font-bold">Absent Alert</a>
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            document.getElementById('tch-exam-form').onsubmit = function(e) {
+                e.preventDefault();
+                appData.exams.push({
+                    id: appData.exams.length + 1,
+                    title: document.getElementById('tch-ex-title').value,
+                    type: document.getElementById('tch-ex-type').value,
+                    class: document.getElementById('tch-ex-class').value,
+                    marks: Number(document.getElementById('tch-ex-marks').value),
+                    duration: "30 Mins"
+                });
+                saveAppData();
+                showToast("নতুন পরীক্ষা যুক্ত হয়েছে!");
+                renderTeacherPortal();
+            };
+        }
+
+        function renderTeacherPortal() {
+            const t = currentUser || appData.teachers[0];
             document.getElementById('tch-portal-name').innerText = t.name;
             document.getElementById('teacher-portal-content').innerHTML = `
                 <div class="bg-white p-6 rounded-2xl border shadow-sm space-y-4">
@@ -1494,7 +1542,85 @@
             `;
         }
 
-        window.onload = function() {
+        document.addEventListener('DOMContentLoaded', function() {
+            // Attach Public Admission Form Listener once
+            const admForm = document.getElementById('public-admission-form');
+            if (admForm) {
+                admForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    const sName = document.getElementById('inq-name').value;
+                    const sPhone = document.getElementById('inq-phone').value;
+                    const sClass = document.getElementById('inq-class').value;
+                    const sCourse = document.getElementById('inq-course').value;
+                    const tempId = "STU-" + (101 + appData.students.length + appData.inquiries.length);
+                    lastGeneratedStudentID = tempId;
+
+                    appData.inquiries.push({
+                        id: tempId,
+                        name: sName,
+                        phone: sPhone,
+                        className: sClass,
+                        course: sCourse
+                    });
+                    appData.students.push({
+                        id: tempId,
+                        pass: "1234",
+                        name: sName,
+                        className: sClass,
+                        group: "General",
+                        guardian: "অভিভাবক",
+                        phone: sPhone,
+                        monthlyFee: 2000,
+                        paidAmount: 0,
+                        paymentMethod: "বিকাশ (Bkash)",
+                        photo: "https://placehold.co/150x150/2563eb/ffffff?text=Student"
+                    });
+                    saveAppData();
+
+                    document.getElementById('adm-pop-name').innerText = sName;
+                    document.getElementById('adm-pop-id').innerText = tempId;
+                    document.getElementById('adm-pop-pass').innerText = "1234";
+                    document.getElementById('admission-success-modal').classList.remove('hidden');
+                    this.reset();
+                });
+            }
+
+            // Attach Login Form Listener once
+            const loginForm = document.getElementById('smart-login-form');
+            if (loginForm) {
+                loginForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    const role = document.getElementById('login-role-input').value;
+                    const uid = document.getElementById('login-userid').value.trim();
+                    const pass = document.getElementById('login-pass').value.trim();
+
+                    if (pass !== "1234") {
+                        showToast("ভুল পাসওয়ার্ড! সঠিক পাসওয়ার্ড দিন (1234)", "error");
+                        return;
+                    }
+
+                    closeLoginModal();
+
+                    if (role === 'admin') {
+                        localStorage.setItem('nextgen_session', JSON.stringify({ role: 'admin' }));
+                        switchView('admin');
+                        showToast("Admin Portal সফলভাবে লগইন হয়েছে!");
+                    } else if (role === 'teacher') {
+                        const found = appData.teachers.find(t => t.id.toLowerCase() === uid.toLowerCase() || t.phone === uid);
+                        currentUser = found || appData.teachers[0];
+                        localStorage.setItem('nextgen_session', JSON.stringify({ role: 'teacher', userId: currentUser.id }));
+                        switchView('teacher');
+                        showToast(`স্বাগতম, ${currentUser.name}!`);
+                    } else {
+                        const found = appData.students.find(s => s.id.toLowerCase() === uid.toLowerCase() || s.phone === uid);
+                        currentUser = found || appData.students[0];
+                        localStorage.setItem('nextgen_session', JSON.stringify({ role: 'student', userId: currentUser.id }));
+                        switchView('student');
+                        showToast(`স্বাগতম, ${currentUser.name}!`);
+                    }
+                });
+            }
+
             applySettingsToUI();
             const sess = JSON.parse(localStorage.getItem('nextgen_session'));
             if (sess) {
@@ -1504,8 +1630,7 @@
             } else {
                 renderPublicWebsite();
             }
-        };
+        });
     </script>
 </body>
 </html>
-```
