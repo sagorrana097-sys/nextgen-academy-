@@ -1,18 +1,20 @@
-const STORAGE_KEY = 'nextgen_academy_erp_v1';
+const STORAGE_KEY = 'nextgen_academy_erp_v2';
+
+const ACADEMY_PROFILE = {
+  name: 'NextGen Academy',
+  director: 'মো: আলমগীর হোসেন (সাগর)',
+  taglineBn: 'আধুনিক শিক্ষা ও স্মার্ট অ্যাকাডেমিক ব্যবস্থাপনা',
+  taglineEn: 'Modern Learning & Smart Academic ERP',
+  phone: '01792818005, 015812299984',
+  email: 'Sagorrana097@gmail.com',
+  address: 'লক্ষিপুরা রোড, বাস-স্ট্যান্ড, জয়দেবপুর, গাজীপুর।'
+};
 
 const DEFAULT_STATE = {
   lang: 'bn',
   theme: 'light',
   currentUser: null,
-  academy: {
-    name: 'NextGen Academy',
-    director: 'মো: আলমগীর হোসেন (সাগর)',
-    taglineBn: 'আধুনিক শিক্ষা ও স্মার্ট অ্যাকাডেমিক ব্যবস্থাপনা',
-    taglineEn: 'Modern Learning & Smart Academic ERP',
-    phone: '01792818005, 015812299984',
-    email: 'Sagorrana097@gmail.com',
-    address: 'লক্ষিপুরা রোড, বাস-স্ট্যান্ড, জয়দেবপুর, গাজীপুর।'
-  },
+  academy: { ...ACADEMY_PROFILE },
   admissions: [
     {
       id: 'ADM-201',
@@ -124,10 +126,7 @@ const Store = {
       return {
         ...cloneDefaultState(),
         ...parsed,
-        academy: {
-          ...cloneDefaultState().academy,
-          ...(parsed.academy || {})
-        }
+        academy: { ...ACADEMY_PROFILE }
       };
     } catch {
       return cloneDefaultState();
