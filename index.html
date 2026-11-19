@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>NextGen Academy — ERP & Learning Portal</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%236d4aff'/><text x='50%' y='62%' dominant-baseline='middle' text-anchor='middle' fill='white' font-size='46' font-family='sans-serif' font-weight='bold'>NG</text></svg>" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
@@ -98,7 +99,6 @@
 <body class="bg-cofferBg text-slate-800 dark:bg-cofferDark dark:text-slate-100 min-h-screen transition-colors duration-200">
   <div id="app"></div>
 
-  <!-- Shared Modal for Receipts, ID Cards, Credentials & Password Recovery -->
   <div id="modal-backdrop" class="fixed inset-0 z-50 hidden items-center justify-center bg-slate-950/60 backdrop-blur-sm p-4 print:hidden">
     <div id="modal-card" class="w-full max-w-xl rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-2xl p-6 max-h-[90vh] overflow-y-auto">
       <div class="flex items-center justify-between border-b border-slate-100 dark:border-slate-800 pb-3 mb-4">
@@ -109,7 +109,6 @@
     </div>
   </div>
 
-  <!-- Printable Area -->
   <div id="print-area" class="hidden print:block p-6 bg-white text-slate-900"></div>
 
   <script src="js/store.js"></script>
