@@ -34,13 +34,13 @@ function triggerPrint(html) {
 
 function buildIdCardHtml(student) {
   return `
-    <div class="max-w-sm mx-auto border-2 border-indigo-600 rounded-2xl p-5 bg-white text-slate-900">
+    <div class="max-w-sm mx-auto border-2 border-slate-700 rounded-2xl p-5 bg-white text-slate-900">
       <div class="flex items-center justify-between border-b pb-2 mb-3">
         <div>
-          <p class="text-xs font-bold uppercase text-indigo-600">${appState.academy.name}</p>
+          <p class="text-xs font-bold uppercase text-blue-700">${appState.academy.name}</p>
           <p class="text-[11px] text-slate-500">${appState.academy.address}</p>
         </div>
-        <span class="px-2.5 py-1 text-xs font-bold rounded bg-indigo-100 text-indigo-700">${student.id}</span>
+        <span class="px-2.5 py-1 text-xs font-bold rounded bg-slate-200 text-slate-800">${student.id}</span>
       </div>
       <div class="space-y-1 text-xs">
         <p><strong>Name:</strong> ${student.name}</p>
@@ -65,7 +65,7 @@ function buildReceiptHtml(fee) {
     <div class="max-w-lg mx-auto border border-slate-300 rounded-2xl p-6 bg-white text-slate-900">
       <div class="flex items-center justify-between border-b pb-3 mb-4">
         <div>
-          <h3 class="text-lg font-extrabold text-indigo-700">${appState.academy.name}</h3>
+          <h3 class="text-lg font-extrabold text-blue-700">${appState.academy.name}</h3>
           <p class="text-xs text-slate-500">${appState.academy.address}</p>
           <p class="text-[11px] text-slate-500">Email: ${appState.academy.email} | Tel: ${appState.academy.phone}</p>
         </div>
@@ -125,41 +125,43 @@ function renderPublicSite() {
   return `
     <div class="space-y-8">
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
-        <div class="lg:col-span-7 coffer-card rounded-3xl p-7 space-y-4">
-          <span class="inline-block px-3.5 py-1 rounded-full text-xs font-extrabold bg-indigo-100 text-indigo-700 dark:bg-violet-950 dark:text-violet-300">
-            ${bn ? 'স্মার্ট অ্যাকাডেমিক ও ERP পোর্টাল' : 'Smart Academic & ERP Portal'}
-          </span>
-          <h1 class="text-3xl md:text-4xl font-extrabold text-slate-900 dark:text-white leading-tight">
+        <div class="lg:col-span-6 coffer-card rounded-3xl p-7 space-y-4">
+          <div class="w-12 h-12 rounded-full neu-card flex items-center justify-center text-blue-600 font-extrabold text-base">NG</div>
+          <h1 class="text-3xl md:text-4xl font-extrabold leading-tight">
             ${appState.academy.name}
           </h1>
           <p class="text-slate-600 dark:text-slate-300 text-sm md:text-base">
             ${bn ? appState.academy.taglineBn : appState.academy.taglineEn}
           </p>
-          <div class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/70 border border-slate-200 dark:border-slate-700 text-xs md:text-sm space-y-1 text-slate-700 dark:text-slate-200">
+          <div class="p-4 rounded-2xl coffer-input text-xs md:text-sm space-y-1">
             <p><strong>${bn ? 'পরিচালক:' : 'Director:'}</strong> ${appState.academy.director}</p>
             <p><strong>${bn ? 'ঠিকানা:' : 'Address:'}</strong> ${appState.academy.address}</p>
             <p><strong>${bn ? 'মোবাইল:' : 'Phone:'}</strong> ${appState.academy.phone}</p>
             <p><strong>${bn ? 'ইমেইল:' : 'Email:'}</strong> ${appState.academy.email}</p>
           </div>
           <div class="flex flex-wrap gap-3 pt-2">
-            <button id="open-login-modal-btn" type="button" class="coffer-btn-primary px-5 py-2.5 rounded-2xl text-sm font-bold">
-              ${bn ? 'পোর্টালে লগইন করুন' : 'Portal Login'}
+            <button id="open-login-modal-btn" type="button" class="coffer-btn-primary px-6 py-2.5 rounded-xl text-xs uppercase tracking-wider">
+              ${bn ? 'পোর্টাল লগইন' : 'Portal Login'}
             </button>
-            <button id="open-recovery-modal-btn" type="button" class="coffer-btn-secondary px-5 py-2.5 rounded-2xl text-sm font-bold">
+            <button id="open-recovery-modal-btn" type="button" class="coffer-btn-secondary px-5 py-2.5 rounded-xl text-xs font-bold">
               ${bn ? 'পাসওয়ার্ড ভুলে গেছেন?' : 'Forgot Password?'}
             </button>
           </div>
-          <div class="p-3.5 rounded-2xl bg-slate-50 dark:bg-slate-800/70 border border-slate-200 dark:border-slate-700 text-xs text-slate-600 dark:text-slate-300">
-            Demo Credentials — Admin: <strong>admin / 1234</strong> • Teacher: <strong>TCH-01 / 123</strong> • Student: <strong>STU-101 / 123</strong>
+          <div class="p-3.5 rounded-2xl coffer-input text-xs text-slate-600 dark:text-slate-300">
+            Demo — Admin: <strong>admin / 1234</strong> • Teacher: <strong>TCH-01 / 123</strong> • Student: <strong>STU-101 / 123</strong>
           </div>
         </div>
 
-        <div class="lg:col-span-5 coffer-card rounded-3xl p-6">
-          <h2 class="text-lg font-extrabold mb-3 text-slate-900 dark:text-white">${bn ? 'অনলাইন ভর্তি আবেদন' : 'Online Admission'}</h2>
-          <form id="public-admission-form" action="javascript:void(0)" method="post" class="space-y-3">
-            <input name="name" required placeholder="${bn ? 'শিক্ষার্থীর পূর্ণ নাম' : 'Student Full Name'}" class="coffer-input" />
+        <div class="lg:col-span-6 coffer-card rounded-3xl p-7">
+          <div class="flex flex-col items-center text-center mb-5">
+            <div class="w-12 h-12 rounded-full neu-card flex items-center justify-center text-blue-600 font-bold text-lg mb-2">✎</div>
+            <h2 class="text-xl font-extrabold">${bn ? 'অনলাইন ভর্তি আবেদন' : 'Create Admission'}</h2>
+            <p class="text-xs text-slate-500 mt-0.5">${bn ? 'আপনার তথ্য দিয়ে আবেদন সম্পন্ন করুন' : 'Start your admission journey with us'}</p>
+          </div>
+          <form id="public-admission-form" action="javascript:void(0)" method="post" class="space-y-3.5">
+            <input name="name" required placeholder="${bn ? 'শিক্ষার্থীর পূর্ণ নাম' : 'Full Name'}" class="coffer-input" />
             <input name="phone" required placeholder="${bn ? 'মোবাইল নম্বর' : 'Mobile Number'}" class="coffer-input" />
-            <div class="grid grid-cols-3 gap-2">
+            <div class="grid grid-cols-3 gap-2.5">
               <select name="studentClass" class="coffer-input text-xs">
                 <option>Class 8</option><option>Class 9</option><option selected>Class 10</option><option>Class 11</option><option>Class 12</option>
               </select>
@@ -170,8 +172,8 @@ function renderPublicSite() {
                 <option>Morning</option><option>Day</option><option>Evening</option>
               </select>
             </div>
-            <button type="submit" class="coffer-btn-primary w-full py-2.5 rounded-2xl text-sm font-bold">
-              ${bn ? 'আবেদন জমা দিন' : 'Submit Admission'}
+            <button type="submit" class="coffer-btn-primary w-full py-3 rounded-xl text-xs uppercase tracking-wider mt-2">
+              ${bn ? 'আবেদন জমা দিন' : 'SUBMIT ADMISSION'}
             </button>
           </form>
         </div>
@@ -183,12 +185,12 @@ function renderPublicSite() {
           ${(appState.notices || [])
             .map(
               (n) => `
-            <div class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/70 border border-slate-200 dark:border-slate-700 flex items-start justify-between gap-3">
+            <div class="p-4 rounded-2xl coffer-input flex items-start justify-between gap-3">
               <div>
                 <p class="font-bold text-sm">${n.title}</p>
                 <p class="text-xs text-slate-500 mt-1">${n.body}</p>
               </div>
-              <a href="https://wa.me/?text=${encodeURIComponent(n.title + ' - ' + n.body)}" target="_blank" rel="noopener" class="px-3 py-1.5 rounded-xl text-xs font-bold bg-emerald-600 text-white shrink-0">WhatsApp</a>
+              <a href="https://wa.me/?text=${encodeURIComponent(n.title + ' - ' + n.body)}" target="_blank" rel="noopener" class="coffer-btn-secondary px-3 py-1.5 rounded-xl text-xs font-bold shrink-0">WhatsApp</a>
             </div>
           `
             )
@@ -200,12 +202,12 @@ function renderPublicSite() {
           ${(appState.onlineClasses || [])
             .map(
               (c) => `
-            <div class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/70 border border-slate-200 dark:border-slate-700 flex items-center justify-between gap-3">
+            <div class="p-4 rounded-2xl coffer-input flex items-center justify-between gap-3">
               <div>
                 <p class="font-bold text-sm">${c.topic}</p>
                 <p class="text-xs text-slate-500">${c.studentClass} • ${c.date} • ${c.time}</p>
               </div>
-              <a href="${c.link}" target="_blank" rel="noopener" class="coffer-btn-primary px-3.5 py-1.5 rounded-xl text-xs font-bold">Join</a>
+              <a href="${c.link}" target="_blank" rel="noopener" class="coffer-btn-primary px-4 py-1.5 rounded-xl text-xs font-bold">Join</a>
             </div>
           `
             )
@@ -221,7 +223,7 @@ function renderFooter() {
   return `
     <footer class="coffer-card rounded-3xl px-6 py-4 text-xs text-slate-600 dark:text-slate-300 flex flex-col md:flex-row md:items-center md:justify-between gap-2">
       <div>
-        <span class="font-extrabold text-slate-900 dark:text-white">${appState.academy.name}</span> — ${appState.academy.address}
+        <span class="font-extrabold">${appState.academy.name}</span> — ${appState.academy.address}
       </div>
       <div class="flex flex-wrap gap-x-4 gap-y-1">
         <span>${bn ? 'পরিচালক:' : 'Director:'} <strong>${appState.academy.director}</strong></span>
@@ -288,24 +290,24 @@ function renderApp() {
   root.innerHTML = `
     <div class="max-w-7xl mx-auto px-4 py-5 space-y-6">
       <header class="coffer-card rounded-3xl px-5 py-3.5 flex flex-wrap items-center justify-between gap-3">
-        <button id="brand-home-btn" type="button" class="flex items-center gap-2.5 text-left">
-          <span class="w-9 h-9 rounded-2xl coffer-pill-active flex items-center justify-center font-extrabold text-sm">NG</span>
+        <button id="brand-home-btn" type="button" class="flex items-center gap-3 text-left">
+          <span class="w-10 h-10 rounded-full neu-card flex items-center justify-center font-extrabold text-sm text-blue-600">NG</span>
           <div>
             <p class="font-extrabold text-sm md:text-base leading-none">${appState.academy.name}</p>
             <p class="text-[11px] text-slate-500 mt-0.5">${appState.academy.address}</p>
           </div>
         </button>
 
-        <div class="flex items-center gap-2">
+        <div class="flex items-center gap-2.5">
           <button id="lang-toggle-btn" type="button" class="coffer-btn-secondary px-3.5 py-1.5 rounded-xl text-xs font-bold">
             ${bn ? 'English' : 'বাংলা'}
           </button>
           ${
             appState.currentUser
-              ? `<button id="logout-btn" type="button" class="px-3.5 py-1.5 rounded-xl text-xs font-bold bg-rose-600 text-white hover:bg-rose-700">
+              ? `<button id="logout-btn" type="button" class="coffer-btn-secondary px-3.5 py-1.5 rounded-xl text-xs font-bold text-rose-600">
                    ${bn ? 'লগআউট' : 'Logout'}
                  </button>`
-              : `<button id="header-login-btn" type="button" class="coffer-btn-primary px-4 py-1.5 rounded-xl text-xs font-bold">
+              : `<button id="header-login-btn" type="button" class="coffer-btn-primary px-4 py-1.5 rounded-xl text-xs">
                    ${bn ? 'লগইন' : 'Login'}
                  </button>`
           }
@@ -326,21 +328,24 @@ function showLoginModal() {
   openModal(
     bn ? 'পোর্টাল লগইন' : 'Portal Login',
     `
-      <form id="login-modal-form" action="javascript:void(0)" method="post" class="space-y-3">
+      <form id="login-modal-form" action="javascript:void(0)" method="post" class="space-y-4">
         <div>
-          <label class="block text-xs font-bold mb-1">${bn ? 'ইউজার ID' : 'User ID'}</label>
+          <label class="block text-xs font-bold mb-1.5">${bn ? 'ইউজার ID' : 'User ID'}</label>
           <input id="login-userid-input" name="userId" required placeholder="admin / TCH-01 / STU-101" class="coffer-input" />
         </div>
         <div>
-          <label class="block text-xs font-bold mb-1">${bn ? 'পাসওয়ার্ড' : 'Password'}</label>
-          <input id="login-password-input" name="password" type="password" required placeholder="1234" class="coffer-input" />
+          <label class="block text-xs font-bold mb-1.5">${bn ? 'পাসওয়ার্ড' : 'Password'}</label>
+          <div class="relative">
+            <input id="login-password-input" name="password" type="password" required placeholder="1234" class="coffer-input pr-11" />
+            <button id="toggle-pass-eye-btn" type="button" aria-label="Toggle Password" class="absolute right-2.5 top-1/2 -translate-y-1/2 text-xs font-bold text-slate-500 px-1.5 py-1">👁</button>
+          </div>
         </div>
         <div id="login-error-msg" class="text-xs font-bold text-rose-600 hidden"></div>
         <div class="flex items-center justify-between pt-2">
-          <button id="modal-forgot-btn" type="button" class="text-xs font-bold text-indigo-600 hover:underline">
+          <button id="modal-forgot-btn" type="button" class="text-xs font-bold text-blue-600 hover:underline">
             ${bn ? 'পাসওয়ার্ড ভুলে গেছেন?' : 'Forgot Password?'}
           </button>
-          <button id="login-submit-btn" type="submit" class="coffer-btn-primary px-5 py-2 rounded-2xl text-sm font-bold">
+          <button id="login-submit-btn" type="submit" class="coffer-btn-primary px-6 py-2.5 rounded-xl text-xs uppercase tracking-wider">
             ${bn ? 'প্রবেশ করুন' : 'Sign In'}
           </button>
         </div>
@@ -359,7 +364,7 @@ function showRecoveryModal() {
         <p class="text-xs text-slate-500">${bn ? 'আপনার Student/Teacher ID অথবা মোবাইল নম্বর লিখুন।' : 'Enter your Student/Teacher ID or phone number.'}</p>
         <input id="recovery-query-input" name="query" required placeholder="e.g. STU-101 or 01811223344" class="coffer-input" />
         <div id="recovery-result" class="text-xs font-semibold"></div>
-        <button id="recovery-submit-btn" type="submit" class="coffer-btn-primary px-5 py-2 rounded-2xl text-sm font-bold">
+        <button id="recovery-submit-btn" type="submit" class="coffer-btn-primary px-5 py-2 rounded-xl text-xs uppercase tracking-wider">
           ${bn ? 'পাসওয়ার্ড খুঁজুন' : 'Find Password'}
         </button>
       </form>
@@ -394,9 +399,9 @@ function processFormSubmission(form) {
     const out = document.getElementById('recovery-result');
     if (out) {
       if (found) {
-        out.innerHTML = `<div class="p-3 rounded-xl bg-emerald-50 text-emerald-700">Name: ${found.name} | ID: <strong>${found.id}</strong> | Password: <strong>${found.password}</strong></div>`;
+        out.innerHTML = `<div class="p-3 rounded-xl coffer-input text-emerald-700 dark:text-emerald-400">Name: ${found.name} | ID: <strong>${found.id}</strong> | Password: <strong>${found.password}</strong></div>`;
       } else {
-        out.innerHTML = `<div class="p-3 rounded-xl bg-rose-50 text-rose-700">No account found.</div>`;
+        out.innerHTML = `<div class="p-3 rounded-xl coffer-input text-rose-600">No account found.</div>`;
       }
     }
     return;
@@ -422,7 +427,7 @@ function processFormSubmission(form) {
     openModal(
       'Admission Submitted',
       `<div class="space-y-2">
-        <p class="font-semibold text-emerald-600">Application received for ${admission.name}.</p>
+        <p class="font-semibold text-emerald-700 dark:text-emerald-400">Application received for ${admission.name}.</p>
         <p><strong>Reference ID:</strong> ${newId}</p>
         <p><strong>Password:</strong> ${newPass}</p>
       </div>`
@@ -551,6 +556,14 @@ document.addEventListener('click', (e) => {
     return;
   }
 
+  if (target.id === 'toggle-pass-eye-btn') {
+    const passInput = document.getElementById('login-password-input');
+    if (passInput) {
+      passInput.type = passInput.type === 'password' ? 'text' : 'password';
+    }
+    return;
+  }
+
   if (target.id === 'modal-close-btn') {
     closeModal();
     return;
@@ -634,7 +647,7 @@ document.addEventListener('click', (e) => {
       openModal(
         'Student Admitted',
         `<div class="space-y-2">
-          <p class="font-bold text-emerald-600">Admission Approved!</p>
+          <p class="font-bold text-emerald-700 dark:text-emerald-400">Admission Approved!</p>
           <p><strong>Student ID:</strong> ${newId}</p>
           <p><strong>Password:</strong> ${newPass}</p>
         </div>`
@@ -668,7 +681,7 @@ document.addEventListener('click', (e) => {
               <input name="studentClass" value="${st.studentClass}" class="coffer-input" />
               <input name="group" value="${st.group}" class="coffer-input" />
             </div>
-            <button type="submit" class="coffer-btn-primary px-4 py-2 rounded-xl text-sm font-bold">Save Changes</button>
+            <button type="submit" class="coffer-btn-primary px-4 py-2 rounded-xl text-xs uppercase tracking-wider">Save Changes</button>
           </form>
         `
       );
