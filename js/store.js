@@ -6,10 +6,12 @@ const DEFAULT_STATE = {
   currentUser: null,
   academy: {
     name: 'NextGen Academy',
+    director: 'মো: আলমগীর হোসেন (সাগর)',
     taglineBn: 'আধুনিক শিক্ষা ও স্মার্ট অ্যাকাডেমিক ব্যবস্থাপনা',
     taglineEn: 'Modern Learning & Smart Academic ERP',
-    phone: '+880 1700-000000',
-    address: 'House 12, Road 04, Sector 07, Uttara, Dhaka'
+    phone: '01792818005, 015812299984',
+    email: 'Sagorrana097@gmail.com',
+    address: 'লক্ষিপুরা রোড, বাস-স্ট্যান্ড, জয়দেবপুর, গাজীপুর।'
   },
   admissions: [
     {
@@ -118,7 +120,15 @@ const Store = {
         this.save(fresh);
         return fresh;
       }
-      return { ...cloneDefaultState(), ...JSON.parse(raw) };
+      const parsed = JSON.parse(raw);
+      return {
+        ...cloneDefaultState(),
+        ...parsed,
+        academy: {
+          ...cloneDefaultState().academy,
+          ...(parsed.academy || {})
+        }
+      };
     } catch {
       return cloneDefaultState();
     }
