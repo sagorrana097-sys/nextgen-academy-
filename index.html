@@ -1,43 +1,43 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="bn">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>NextGen Academy — ERP & Learning Portal</title>
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%232563eb'/><text x='50%' y='62%' dominant-baseline='middle' text-anchor='middle' fill='white' font-size='46' font-family='sans-serif' font-weight='bold'>NG</text></svg>" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = { darkMode: 'class' };
-  </script>
-  <link rel="stylesheet" href="css/style.css" />
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#edf1f8">
+  <title>NextGen Academy | Login</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/variables.css"><link rel="stylesheet" href="css/reset.css">
+  <link rel="stylesheet" href="css/common.css"><link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/auth.css"><link rel="stylesheet" href="css/responsive.css">
 </head>
-<body class="neu-bg min-h-screen relative overflow-x-hidden transition-colors duration-200">
-  <div class="bg-circle bg1" aria-hidden="true"></div>
-  <div class="bg-circle bg2" aria-hidden="true"></div>
-  <div class="bg-circle bg3" aria-hidden="true"></div>
-
-  <div id="app" class="relative z-10"></div>
-
-  <div id="modal-backdrop" class="fixed inset-0 z-50 hidden items-center justify-center bg-slate-900/35 p-4 print:hidden">
-    <div id="modal-card" class="w-full max-w-xl rounded-3xl neu-card p-6 max-h-[90vh] overflow-y-auto">
-      <div class="flex items-center justify-between border-b border-slate-300/60 dark:border-slate-700/60 pb-3 mb-4">
-        <h3 id="modal-title" class="text-lg font-bold">Details</h3>
-        <button id="modal-close-btn" type="button" class="neu-btn rounded-xl px-3 py-1.5 text-sm font-bold">✕</button>
+<body class="auth-page">
+  <div class="ambient ambient-one"></div><div class="ambient ambient-two"></div><div class="ambient ambient-three"></div>
+  <main class="auth-shell">
+    <section class="brand-panel">
+      <div class="brand-lockup"><span class="brand-mark">N</span><span>NextGen <b>Academy</b></span></div>
+      <div class="brand-copy">
+        <span class="eyebrow">LEARN • GROW • ACHIEVE</span>
+        <h1>শেখার প্রতিটি ধাপে<br><em>আগামীর প্রস্তুতি।</em></h1>
+        <p>একটি স্মার্ট, সহজ ও সংগঠিত শিক্ষা ব্যবস্থাপনা প্ল্যাটফর্ম।</p>
       </div>
-      <div id="modal-body" class="space-y-4 text-sm"></div>
-    </div>
-  </div>
-
-  <div id="print-area" class="hidden print:block p-6 bg-white text-slate-900"></div>
-
-  <script src="js/store.js"></script>
-  <script src="js/auth.js"></script>
-  <script src="js/admin.js"></script>
-  <script src="js/teacher.js"></script>
-  <script src="js/student.js"></script>
-  <script src="js/app.js"></script>
-</body>
-</html>
+      <div class="brand-foot"><span class="status-dot"></span> আপনার শেখার যাত্রা শুরু হোক আজই</div>
+    </section>
+    <section class="auth-card neu-card">
+      <div class="mobile-brand"><span class="brand-mark">N</span><strong>NextGen Academy</strong></div>
+      <div class="auth-icon">✦</div>
+      <div class="auth-heading"><span class="eyebrow">WELCOME TO NEXTGEN</span><h2 id="auth-title">অ্যাকাউন্টে প্রবেশ করুন</h2><p id="auth-subtitle">আপনার শেখার জগতে ফিরে আসুন</p></div>
+      <div class="auth-tabs"><button class="tab-btn active" data-auth-tab="login" type="button">লগইন</button><button class="tab-btn" data-auth-tab="signup" type="button">নতুন অ্যাকাউন্ট</button></div>
+      <form id="auth-form" class="form-stack">
+        <label id="name-field" class="field hidden"><span>পূর্ণ নাম</span><input id="full-name" type="text" autocomplete="name" placeholder="আপনার নাম লিখুন"></label>
+        <label class="field"><span>ইমেইল ঠিকানা</span><input id="email" type="email" autocomplete="email" placeholder="name@example.com" required></label>
+        <label class="field"><span>পাসওয়ার্ড</span><div class="password-wrap"><input id="password" type="password" autocomplete="current-password" placeholder="কমপক্ষে ৬ অক্ষর" minlength="6" required><button class="password-toggle" type="button" aria-label="পাসওয়ার্ড দেখান">◉</button></div></label>
+        <label id="confirm-field" class="field hidden"><span>পাসওয়ার্ড নিশ্চিত করুন</span><input id="confirm-password" type="password" autocomplete="new-password" placeholder="আবার পাসওয়ার্ড লিখুন"></label>
+        <button id="auth-submit" class="btn btn-primary btn-block" type="submit">লগইন করুন <span>→</span></button>
+      </form>
+      <p id="auth-message" class="form-message" role="status"></p>
+      <p class="auth-note">প্রবেশের মাধ্যমে আপনি আমাদের ব্যবহারের শর্তাবলিতে সম্মতি দিচ্ছেন।</p>
+    </section>
+  </main>
+  <script type="module" src="js/app.js"></script>
+</body></html>
