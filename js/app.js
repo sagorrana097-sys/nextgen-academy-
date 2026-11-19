@@ -28,6 +28,64 @@ function triggerPrint(html) {
   window.print();
 }
 
+function buildIdCardHtml(student) {
+  return `
+    <div class="max-w-sm mx-auto border-2 border-indigo-600 rounded-2xl p-5 bg-white text-slate-900">
+      <div class="flex items-center justify-between border-b pb-2 mb-3">
+        <div>
+          <p class="text-xs font-bold uppercase text-indigo-600">${appState.academy.name}</p>
+          <p class="text-[11px] text-slate-500">Official Student ID Card</p>
+        </div>
+        <span class="px-2.5 py-1 text-xs font-bold rounded bg-indigo-100 text-indigo-700">${student.id}</span>
+      </div>
+      <div class="space-y-1 text-xs">
+        <p><strong>Name:</strong> ${student.name}</p>
+        <p><strong>Class & Group:</strong> ${student.studentClass} (${student.group})</p>
+        <p><strong>Batch:</strong> ${student.batch}</p>
+        <p><strong>Phone:</strong> ${student.phone}</p>
+        <p><strong>Verify Code:</strong> ${student.verificationCode || 'NGA-VER-01'}</p>
+      </div>
+      <div class="mt-4 pt-3 border-t flex items-end justify-between text-[11px] text-slate-500">
+        <span>${appState.academy.phone}</span>
+        <span class="font-semibold text-slate-800 border-t border-slate-400 pt-1">Authorized Seal & Sign</span>
+      </div>
+    </div>
+  `;
+}
+
+function buildReceiptHtml(fee) {
+  return `
+    <div class="max-w-lg mx-auto border border-slate-300 rounded-2xl p-6 bg-white text-slate-900">
+      <div class="flex items-center justify-between border-b pb-3 mb-4">
+        <div>
+          <h3 class="text-lg font-extrabold text-indigo-700">${appState.academy.name}</h3>
+          <p class="text-xs text-slate-500">${appState.academy.address}</p>
+        </div>
+        <div class="text-right text-xs">
+          <p class="font-bold">Receipt: ${fee.receiptNo}</p>
+          <p class="text-slate-500">Verify: ${fee.verificationCode}</p>
+        </div>
+      </div>
+      <div class="grid grid-cols-2 gap-2 text-xs mb-4">
+        <p><strong>Student:</strong> ${fee.studentName} (${fee.studentId})</p>
+        <p><strong>Month:</strong> ${fee.month}</p>
+        <p><strong>Method:</strong> ${fee.method}</p>
+        <p><strong>Account/Ref:</strong> ${fee.accountNo || 'N/A'}</p>
+        <p><strong>Status:</strong> ${fee.status}</p>
+        <p><strong>Date:</strong> ${fee.date}</p>
+      </div>
+      <div class="p-3 rounded-xl bg-slate-100 flex items-center justify-between font-bold text-sm mb-5">
+        <span>Total Paid Amount</span>
+        <span>৳${fee.amount}</span>
+      </div>
+      <div class="flex justify-between text-xs text-slate-500 pt-4 border-t">
+        <span>Help: ${appState.academy.phone}</span>
+        <span class="font-semibold text-slate-800">Authorized Signature & Seal</span>
+      </div>
+    </div>
+  `;
+}
+
 function verifyCredentials(userId, password) {
   const cleanId = String(userId || '').trim();
   const cleanPass = String(password || '').trim();
@@ -228,6 +286,48 @@ function showLoginModal() {
       </form>
     `
   );
+
+  const formEl = document.getElementById('login-modal-form');
+  if (formEl) {
+    formEl.onsubmit = function (ev) {
+      ev.preventDefault();
+      handleLoginSubmit(ev);
+    };
+  }
+}
+
+function showRecoveryModal() {
+  const bn = appState.lang === 'bn';
+  openModal(
+    bn ? 'পাসওয়ার্ড পুনরুদ্ধার' : 'Password Recovery',
+    `
+      <form id="recovery-modal-form" class="space-y-3">
+        <p class="text-xs text-slate-500">${bn ? 'আপনার Student/Teacher ID অথবা মোবাইল নম্বর লিখুন।' : 'Enter your Student/Teacher ID or phone number.'}</p>
+        <input id="recovery-query-input" name="query" required placeholder="e.g. STU-101 or 01811223344" class="coffer-input" />
+        <div id="recovery-result" class="text-xs font-semibold"></div>
+        <button id="recovery-submit-btn" type="submit" class="coffer-btn-primary px-5 py-2 rounded-2xl text-sm font-bold">
+          ${bn ? 'পাসওয়ার্ড খুঁজুন' : 'Find Password'}
+        </button>
+      </form>
+    `
+  );
+
+  const recForm = document.getElementById('recovery-modal-form');
+  if (recForm) {
+    recForm.onsubmit = function (ev) {
+      ev.preventDefault();
+      const qVal = document.getElementById('recovery-query-input')?.value || '';
+      const found = typeof Auth !== 'undefined' && typeof Auth.recoverPassword === 'function' ? Auth.recoverPassword(qVal) : null;
+      const out = document.getElementById('recovery-result');
+      if (out) {
+        if (found) {
+          out.innerHTML = `<div class="p-3 rounded-xl bg-emerald-50 text-emerald-700">Name: ${found.name} | ID: <strong>${found.id}</strong> | Password: <strong>${found.password}</strong></div>`;
+        } else {
+          out.innerHTML = `<div class="p-3 rounded-xl bg-rose-50 text-rose-700">No account found.</div>`;
+        }
+      }
+    };
+  }
 }
 
 function handleLoginSubmit(event) {
@@ -288,8 +388,18 @@ document.addEventListener('click', (e) => {
     return;
   }
 
+  if (target.id === 'open-recovery-modal-btn' || target.id === 'modal-forgot-btn') {
+    showRecoveryModal();
+    return;
+  }
+
   if (target.id === 'logout-btn') {
     appState.currentUser = null;
+    renderApp();
+    return;
+  }
+
+  if (target.id === 'brand-home-btn' && !appState.currentUser) {
     renderApp();
     return;
   }
@@ -302,6 +412,120 @@ document.addEventListener('click', (e) => {
 
   if (target.id === 'admin-quick-add-student') {
     currentAdminTab = 'students';
+    renderApp();
+    return;
+  }
+
+  if (target.dataset.approveAdmission) {
+    const adm = appState.admissions.find((a) => a.id === target.dataset.approveAdmission);
+    if (adm) {
+      adm.status = 'Approved';
+      const newId = 'STU-' + (100 + appState.students.length + 1);
+      const newPass = String(Math.floor(1000 + Math.random() * 9000));
+      const newStudent = {
+        id: newId,
+        password: newPass,
+        name: adm.name,
+        phone: adm.phone,
+        guardianPhone: adm.phone,
+        studentClass: adm.studentClass,
+        group: adm.group,
+        batch: adm.batch,
+        feeStatus: 'Due',
+        feeAmount: 2000,
+        paymentMethod: 'bKash',
+        paymentAccount: adm.phone,
+        receiptNo: 'RCP-' + Math.floor(1000 + Math.random() * 9000),
+        verificationCode: 'NGA-VER-' + Math.floor(1000 + Math.random() * 9000)
+      };
+      appState.students.unshift(newStudent);
+      renderApp();
+      openModal(
+        'Student Admitted',
+        `<div class="space-y-2">
+          <p class="font-bold text-emerald-600">Admission Approved!</p>
+          <p><strong>Student ID:</strong> ${newId}</p>
+          <p><strong>Password:</strong> ${newPass}</p>
+        </div>`
+      );
+    }
+    return;
+  }
+
+  if (target.dataset.deleteAdmission) {
+    appState.admissions = appState.admissions.filter((a) => a.id !== target.dataset.deleteAdmission);
+    renderApp();
+    return;
+  }
+
+  if (target.dataset.deleteStudent) {
+    appState.students = appState.students.filter((s) => s.id !== target.dataset.deleteStudent);
+    renderApp();
+    return;
+  }
+
+  if (target.dataset.editStudent) {
+    const st = appState.students.find((s) => s.id === target.dataset.editStudent);
+    if (st) {
+      openModal(
+        `Edit Student (${st.id})`,
+        `
+          <form id="edit-student-form" data-student-id="${st.id}" class="space-y-3">
+            <input name="name" value="${st.name}" required class="coffer-input" />
+            <input name="phone" value="${st.phone}" required class="coffer-input" />
+            <div class="grid grid-cols-2 gap-2">
+              <input name="studentClass" value="${st.studentClass}" class="coffer-input" />
+              <input name="group" value="${st.group}" class="coffer-input" />
+            </div>
+            <button type="submit" class="coffer-btn-primary px-4 py-2 rounded-xl text-sm font-bold">Save Changes</button>
+          </form>
+        `
+      );
+    }
+    return;
+  }
+
+  if (target.dataset.printIdCard) {
+    const st = appState.students.find((s) => s.id === target.dataset.printIdCard);
+    if (st) triggerPrint(buildIdCardHtml(st));
+    return;
+  }
+
+  if (target.dataset.markPaid) {
+    const fee = appState.fees.find((f) => f.id === target.dataset.markPaid);
+    if (fee) {
+      fee.status = 'Paid';
+      renderApp();
+    }
+    return;
+  }
+
+  if (target.dataset.printReceipt) {
+    const fee = appState.fees.find((f) => f.id === target.dataset.printReceipt);
+    if (fee) triggerPrint(buildReceiptHtml(fee));
+    return;
+  }
+
+  if (target.dataset.deleteTeacher) {
+    appState.teachers = appState.teachers.filter((t) => t.id !== target.dataset.deleteTeacher);
+    renderApp();
+    return;
+  }
+
+  if (target.dataset.deleteExam) {
+    appState.exams = appState.exams.filter((e) => e.id !== target.dataset.deleteExam);
+    renderApp();
+    return;
+  }
+
+  if (target.dataset.deleteClass) {
+    appState.onlineClasses = appState.onlineClasses.filter((c) => c.id !== target.dataset.deleteClass);
+    renderApp();
+    return;
+  }
+
+  if (target.dataset.deleteNotice) {
+    appState.notices = appState.notices.filter((n) => n.id !== target.dataset.deleteNotice);
     renderApp();
     return;
   }
@@ -323,39 +547,180 @@ document.addEventListener('click', (e) => {
   }
 });
 
-document.addEventListener('submit', (e) => {
-  const form = e.target;
-  if (form && form.id === 'login-modal-form') {
-    handleLoginSubmit(e);
-    return;
-  }
-
-  if (form && form.id === 'public-admission-form') {
-    e.preventDefault();
-    const fd = new FormData(form);
-    const newId = 'STU-' + (100 + (appState.students || []).length + (appState.admissions || []).length + 1);
-    const newPass = String(Math.floor(1000 + Math.random() * 9000));
-    const admission = {
-      id: 'ADM-' + Math.floor(100 + Math.random() * 900),
-      name: String(fd.get('name') || '').trim(),
-      phone: String(fd.get('phone') || '').trim(),
-      studentClass: fd.get('studentClass'),
-      group: fd.get('group'),
-      batch: fd.get('batch'),
-      status: 'Pending',
-      createdAt: new Date().toISOString().slice(0, 10)
+document.addEventListener('change', (e) => {
+  if (e.target.id === 'import-json-input' && e.target.files?.[0]) {
+    const reader = new FileReader();
+    reader.onload = () => {
+      try {
+        const parsed = JSON.parse(reader.result);
+        appState = { ...DEFAULT_STATE, ...parsed };
+        renderApp();
+      } catch {
+        alert('Invalid JSON file');
+      }
     };
-    appState.admissions.unshift(admission);
-    renderApp();
-    openModal(
-      'Admission Submitted',
-      `<div class="space-y-2">
-        <p class="font-semibold text-emerald-600">Application received for ${admission.name}.</p>
-        <p><strong>Reference ID:</strong> ${newId}</p>
-        <p><strong>Password:</strong> ${newPass}</p>
-      </div>`
-    );
+    reader.readAsText(e.target.files[0]);
   }
 });
+
+document.addEventListener(
+  'submit',
+  (e) => {
+    const form = e.target;
+    if (!form || form.tagName !== 'FORM') return;
+    e.preventDefault();
+
+    if (form.id === 'login-modal-form') {
+      handleLoginSubmit(e);
+      return;
+    }
+
+    if (form.id === 'public-admission-form') {
+      const fd = new FormData(form);
+      const newId = 'STU-' + (100 + (appState.students || []).length + (appState.admissions || []).length + 1);
+      const newPass = String(Math.floor(1000 + Math.random() * 9000));
+      const admission = {
+        id: 'ADM-' + Math.floor(100 + Math.random() * 900),
+        name: String(fd.get('name') || '').trim(),
+        phone: String(fd.get('phone') || '').trim(),
+        studentClass: fd.get('studentClass'),
+        group: fd.get('group'),
+        batch: fd.get('batch'),
+        status: 'Pending',
+        createdAt: new Date().toISOString().slice(0, 10)
+      };
+      appState.admissions.unshift(admission);
+      renderApp();
+      openModal(
+        'Admission Submitted',
+        `<div class="space-y-2">
+          <p class="font-semibold text-emerald-600">Application received for ${admission.name}.</p>
+          <p><strong>Reference ID:</strong> ${newId}</p>
+          <p><strong>Password:</strong> ${newPass}</p>
+        </div>`
+      );
+      return;
+    }
+
+    if (form.id === 'admin-add-student-form') {
+      const fd = new FormData(form);
+      const customId = String(fd.get('customId') || '').trim() || 'STU-' + (100 + appState.students.length + 1);
+      const phone = String(fd.get('phone') || '').trim();
+      appState.students.unshift({
+        id: customId,
+        password: String(Math.floor(1000 + Math.random() * 9000)),
+        name: String(fd.get('name') || '').trim(),
+        phone,
+        guardianPhone: phone,
+        studentClass: fd.get('studentClass'),
+        group: fd.get('group'),
+        batch: 'Morning',
+        feeStatus: 'Due',
+        feeAmount: 2000,
+        paymentMethod: 'bKash',
+        paymentAccount: phone,
+        receiptNo: 'RCP-' + Math.floor(1000 + Math.random() * 9000),
+        verificationCode: 'NGA-VER-' + Math.floor(1000 + Math.random() * 9000)
+      });
+      renderApp();
+      return;
+    }
+
+    if (form.id === 'edit-student-form') {
+      const fd = new FormData(form);
+      const st = appState.students.find((s) => s.id === form.dataset.studentId);
+      if (st) {
+        st.name = String(fd.get('name') || '').trim();
+        st.phone = String(fd.get('phone') || '').trim();
+        st.studentClass = String(fd.get('studentClass') || '').trim();
+        st.group = String(fd.get('group') || '').trim();
+      }
+      closeModal();
+      renderApp();
+      return;
+    }
+
+    if (form.id === 'admin-add-teacher-form') {
+      const fd = new FormData(form);
+      appState.teachers.push({
+        id: 'TCH-0' + (appState.teachers.length + 1),
+        password: '123',
+        name: String(fd.get('name') || '').trim(),
+        subject: String(fd.get('subject') || '').trim(),
+        phone: String(fd.get('phone') || '').trim(),
+        batch: 'All'
+      });
+      renderApp();
+      return;
+    }
+
+    if (form.id === 'admin-add-fee-form') {
+      const fd = new FormData(form);
+      const sid = fd.get('studentId');
+      const st = appState.students.find((s) => s.id === sid);
+      appState.fees.unshift({
+        id: 'FEE-' + Date.now(),
+        studentId: sid,
+        studentName: st ? st.name : sid,
+        studentClass: st ? st.studentClass : 'Class 10',
+        month: String(fd.get('month') || '').trim(),
+        amount: Number(fd.get('amount') || 0),
+        method: fd.get('method'),
+        accountNo: String(fd.get('accountNo') || '').trim(),
+        status: 'Paid',
+        receiptNo: 'RCP-' + Math.floor(1000 + Math.random() * 9000),
+        verificationCode: 'NGA-VER-' + Math.floor(1000 + Math.random() * 9000),
+        date: new Date().toISOString().slice(0, 10)
+      });
+      renderApp();
+      return;
+    }
+
+    if (form.id === 'admin-add-exam-form' || form.id === 'teacher-exam-form') {
+      const fd = new FormData(form);
+      appState.exams.unshift({
+        id: 'EXM-' + Date.now(),
+        title: String(fd.get('title') || '').trim(),
+        studentClass: fd.get('studentClass'),
+        group: 'General',
+        totalMarks: 100,
+        obtainedMarks: Number(fd.get('obtainedMarks') || 0),
+        date: new Date().toISOString().slice(0, 10),
+        question: String(fd.get('question') || '').trim(),
+        answerKey: String(fd.get('answerKey') || '').trim()
+      });
+      renderApp();
+      return;
+    }
+
+    if (form.id === 'admin-add-class-form') {
+      const fd = new FormData(form);
+      appState.onlineClasses.unshift({
+        id: 'CLS-' + Date.now(),
+        topic: String(fd.get('topic') || '').trim(),
+        studentClass: fd.get('studentClass'),
+        group: 'General',
+        teacherName: 'Faculty',
+        date: new Date().toISOString().slice(0, 10),
+        time: String(fd.get('time') || '').trim(),
+        link: String(fd.get('link') || '').trim()
+      });
+      renderApp();
+      return;
+    }
+
+    if (form.id === 'admin-add-notice-form') {
+      const fd = new FormData(form);
+      appState.notices.unshift({
+        id: 'NTC-' + Date.now(),
+        title: String(fd.get('title') || '').trim(),
+        body: String(fd.get('body') || '').trim(),
+        date: new Date().toISOString().slice(0, 10)
+      });
+      renderApp();
+    }
+  },
+  true
+);
 
 renderApp();
