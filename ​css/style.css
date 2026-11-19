@@ -32,146 +32,71 @@ body,
   pointer-events: none;
   z-index: 0;
   background: var(--neu-base);
-  box-shadow:
-    14px 14px 28px var(--neu-dark),
-    -14px -14px 28px var(--neu-light);
+  box-shadow: 14px 14px 28px var(--neu-dark), -14px -14px 28px var(--neu-light);
 }
 
-.bg1 {
-  width: 240px;
-  height: 240px;
-  top: -60px;
-  left: -60px;
-}
+.bg1 { width: 240px; height: 240px; top: -60px; left: -60px; }
+.bg2 { width: 170px; height: 170px; top: 26%; right: -55px; }
+.bg3 { width: 290px; height: 290px; bottom: -95px; right: 8%; }
 
-.bg2 {
-  width: 170px;
-  height: 170px;
-  top: 26%;
-  right: -55px;
-}
-
-.bg3 {
-  width: 290px;
-  height: 290px;
-  bottom: -95px;
-  right: 8%;
-}
-
-.coffer-card,
 .neu-card {
   background-color: var(--neu-base);
+  color: var(--neu-text);
   border: 1px solid rgba(255, 255, 255, 0.55);
-  box-shadow:
-    12px 12px 24px var(--neu-dark),
-    -12px -12px 24px var(--neu-light);
+  box-shadow: 12px 12px 24px var(--neu-dark), -12px -12px 24px var(--neu-light);
 }
 
-.dark .coffer-card,
-.dark .neu-card {
-  border-color: rgba(255, 255, 255, 0.05);
+.dark .neu-card { border-color: rgba(255, 255, 255, 0.05); }
+
+.neu-btn {
+  background-color: var(--neu-base);
+  color: var(--neu-text);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  box-shadow: 5px 5px 12px var(--neu-dark), -5px -5px 12px var(--neu-light);
+  transition: transform 0.14s ease, box-shadow 0.14s ease;
+  cursor: pointer;
 }
 
-.coffer-btn-primary,
+.neu-btn:hover { transform: translateY(-1px); }
+
+.neu-btn:active,
+.neu-pill-active {
+  color: var(--neu-accent);
+  box-shadow: inset 5px 5px 11px var(--neu-dark), inset -5px -5px 11px var(--neu-light);
+}
+
 .neu-btn-primary {
   background-color: var(--neu-base);
   color: var(--neu-accent);
   font-weight: 700;
-  letter-spacing: 0.02em;
   border: 1px solid rgba(255, 255, 255, 0.65);
-  box-shadow:
-    6px 6px 14px var(--neu-dark),
-    -6px -6px 14px var(--neu-light);
-  transition: transform 0.14s ease, box-shadow 0.14s ease, color 0.14s ease;
+  box-shadow: 6px 6px 14px var(--neu-dark), -6px -6px 14px var(--neu-light);
+  transition: transform 0.14s ease, box-shadow 0.14s ease;
+  cursor: pointer;
 }
 
-.coffer-btn-primary:hover,
-.neu-btn-primary:hover {
-  transform: translateY(-1px);
-  box-shadow:
-    8px 8px 16px var(--neu-dark),
-    -8px -8px 16px var(--neu-light);
+.neu-btn-primary:hover { transform: translateY(-1px); }
+.neu-btn-primary:active {
+  box-shadow: inset 5px 5px 11px var(--neu-dark), inset -5px -5px 11px var(--neu-light);
 }
 
-.coffer-btn-primary:active,
-.neu-btn-primary:active,
-.coffer-pill-active {
-  color: var(--neu-accent);
-  box-shadow:
-    inset 5px 5px 11px var(--neu-dark),
-    inset -5px -5px 11px var(--neu-light);
-}
-
-.coffer-btn-secondary,
-.neu-btn-flat {
-  background-color: var(--neu-base);
-  color: var(--neu-text);
-  border: 1px solid rgba(255, 255, 255, 0.5);
-  box-shadow:
-    5px 5px 12px var(--neu-dark),
-    -5px -5px 12px var(--neu-light);
-  transition: box-shadow 0.14s ease, transform 0.14s ease;
-}
-
-.coffer-btn-secondary:hover,
-.neu-btn-flat:hover {
-  transform: translateY(-1px);
-}
-
-.coffer-btn-secondary:active,
-.neu-btn-flat:active {
-  box-shadow:
-    inset 4px 4px 9px var(--neu-dark),
-    inset -4px -4px 9px var(--neu-light);
-}
-
-.coffer-input,
 .neu-input {
   width: 100%;
-  padding: 0.72rem 1rem;
+  padding: 0.7rem 0.95rem;
   border-radius: 0.85rem;
   border: 1px solid rgba(255, 255, 255, 0.45);
   background-color: var(--neu-base);
   color: var(--neu-text);
   font-size: 0.875rem;
   outline: none;
-  box-shadow:
-    inset 5px 5px 11px var(--neu-dark),
-    inset -5px -5px 11px var(--neu-light);
-  transition: box-shadow 0.15s ease;
+  box-shadow: inset 5px 5px 11px var(--neu-dark), inset -5px -5px 11px var(--neu-light);
 }
 
-.coffer-input::placeholder,
-.neu-input::placeholder {
-  color: var(--neu-muted);
-}
-
-.coffer-input:focus,
-.neu-input:focus {
-  box-shadow:
-    inset 6px 6px 12px var(--neu-dark),
-    inset -6px -6px 12px var(--neu-light),
-    0 0 0 2px rgba(37, 99, 235, 0.25);
-}
-
-.coffer-input option,
-.neu-input option {
-  background-color: var(--neu-base);
-  color: var(--neu-text);
-}
+.neu-input::placeholder { color: var(--neu-muted); }
+.neu-input option { background-color: var(--neu-base); color: var(--neu-text); }
 
 @media print {
-  body * {
-    visibility: hidden;
-  }
-  #print-area,
-  #print-area * {
-    visibility: visible;
-  }
-  #print-area {
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100%;
-  }
+  body * { visibility: hidden; }
+  #print-area, #print-area * { visibility: visible; }
+  #print-area { position: absolute; left: 0; top: 0; width: 100%; }
 }
