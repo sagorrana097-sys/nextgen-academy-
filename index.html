@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="bn" class="scroll-smooth">
 <head>
@@ -831,6 +832,15 @@
             document.getElementById('login-userid').value = lastGeneratedStudentID;
             document.getElementById('login-pass').value = "1234";
         }
+
+        function switchLoginRole(role) {
+            ['admin', 'teacher', 'student'].forEach(r => {
+                const btn = document.getElementById(`tab-btn-${r}`);
+                if (r === role) {
+                    btn.className = "py-2 rounded-xl text-xs font-bold transition neu-btn text-primary";
+                } else {
+                    btn.className = "py-2 rounded-xl text-xs font-bold transition text-slate-500 hover:text-slate-800";
+                }
             });
 
             document.getElementById('login-role-input').value = role;
@@ -1498,3 +1508,4 @@
     </script>
 </body>
 </html>
+```
