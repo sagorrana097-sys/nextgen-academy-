@@ -1,34 +1,9 @@
-const StudentPortal = {
-  render(state, student) {
-    const bn = state.lang === 'bn';
-    const myFees = (state.fees || []).filter((f) => f.studentId === student.id);
-    return `
-      <div class="space-y-6">
-        <div class="neu-card rounded-3xl p-6 flex flex-wrap items-center justify-between gap-4">
-          <div>
-            <h2 class="text-xl font-extrabold">${student.name} (${student.id})</h2>
-            <p class="text-xs text-slate-500 mt-1">${student.studentClass} • ${student.group} • ${student.batch}</p>
-          </div>
-          <button data-print-id-card="${student.id}" type="button" class="neu-btn-primary px-4 py-2 rounded-xl text-xs">Print ID Card</button>
-        </div>
-
-        <div class="neu-card rounded-3xl p-6 space-y-3">
-          <h3 class="text-lg font-extrabold">${bn ? 'আমার ফি ও রিসিটসমূহ' : 'My Fee Receipts'}</h3>
-          ${myFees
-            .map(
-              (f) => `
-            <div class="neu-input rounded-2xl p-3.5 flex items-center justify-between gap-2">
-              <div>
-                <p class="font-bold text-sm">${f.receiptNo} — ${f.month} • ৳${f.amount}</p>
-                <p class="text-xs text-slate-500">${f.method} • Status: ${f.status}</p>
-              </div>
-              <button data-print-receipt="${f.id}" type="button" class="neu-btn-primary px-3.5 py-1.5 rounded-xl text-xs">Receipt</button>
-            </div>
-          `
-            )
-            .join('') || `<p class="text-xs text-slate-500">No fee records found.</p>`}
-        </div>
-      </div>
-    `;
-  }
-};
+import {listRecords,createRecord} from "./store.js";
+import {escapeHTML,formatDate,toast} from "./utils.js";
+export async function renderStudent(root,{user,profile}){
+ const [courses,notices]=await Promise.all([listRecords("courses"),listRecords("notices")]);
+ root.innerHTML=`<div class="app-shell role-student"><aside class="sidebar"><div class="sidebar-brand"><span class="brand-mark">N</span><div><b>NextGen</b><small>ACADEMY</small></div></div><nav class="side-nav"><span class="nav-caption">STUDENT SPACE</span><a class="nav-link active" href="#">▦ <span>ড্যাশবোর্ড</span></a><a class="nav-link" href="#courses">▤ <span>কোর্সসমূহ</span></a><a class="nav-link" href="#notices">◉ <span>নোটিশ</span></a><a class="nav-link" href="#admission">✎ <span>ভর্তি আবেদন</span></a></nav><div class="sidebar-bottom"><div class="profile-mini"><span class="avatar">${escapeHTML((profile.name||"S")[0])}</span><div><b>${escapeHTML(profile.name||"Student")}</b><small>শিক্ষার্থী</small></div></div><button id="logout-btn" class="btn btn-soft btn-block">↪ লগআউট</button></div></aside><main class="dashboard-main"><header class="topbar"><button id="mobile-menu-btn" class="btn btn-soft mobile-menu">☰</button><div class="topbar-title">Student Dashboard</div><div class="topbar-actions"><button id="theme-btn" class="icon-btn">◐</button><span class="avatar">${escapeHTML((profile.name||"S")[0])}</span></div></header><div class="dashboard-content"><div class="welcome-row"><div><span class="eyebrow">YOUR LEARNING SPACE</span><h1>স্বাগতম, ${escapeHTML(profile.name||"শিক্ষার্থী")} 👋</h1><p class="muted">আজকের শেখার লক্ষ্য পূরণে এগিয়ে চলুন।</p></div><span class="pill">Student</span></div><div class="stats-grid">${stat("📚","উপলব্ধ কোর্স",courses.length)}${stat("📢","নোটিশ",notices.length)}</div><section class="neu-card panel"><h2 class="section-title">আপনার কোর্সসমূহ</h2>${items(courses,"title","এখনো কোনো কোর্স প্রকাশ করা হয়নি")}</section><section class="neu-card panel"><h2 class="section-title">সাম্প্রতিক নোটিশ</h2>${items(notices,"title","কোনো নোটিশ নেই")}</section><section id="admission" class="neu-card panel"><h2 class="section-title">ভর্তি সংক্রান্ত আবেদন</h2><form id="admission-form" class="form-stack compact"><label class="field"><span>যোগাযোগ নম্বর</span><input name="phone" inputmode="tel" required placeholder="01XXXXXXXXX"></label><label class="field"><span>যে কোর্সে ভর্তি হতে চান</span><select name="course" required><option value="">কোর্স নির্বাচন করুন</option>${courses.map(c=>`<option value="${escapeHTML(c.title)}">${escapeHTML(c.title)}</option>`).join("")}</select></label><button class="btn btn-primary">আবেদন জমা দিন</button></form></section></div></main></div>`;
+ root.querySelector("#admission-form").addEventListener("submit",async e=>{e.preventDefault();const f=new FormData(e.currentTarget);try{await createRecord("admissions",{uid:user.uid,name:profile.name,email:profile.email,phone:f.get("phone").trim(),course:f.get("course"),status:"pending"});toast("আপনার আবেদন জমা হয়েছে।","success");e.currentTarget.reset();}catch(err){console.error(err);toast("আবেদন জমা দেওয়া যায়নি।","error");}});
+}
+function stat(icon,label,value){return `<article class="neu-card stat-card"><div class="stat-icon">${icon}</div><div><strong>${value}</strong><span>${label}</span></div></article>`;}
+function items(data,key,empty){return data.length?`<ul class="simple-list">${data.map(x=>`<li><span>${escapeHTML(x[key]||"—")}</span><small>${formatDate(x.createdAt)}</small></li>`).join("")}</ul>`:`<p class="muted empty-state">${empty}</p>`;}
