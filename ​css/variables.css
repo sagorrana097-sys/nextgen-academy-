@@ -1,1 +1,9 @@
+:root{
+ --bg:#edf1f8;--surface:#edf1f8;--surface-2:#e7ecf4;--text:#202b3c;--muted:#7d899b;
+ --primary:#2868d7;--primary-dark:#1e54b5;--accent:#19a7a0;--danger:#dc5555;--success:#1b9b70;
+ --line:rgba(111,130,158,.18);--shadow-out:9px 9px 22px #cbd2df,-9px -9px 22px #fff;
+ --shadow-in:inset 5px 5px 11px #cbd2df,inset -5px -5px 11px #fff;
+ --radius:22px;--radius-sm:14px;--font-body:"Hind Siliguri",sans-serif;--font-ui:"Plus Jakarta Sans","Hind Siliguri",sans-serif;
+}
+[data-theme="dark"]{--bg:#1b2432;--surface:#202b3b;--surface-2:#253246;--text:#edf3fc;--muted:#9eacc0;--primary:#76a8ff;--primary-dark:#4c87ed;--accent:#45c6b8;--line:rgba(190,205,226,.12);--shadow-out:8px 8px 20px #141c28,-8px -8px 20px #263244;--shadow-in:inset 5px 5px 10px #141c28,inset -5px -5px 10px #263244}
 
