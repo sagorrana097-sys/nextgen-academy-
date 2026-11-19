@@ -2,7 +2,7 @@ if (window.location.search && window.history && typeof window.history.replaceSta
   window.history.replaceState({}, document.title, window.location.pathname);
 }
 
-let appState = typeof Store !== 'undefined' ? Store.load() : cloneDefaultState();
+let appState = Store.load();
 let currentAdminTab = 'overview';
 
 function applyTheme() {
@@ -33,12 +33,13 @@ function triggerPrint(html) {
 }
 
 function buildIdCardHtml(student) {
+  const a = appState.academy;
   return `
     <div class="max-w-sm mx-auto border-2 border-slate-700 rounded-2xl p-5 bg-white text-slate-900">
       <div class="flex items-center justify-between border-b pb-2 mb-3">
         <div>
-          <p class="text-xs font-bold uppercase text-blue-700">${appState.academy.name}</p>
-          <p class="text-[11px] text-slate-500">${appState.academy.address}</p>
+          <p class="text-xs font-bold uppercase text-blue-700">${a.name}</p>
+          <p class="text-[11px] text-slate-500">${a.address}</p>
         </div>
         <span class="px-2.5 py-1 text-xs font-bold rounded bg-slate-200 text-slate-800">${student.id}</span>
       </div>
@@ -51,23 +52,24 @@ function buildIdCardHtml(student) {
       </div>
       <div class="mt-4 pt-3 border-t flex items-end justify-between text-[11px] text-slate-500">
         <div>
-          <p>${appState.academy.phone}</p>
-          <p>${appState.academy.email}</p>
+          <p>${a.phone}</p>
+          <p>${a.email}</p>
         </div>
-        <span class="font-semibold text-slate-800 border-t border-slate-400 pt-1">${appState.academy.director}</span>
+        <span class="font-semibold text-slate-800 border-t border-slate-400 pt-1">${a.director}</span>
       </div>
     </div>
   `;
 }
 
 function buildReceiptHtml(fee) {
+  const a = appState.academy;
   return `
     <div class="max-w-lg mx-auto border border-slate-300 rounded-2xl p-6 bg-white text-slate-900">
       <div class="flex items-center justify-between border-b pb-3 mb-4">
         <div>
-          <h3 class="text-lg font-extrabold text-blue-700">${appState.academy.name}</h3>
-          <p class="text-xs text-slate-500">${appState.academy.address}</p>
-          <p class="text-[11px] text-slate-500">Email: ${appState.academy.email} | Tel: ${appState.academy.phone}</p>
+          <h3 class="text-lg font-extrabold text-blue-700">${a.name}</h3>
+          <p class="text-xs text-slate-500">${a.address}</p>
+          <p class="text-[11px] text-slate-500">Email: ${a.email} | Tel: ${a.phone}</p>
         </div>
         <div class="text-right text-xs">
           <p class="font-bold">Receipt: ${fee.receiptNo}</p>
@@ -87,92 +89,57 @@ function buildReceiptHtml(fee) {
         <span>৳${fee.amount}</span>
       </div>
       <div class="flex justify-between items-end text-xs text-slate-500 pt-4 border-t">
-        <span>${appState.academy.email}</span>
-        <span class="font-semibold text-slate-800 border-t border-slate-400 pt-1">${appState.academy.director}</span>
+        <span>${a.email}</span>
+        <span class="font-semibold text-slate-800 border-t border-slate-400 pt-1">${a.director}</span>
       </div>
     </div>
   `;
 }
 
-function verifyCredentials(userId, password) {
-  const cleanId = String(userId || '').trim();
-  const cleanPass = String(password || '').trim();
-
-  if (typeof Auth !== 'undefined' && typeof Auth.login === 'function') {
-    const res = Auth.login(cleanId, cleanPass);
-    if (res && res.ok && res.user) return res.user;
-  }
-
-  if (cleanId.toLowerCase() === 'admin' && cleanPass === '1234') {
-    return { id: 'admin', name: 'Super Admin', role: 'admin' };
-  }
-
-  const teacher = (appState.teachers || []).find(
-    (t) => String(t.id || '').trim().toLowerCase() === cleanId.toLowerCase() && String(t.password || '').trim() === cleanPass
-  );
-  if (teacher) return { ...teacher, role: 'teacher' };
-
-  const student = (appState.students || []).find(
-    (s) => String(s.id || '').trim().toLowerCase() === cleanId.toLowerCase() && String(s.password || '').trim() === cleanPass
-  );
-  if (student) return { ...student, role: 'student' };
-
-  return null;
-}
-
 function renderPublicSite() {
   const bn = appState.lang === 'bn';
+  const a = appState.academy;
   return `
     <div class="space-y-8">
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
-        <div class="lg:col-span-6 coffer-card rounded-3xl p-7 space-y-4">
+        <div class="lg:col-span-6 neu-card rounded-3xl p-7 space-y-4">
           <div class="w-12 h-12 rounded-full neu-card flex items-center justify-center text-blue-600 font-extrabold text-base">NG</div>
-          <h1 class="text-3xl md:text-4xl font-extrabold leading-tight">
-            ${appState.academy.name}
-          </h1>
-          <p class="text-slate-600 dark:text-slate-300 text-sm md:text-base">
-            ${bn ? appState.academy.taglineBn : appState.academy.taglineEn}
-          </p>
-          <div class="p-4 rounded-2xl coffer-input text-xs md:text-sm space-y-1">
-            <p><strong>${bn ? 'পরিচালক:' : 'Director:'}</strong> ${appState.academy.director}</p>
-            <p><strong>${bn ? 'ঠিকানা:' : 'Address:'}</strong> ${appState.academy.address}</p>
-            <p><strong>${bn ? 'মোবাইল:' : 'Phone:'}</strong> ${appState.academy.phone}</p>
-            <p><strong>${bn ? 'ইমেইল:' : 'Email:'}</strong> ${appState.academy.email}</p>
+          <h1 class="text-3xl md:text-4xl font-extrabold leading-tight">${a.name}</h1>
+          <p class="text-sm md:text-base text-slate-600 dark:text-slate-300">${bn ? a.taglineBn : a.taglineEn}</p>
+          <div class="p-4 rounded-2xl neu-input text-xs md:text-sm space-y-1">
+            <p><strong>${bn ? 'পরিচালক:' : 'Director:'}</strong> ${a.director}</p>
+            <p><strong>${bn ? 'ঠিকানা:' : 'Address:'}</strong> ${a.address}</p>
+            <p><strong>${bn ? 'মোবাইল:' : 'Phone:'}</strong> ${a.phone}</p>
+            <p><strong>${bn ? 'ইমেইল:' : 'Email:'}</strong> ${a.email}</p>
           </div>
           <div class="flex flex-wrap gap-3 pt-2">
-            <button id="open-login-modal-btn" type="button" class="coffer-btn-primary px-6 py-2.5 rounded-xl text-xs uppercase tracking-wider">
+            <button id="open-login-modal-btn" type="button" class="neu-btn-primary px-6 py-2.5 rounded-xl text-xs uppercase tracking-wider">
               ${bn ? 'পোর্টাল লগইন' : 'Portal Login'}
             </button>
-            <button id="open-recovery-modal-btn" type="button" class="coffer-btn-secondary px-5 py-2.5 rounded-xl text-xs font-bold">
+            <button id="open-recovery-modal-btn" type="button" class="neu-btn px-5 py-2.5 rounded-xl text-xs font-bold">
               ${bn ? 'পাসওয়ার্ড ভুলে গেছেন?' : 'Forgot Password?'}
             </button>
           </div>
-          <div class="p-3.5 rounded-2xl coffer-input text-xs text-slate-600 dark:text-slate-300">
+          <div class="p-3.5 rounded-2xl neu-input text-xs">
             Demo — Admin: <strong>admin / 1234</strong> • Teacher: <strong>TCH-01 / 123</strong> • Student: <strong>STU-101 / 123</strong>
           </div>
         </div>
 
-        <div class="lg:col-span-6 coffer-card rounded-3xl p-7">
+        <div class="lg:col-span-6 neu-card rounded-3xl p-7">
           <div class="flex flex-col items-center text-center mb-5">
             <div class="w-12 h-12 rounded-full neu-card flex items-center justify-center text-blue-600 font-bold text-lg mb-2">✎</div>
             <h2 class="text-xl font-extrabold">${bn ? 'অনলাইন ভর্তি আবেদন' : 'Create Admission'}</h2>
             <p class="text-xs text-slate-500 mt-0.5">${bn ? 'আপনার তথ্য দিয়ে আবেদন সম্পন্ন করুন' : 'Start your admission journey with us'}</p>
           </div>
           <form id="public-admission-form" action="javascript:void(0)" method="post" class="space-y-3.5">
-            <input name="name" required placeholder="${bn ? 'শিক্ষার্থীর পূর্ণ নাম' : 'Full Name'}" class="coffer-input" />
-            <input name="phone" required placeholder="${bn ? 'মোবাইল নম্বর' : 'Mobile Number'}" class="coffer-input" />
+            <input name="name" required placeholder="${bn ? 'শিক্ষার্থীর পূর্ণ নাম' : 'Full Name'}" class="neu-input" />
+            <input name="phone" required placeholder="${bn ? 'মোবাইল নম্বর' : 'Mobile Number'}" class="neu-input" />
             <div class="grid grid-cols-3 gap-2.5">
-              <select name="studentClass" class="coffer-input text-xs">
-                <option>Class 8</option><option>Class 9</option><option selected>Class 10</option><option>Class 11</option><option>Class 12</option>
-              </select>
-              <select name="group" class="coffer-input text-xs">
-                <option>Science</option><option>Commerce</option><option>Arts</option><option>General</option>
-              </select>
-              <select name="batch" class="coffer-input text-xs">
-                <option>Morning</option><option>Day</option><option>Evening</option>
-              </select>
+              <select name="studentClass" class="neu-input text-xs"><option>Class 8</option><option>Class 9</option><option selected>Class 10</option><option>Class 11</option><option>Class 12</option></select>
+              <select name="group" class="neu-input text-xs"><option>Science</option><option>Commerce</option><option>Arts</option><option>General</option></select>
+              <select name="batch" class="neu-input text-xs"><option>Morning</option><option>Day</option><option>Evening</option></select>
             </div>
-            <button type="submit" class="coffer-btn-primary w-full py-3 rounded-xl text-xs uppercase tracking-wider mt-2">
+            <button type="submit" class="neu-btn-primary w-full py-3 rounded-xl text-xs uppercase tracking-wider mt-2">
               ${bn ? 'আবেদন জমা দিন' : 'SUBMIT ADMISSION'}
             </button>
           </form>
@@ -180,34 +147,34 @@ function renderPublicSite() {
       </div>
 
       <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div class="coffer-card rounded-3xl p-6 space-y-3">
+        <div class="neu-card rounded-3xl p-6 space-y-3">
           <h3 class="font-bold text-lg">${bn ? 'নোটিশ বোর্ড' : 'Notice Board'}</h3>
           ${(appState.notices || [])
             .map(
               (n) => `
-            <div class="p-4 rounded-2xl coffer-input flex items-start justify-between gap-3">
+            <div class="p-4 rounded-2xl neu-input flex items-start justify-between gap-3">
               <div>
                 <p class="font-bold text-sm">${n.title}</p>
                 <p class="text-xs text-slate-500 mt-1">${n.body}</p>
               </div>
-              <a href="https://wa.me/?text=${encodeURIComponent(n.title + ' - ' + n.body)}" target="_blank" rel="noopener" class="coffer-btn-secondary px-3 py-1.5 rounded-xl text-xs font-bold shrink-0">WhatsApp</a>
+              <a href="https://wa.me/?text=${encodeURIComponent(n.title + ' - ' + n.body)}" target="_blank" rel="noopener" class="neu-btn px-3 py-1.5 rounded-xl text-xs font-bold shrink-0">WhatsApp</a>
             </div>
           `
             )
             .join('')}
         </div>
 
-        <div class="coffer-card rounded-3xl p-6 space-y-3">
+        <div class="neu-card rounded-3xl p-6 space-y-3">
           <h3 class="font-bold text-lg">${bn ? 'চলমান অনলাইন ক্লাস' : 'Upcoming Online Classes'}</h3>
           ${(appState.onlineClasses || [])
             .map(
               (c) => `
-            <div class="p-4 rounded-2xl coffer-input flex items-center justify-between gap-3">
+            <div class="p-4 rounded-2xl neu-input flex items-center justify-between gap-3">
               <div>
                 <p class="font-bold text-sm">${c.topic}</p>
                 <p class="text-xs text-slate-500">${c.studentClass} • ${c.date} • ${c.time}</p>
               </div>
-              <a href="${c.link}" target="_blank" rel="noopener" class="coffer-btn-primary px-4 py-1.5 rounded-xl text-xs font-bold">Join</a>
+              <a href="${c.link}" target="_blank" rel="noopener" class="neu-btn-primary px-4 py-1.5 rounded-xl text-xs">Join</a>
             </div>
           `
             )
@@ -220,15 +187,14 @@ function renderPublicSite() {
 
 function renderFooter() {
   const bn = appState.lang === 'bn';
+  const a = appState.academy;
   return `
-    <footer class="coffer-card rounded-3xl px-6 py-4 text-xs text-slate-600 dark:text-slate-300 flex flex-col md:flex-row md:items-center md:justify-between gap-2">
-      <div>
-        <span class="font-extrabold">${appState.academy.name}</span> — ${appState.academy.address}
-      </div>
+    <footer class="neu-card rounded-3xl px-6 py-4 text-xs flex flex-col md:flex-row md:items-center md:justify-between gap-2">
+      <div><span class="font-extrabold">${a.name}</span> — ${a.address}</div>
       <div class="flex flex-wrap gap-x-4 gap-y-1">
-        <span>${bn ? 'পরিচালক:' : 'Director:'} <strong>${appState.academy.director}</strong></span>
-        <span>${bn ? 'মোবাইল:' : 'Phone:'} <strong>${appState.academy.phone}</strong></span>
-        <span>${bn ? 'ইমেইল:' : 'Email:'} <strong>${appState.academy.email}</strong></span>
+        <span>${bn ? 'পরিচালক:' : 'Director:'} <strong>${a.director}</strong></span>
+        <span>${bn ? 'মোবাইল:' : 'Phone:'} <strong>${a.phone}</strong></span>
+        <span>${bn ? 'ইমেইল:' : 'Email:'} <strong>${a.email}</strong></span>
       </div>
     </footer>
   `;
@@ -246,7 +212,6 @@ function bindActiveForms() {
       processFormSubmission(form);
       return false;
     };
-
     const submitBtn = form.querySelector('button[type="submit"]');
     if (submitBtn) {
       submitBtn.onclick = function (ev) {
@@ -263,9 +228,7 @@ function bindActiveForms() {
 
 function renderApp() {
   applyTheme();
-  if (typeof Store !== 'undefined' && typeof Store.save === 'function') {
-    Store.save(appState);
-  }
+  Store.save(appState);
 
   const bn = appState.lang === 'bn';
   const root = document.getElementById('app');
@@ -274,22 +237,17 @@ function renderApp() {
   let bodyHtml = '';
   if (!appState.currentUser) {
     bodyHtml = renderPublicSite();
-  } else if (appState.currentUser.role === 'admin' && typeof AdminPortal !== 'undefined') {
+  } else if (appState.currentUser.role === 'admin') {
     bodyHtml = AdminPortal.render(appState, currentAdminTab);
-  } else if (appState.currentUser.role === 'teacher' && typeof TeacherPortal !== 'undefined') {
+  } else if (appState.currentUser.role === 'teacher') {
     bodyHtml = TeacherPortal.render(appState, appState.currentUser);
-  } else if (appState.currentUser.role === 'student' && typeof StudentPortal !== 'undefined') {
+  } else if (appState.currentUser.role === 'student') {
     bodyHtml = StudentPortal.render(appState, appState.currentUser);
-  } else {
-    bodyHtml = `<div class="coffer-card rounded-3xl p-6 space-y-3">
-      <h2 class="text-xl font-extrabold">Logged in as ${appState.currentUser.name} (${appState.currentUser.role})</h2>
-      <p class="text-sm text-slate-500">Dashboard module ready.</p>
-    </div>`;
   }
 
   root.innerHTML = `
     <div class="max-w-7xl mx-auto px-4 py-5 space-y-6">
-      <header class="coffer-card rounded-3xl px-5 py-3.5 flex flex-wrap items-center justify-between gap-3">
+      <header class="neu-card rounded-3xl px-5 py-3.5 flex flex-wrap items-center justify-between gap-3">
         <button id="brand-home-btn" type="button" class="flex items-center gap-3 text-left">
           <span class="w-10 h-10 rounded-full neu-card flex items-center justify-center font-extrabold text-sm text-blue-600">NG</span>
           <div>
@@ -299,23 +257,18 @@ function renderApp() {
         </button>
 
         <div class="flex items-center gap-2.5">
-          <button id="lang-toggle-btn" type="button" class="coffer-btn-secondary px-3.5 py-1.5 rounded-xl text-xs font-bold">
+          <button id="lang-toggle-btn" type="button" class="neu-btn px-3.5 py-1.5 rounded-xl text-xs font-bold">
             ${bn ? 'English' : 'বাংলা'}
           </button>
           ${
             appState.currentUser
-              ? `<button id="logout-btn" type="button" class="coffer-btn-secondary px-3.5 py-1.5 rounded-xl text-xs font-bold text-rose-600">
-                   ${bn ? 'লগআউট' : 'Logout'}
-                 </button>`
-              : `<button id="header-login-btn" type="button" class="coffer-btn-primary px-4 py-1.5 rounded-xl text-xs">
-                   ${bn ? 'লগইন' : 'Login'}
-                 </button>`
+              ? `<button id="logout-btn" type="button" class="neu-btn px-3.5 py-1.5 rounded-xl text-xs font-bold text-rose-600">${bn ? 'লগআউট' : 'Logout'}</button>`
+              : `<button id="header-login-btn" type="button" class="neu-btn-primary px-4 py-1.5 rounded-xl text-xs">${bn ? 'লগইন' : 'Login'}</button>`
           }
         </div>
       </header>
 
       ${bodyHtml}
-
       ${renderFooter()}
     </div>
   `;
@@ -331,12 +284,12 @@ function showLoginModal() {
       <form id="login-modal-form" action="javascript:void(0)" method="post" class="space-y-4">
         <div>
           <label class="block text-xs font-bold mb-1.5">${bn ? 'ইউজার ID' : 'User ID'}</label>
-          <input id="login-userid-input" name="userId" required placeholder="admin / TCH-01 / STU-101" class="coffer-input" />
+          <input id="login-userid-input" name="userId" required placeholder="admin / TCH-01 / STU-101" class="neu-input" />
         </div>
         <div>
           <label class="block text-xs font-bold mb-1.5">${bn ? 'পাসওয়ার্ড' : 'Password'}</label>
           <div class="relative">
-            <input id="login-password-input" name="password" type="password" required placeholder="1234" class="coffer-input pr-11" />
+            <input id="login-password-input" name="password" type="password" required placeholder="1234" class="neu-input pr-11" />
             <button id="toggle-pass-eye-btn" type="button" aria-label="Toggle Password" class="absolute right-2.5 top-1/2 -translate-y-1/2 text-xs font-bold text-slate-500 px-1.5 py-1">👁</button>
           </div>
         </div>
@@ -345,7 +298,7 @@ function showLoginModal() {
           <button id="modal-forgot-btn" type="button" class="text-xs font-bold text-blue-600 hover:underline">
             ${bn ? 'পাসওয়ার্ড ভুলে গেছেন?' : 'Forgot Password?'}
           </button>
-          <button id="login-submit-btn" type="submit" class="coffer-btn-primary px-6 py-2.5 rounded-xl text-xs uppercase tracking-wider">
+          <button id="login-submit-btn" type="submit" class="neu-btn-primary px-6 py-2.5 rounded-xl text-xs uppercase tracking-wider">
             ${bn ? 'প্রবেশ করুন' : 'Sign In'}
           </button>
         </div>
@@ -362,9 +315,9 @@ function showRecoveryModal() {
     `
       <form id="recovery-modal-form" action="javascript:void(0)" method="post" class="space-y-3">
         <p class="text-xs text-slate-500">${bn ? 'আপনার Student/Teacher ID অথবা মোবাইল নম্বর লিখুন।' : 'Enter your Student/Teacher ID or phone number.'}</p>
-        <input id="recovery-query-input" name="query" required placeholder="e.g. STU-101 or 01811223344" class="coffer-input" />
+        <input id="recovery-query-input" name="query" required placeholder="e.g. STU-101 or 01811223344" class="neu-input" />
         <div id="recovery-result" class="text-xs font-semibold"></div>
-        <button id="recovery-submit-btn" type="submit" class="coffer-btn-primary px-5 py-2 rounded-xl text-xs uppercase tracking-wider">
+        <button id="recovery-submit-btn" type="submit" class="neu-btn-primary px-5 py-2 rounded-xl text-xs uppercase tracking-wider">
           ${bn ? 'পাসওয়ার্ড খুঁজুন' : 'Find Password'}
         </button>
       </form>
@@ -377,17 +330,17 @@ function processFormSubmission(form) {
   if (!form) return;
 
   if (form.id === 'login-modal-form') {
-    const idInput = document.getElementById('login-userid-input');
-    const passInput = document.getElementById('login-password-input');
+    const idVal = document.getElementById('login-userid-input')?.value || '';
+    const passVal = document.getElementById('login-password-input')?.value || '';
     const errBox = document.getElementById('login-error-msg');
-    const user = verifyCredentials(idInput ? idInput.value : '', passInput ? passInput.value : '');
-    if (user) {
-      appState.currentUser = user;
+    const res = Auth.login(idVal, passVal);
+    if (res.ok && res.user) {
+      appState.currentUser = res.user;
       currentAdminTab = 'overview';
       closeModal();
       renderApp();
     } else if (errBox) {
-      errBox.textContent = appState.lang === 'bn' ? 'ভুল ইউজার ID বা পাসওয়ার্ড! (Admin: admin / 1234)' : 'Invalid ID or Password! (Admin: admin / 1234)';
+      errBox.textContent = appState.lang === 'bn' ? 'ভুল ইউজার ID বা পাসওয়ার্ড! (Admin: admin / 1234)' : 'Invalid ID or Password!';
       errBox.classList.remove('hidden');
     }
     return;
@@ -395,14 +348,12 @@ function processFormSubmission(form) {
 
   if (form.id === 'recovery-modal-form') {
     const qVal = document.getElementById('recovery-query-input')?.value || '';
-    const found = typeof Auth !== 'undefined' && typeof Auth.recoverPassword === 'function' ? Auth.recoverPassword(qVal) : null;
+    const found = Auth.recoverPassword(qVal);
     const out = document.getElementById('recovery-result');
     if (out) {
-      if (found) {
-        out.innerHTML = `<div class="p-3 rounded-xl coffer-input text-emerald-700 dark:text-emerald-400">Name: ${found.name} | ID: <strong>${found.id}</strong> | Password: <strong>${found.password}</strong></div>`;
-      } else {
-        out.innerHTML = `<div class="p-3 rounded-xl coffer-input text-rose-600">No account found.</div>`;
-      }
+      out.innerHTML = found
+        ? `<div class="p-3 rounded-xl neu-input text-emerald-700 dark:text-emerald-400">Name: ${found.name} | ID: <strong>${found.id}</strong> | Password: <strong>${found.password}</strong></div>`
+        : `<div class="p-3 rounded-xl neu-input text-rose-600">No account found.</div>`;
     }
     return;
   }
@@ -410,7 +361,7 @@ function processFormSubmission(form) {
   const fd = new FormData(form);
 
   if (form.id === 'public-admission-form') {
-    const newId = 'STU-' + (100 + (appState.students || []).length + (appState.admissions || []).length + 1);
+    const newId = 'STU-' + (100 + appState.students.length + appState.admissions.length + 1);
     const newPass = String(Math.floor(1000 + Math.random() * 9000));
     const admission = {
       id: 'ADM-' + Math.floor(100 + Math.random() * 900),
@@ -558,67 +509,20 @@ document.addEventListener('click', (e) => {
 
   if (target.id === 'toggle-pass-eye-btn') {
     const passInput = document.getElementById('login-password-input');
-    if (passInput) {
-      passInput.type = passInput.type === 'password' ? 'text' : 'password';
-    }
+    if (passInput) passInput.type = passInput.type === 'password' ? 'text' : 'password';
     return;
   }
 
-  if (target.id === 'modal-close-btn') {
-    closeModal();
-    return;
-  }
-
-  if (target.id === 'lang-toggle-btn') {
-    appState.lang = appState.lang === 'bn' ? 'en' : 'bn';
-    renderApp();
-    return;
-  }
-
-  if (target.id === 'theme-light-btn') {
-    appState.theme = 'light';
-    renderApp();
-    return;
-  }
-
-  if (target.id === 'theme-dark-btn') {
-    appState.theme = 'dark';
-    renderApp();
-    return;
-  }
-
-  if (target.id === 'open-login-modal-btn' || target.id === 'header-login-btn') {
-    showLoginModal();
-    return;
-  }
-
-  if (target.id === 'open-recovery-modal-btn' || target.id === 'modal-forgot-btn') {
-    showRecoveryModal();
-    return;
-  }
-
-  if (target.id === 'logout-btn') {
-    appState.currentUser = null;
-    renderApp();
-    return;
-  }
-
-  if (target.id === 'brand-home-btn' && !appState.currentUser) {
-    renderApp();
-    return;
-  }
-
-  if (target.dataset.adminTab) {
-    currentAdminTab = target.dataset.adminTab;
-    renderApp();
-    return;
-  }
-
-  if (target.id === 'admin-quick-add-student') {
-    currentAdminTab = 'students';
-    renderApp();
-    return;
-  }
+  if (target.id === 'modal-close-btn') return closeModal();
+  if (target.id === 'lang-toggle-btn') { appState.lang = appState.lang === 'bn' ? 'en' : 'bn'; return renderApp(); }
+  if (target.id === 'theme-light-btn') { appState.theme = 'light'; return renderApp(); }
+  if (target.id === 'theme-dark-btn') { appState.theme = 'dark'; return renderApp(); }
+  if (target.id === 'open-login-modal-btn' || target.id === 'header-login-btn') return showLoginModal();
+  if (target.id === 'open-recovery-modal-btn' || target.id === 'modal-forgot-btn') return showRecoveryModal();
+  if (target.id === 'logout-btn') { appState.currentUser = null; return renderApp(); }
+  if (target.id === 'brand-home-btn' && !appState.currentUser) return renderApp();
+  if (target.dataset.adminTab) { currentAdminTab = target.dataset.adminTab; return renderApp(); }
+  if (target.id === 'admin-quick-add-student') { currentAdminTab = 'students'; return renderApp(); }
 
   if (target.dataset.approveAdmission) {
     const adm = appState.admissions.find((a) => a.id === target.dataset.approveAdmission);
@@ -626,7 +530,7 @@ document.addEventListener('click', (e) => {
       adm.status = 'Approved';
       const newId = 'STU-' + (100 + appState.students.length + 1);
       const newPass = String(Math.floor(1000 + Math.random() * 9000));
-      const newStudent = {
+      appState.students.unshift({
         id: newId,
         password: newPass,
         name: adm.name,
@@ -641,49 +545,30 @@ document.addEventListener('click', (e) => {
         paymentAccount: adm.phone,
         receiptNo: 'RCP-' + Math.floor(1000 + Math.random() * 9000),
         verificationCode: 'NGA-VER-' + Math.floor(1000 + Math.random() * 9000)
-      };
-      appState.students.unshift(newStudent);
+      });
       renderApp();
-      openModal(
-        'Student Admitted',
-        `<div class="space-y-2">
-          <p class="font-bold text-emerald-700 dark:text-emerald-400">Admission Approved!</p>
-          <p><strong>Student ID:</strong> ${newId}</p>
-          <p><strong>Password:</strong> ${newPass}</p>
-        </div>`
-      );
+      openModal('Student Admitted', `<p class="font-bold text-emerald-700 dark:text-emerald-400">Admission Approved!</p><p><strong>Student ID:</strong> ${newId}</p><p><strong>Password:</strong> ${newPass}</p>`);
     }
     return;
   }
 
-  if (target.dataset.deleteAdmission) {
-    appState.admissions = appState.admissions.filter((a) => a.id !== target.dataset.deleteAdmission);
-    renderApp();
-    return;
-  }
-
-  if (target.dataset.deleteStudent) {
-    appState.students = appState.students.filter((s) => s.id !== target.dataset.deleteStudent);
-    renderApp();
-    return;
-  }
+  if (target.dataset.deleteAdmission) { appState.admissions = appState.admissions.filter((a) => a.id !== target.dataset.deleteAdmission); return renderApp(); }
+  if (target.dataset.deleteStudent) { appState.students = appState.students.filter((s) => s.id !== target.dataset.deleteStudent); return renderApp(); }
 
   if (target.dataset.editStudent) {
     const st = appState.students.find((s) => s.id === target.dataset.editStudent);
     if (st) {
       openModal(
         `Edit Student (${st.id})`,
-        `
-          <form id="edit-student-form" action="javascript:void(0)" method="post" data-student-id="${st.id}" class="space-y-3">
-            <input name="name" value="${st.name}" required class="coffer-input" />
-            <input name="phone" value="${st.phone}" required class="coffer-input" />
-            <div class="grid grid-cols-2 gap-2">
-              <input name="studentClass" value="${st.studentClass}" class="coffer-input" />
-              <input name="group" value="${st.group}" class="coffer-input" />
-            </div>
-            <button type="submit" class="coffer-btn-primary px-4 py-2 rounded-xl text-xs uppercase tracking-wider">Save Changes</button>
-          </form>
-        `
+        `<form id="edit-student-form" action="javascript:void(0)" method="post" data-student-id="${st.id}" class="space-y-3">
+          <input name="name" value="${st.name}" required class="neu-input" />
+          <input name="phone" value="${st.phone}" required class="neu-input" />
+          <div class="grid grid-cols-2 gap-2">
+            <input name="studentClass" value="${st.studentClass}" class="neu-input" />
+            <input name="group" value="${st.group}" class="neu-input" />
+          </div>
+          <button type="submit" class="neu-btn-primary px-4 py-2 rounded-xl text-xs">Save Changes</button>
+        </form>`
       );
       bindActiveForms();
     }
@@ -698,10 +583,7 @@ document.addEventListener('click', (e) => {
 
   if (target.dataset.markPaid) {
     const fee = appState.fees.find((f) => f.id === target.dataset.markPaid);
-    if (fee) {
-      fee.status = 'Paid';
-      renderApp();
-    }
+    if (fee) { fee.status = 'Paid'; renderApp(); }
     return;
   }
 
@@ -711,29 +593,10 @@ document.addEventListener('click', (e) => {
     return;
   }
 
-  if (target.dataset.deleteTeacher) {
-    appState.teachers = appState.teachers.filter((t) => t.id !== target.dataset.deleteTeacher);
-    renderApp();
-    return;
-  }
-
-  if (target.dataset.deleteExam) {
-    appState.exams = appState.exams.filter((e) => e.id !== target.dataset.deleteExam);
-    renderApp();
-    return;
-  }
-
-  if (target.dataset.deleteClass) {
-    appState.onlineClasses = appState.onlineClasses.filter((c) => c.id !== target.dataset.deleteClass);
-    renderApp();
-    return;
-  }
-
-  if (target.dataset.deleteNotice) {
-    appState.notices = appState.notices.filter((n) => n.id !== target.dataset.deleteNotice);
-    renderApp();
-    return;
-  }
+  if (target.dataset.deleteTeacher) { appState.teachers = appState.teachers.filter((t) => t.id !== target.dataset.deleteTeacher); return renderApp(); }
+  if (target.dataset.deleteExam) { appState.exams = appState.exams.filter((e) => e.id !== target.dataset.deleteExam); return renderApp(); }
+  if (target.dataset.deleteClass) { appState.onlineClasses = appState.onlineClasses.filter((c) => c.id !== target.dataset.deleteClass); return renderApp(); }
+  if (target.dataset.deleteNotice) { appState.notices = appState.notices.filter((n) => n.id !== target.dataset.deleteNotice); return renderApp(); }
 
   if (target.id === 'export-json-btn') {
     const blob = new Blob([JSON.stringify(appState, null, 2)], { type: 'application/json' });
@@ -747,7 +610,7 @@ document.addEventListener('click', (e) => {
   }
 
   if (target.id === 'reset-demo-btn') {
-    appState = typeof Store !== 'undefined' ? Store.reset() : cloneDefaultState();
+    appState = Store.reset();
     renderApp();
   }
 });
@@ -757,8 +620,7 @@ document.addEventListener('change', (e) => {
     const reader = new FileReader();
     reader.onload = () => {
       try {
-        const parsed = JSON.parse(reader.result);
-        appState = { ...DEFAULT_STATE, ...parsed };
+        appState = { ...DEFAULT_STATE, ...JSON.parse(reader.result), academy: { ...ACADEMY_PROFILE } };
         renderApp();
       } catch {
         alert('Invalid JSON file');
