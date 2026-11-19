@@ -4,30 +4,28 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>NextGen Academy — ERP & Learning Portal</title>
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%23334155'/><text x='50%' y='62%' dominant-baseline='middle' text-anchor='middle' fill='white' font-size='46' font-family='sans-serif' font-weight='bold'>NG</text></svg>" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%232563eb'/><text x='50%' y='62%' dominant-baseline='middle' text-anchor='middle' fill='white' font-size='46' font-family='sans-serif' font-weight='bold'>NG</text></svg>" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
-    tailwind.config = {
-      darkMode: 'class'
-    };
+    tailwind.config = { darkMode: 'class' };
   </script>
   <link rel="stylesheet" href="css/style.css" />
 </head>
-<body class="neu-bg text-slate-800 dark:text-slate-100 min-h-screen relative overflow-x-hidden transition-colors duration-200">
+<body class="neu-bg min-h-screen relative overflow-x-hidden transition-colors duration-200">
   <div class="bg-circle bg1" aria-hidden="true"></div>
   <div class="bg-circle bg2" aria-hidden="true"></div>
   <div class="bg-circle bg3" aria-hidden="true"></div>
 
   <div id="app" class="relative z-10"></div>
 
-  <div id="modal-backdrop" class="fixed inset-0 z-50 hidden items-center justify-center bg-slate-900/35 backdrop-blur-xs p-4 print:hidden">
+  <div id="modal-backdrop" class="fixed inset-0 z-50 hidden items-center justify-center bg-slate-900/35 p-4 print:hidden">
     <div id="modal-card" class="w-full max-w-xl rounded-3xl neu-card p-6 max-h-[90vh] overflow-y-auto">
-      <div class="flex items-center justify-between border-b border-slate-200/80 dark:border-slate-700/80 pb-3 mb-4">
-        <h3 id="modal-title" class="text-lg font-bold text-slate-800 dark:text-white">Details</h3>
-        <button id="modal-close-btn" type="button" class="neu-btn-flat rounded-xl px-3 py-1.5 text-sm font-bold text-slate-700 dark:text-slate-200">✕</button>
+      <div class="flex items-center justify-between border-b border-slate-300/60 dark:border-slate-700/60 pb-3 mb-4">
+        <h3 id="modal-title" class="text-lg font-bold">Details</h3>
+        <button id="modal-close-btn" type="button" class="neu-btn rounded-xl px-3 py-1.5 text-sm font-bold">✕</button>
       </div>
       <div id="modal-body" class="space-y-4 text-sm"></div>
     </div>
