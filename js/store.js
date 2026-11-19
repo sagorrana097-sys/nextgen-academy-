@@ -39,22 +39,6 @@ const DEFAULT_STATE = {
       paymentAccount: '01811223344',
       receiptNo: 'RCP-9001',
       verificationCode: 'NGA-VER-9001'
-    },
-    {
-      id: 'STU-102',
-      password: '123',
-      name: 'Farhana Akter',
-      phone: '01911223344',
-      guardianPhone: '01718889900',
-      studentClass: 'Class 9',
-      group: 'Commerce',
-      batch: 'Day',
-      feeStatus: 'Due',
-      feeAmount: 2000,
-      paymentMethod: 'Nagad',
-      paymentAccount: '01911223344',
-      receiptNo: 'RCP-9002',
-      verificationCode: 'NGA-VER-9002'
     }
   ],
   teachers: [
@@ -81,20 +65,6 @@ const DEFAULT_STATE = {
       receiptNo: 'RCP-9001',
       verificationCode: 'NGA-VER-9001',
       date: '2026-11-05'
-    },
-    {
-      id: 'FEE-2',
-      studentId: 'STU-102',
-      studentName: 'Farhana Akter',
-      studentClass: 'Class 9',
-      month: 'November 2026',
-      amount: 2000,
-      method: 'Nagad',
-      accountNo: '01911223344',
-      status: 'Due',
-      receiptNo: 'RCP-9002',
-      verificationCode: 'NGA-VER-9002',
-      date: '2026-11-12'
     }
   ],
   exams: [
@@ -131,31 +101,38 @@ const DEFAULT_STATE = {
     }
   ],
   textbooks: [
-    { id: 'TB-1', studentClass: 'Class 10', group: 'Science', title: 'Higher Mathematics & Physics Guide', code: 'NGA-BK-101' },
-    { id: 'TB-2', studentClass: 'Class 9', group: 'Commerce', title: 'Principles of Accounting & Finance', code: 'NGA-BK-092' },
-    { id: 'TB-3', studentClass: 'Class 8', group: 'General', title: 'General Science & ICT Workbook', code: 'NGA-BK-083' }
+    { id: 'TB-1', studentClass: 'Class 10', group: 'Science', title: 'Higher Mathematics & Physics Guide', code: 'NGA-BK-101' }
   ]
 };
+
+function cloneDefaultState() {
+  return JSON.parse(JSON.stringify(DEFAULT_STATE));
+}
 
 const Store = {
   load() {
     try {
       const raw = localStorage.getItem(STORAGE_KEY);
       if (!raw) {
-        this.save(DEFAULT_STATE);
-        return structuredClone(DEFAULT_STATE);
+        const fresh = cloneDefaultState();
+        this.save(fresh);
+        return fresh;
       }
-      return { ...structuredClone(DEFAULT_STATE), ...JSON.parse(raw) };
+      return { ...cloneDefaultState(), ...JSON.parse(raw) };
     } catch {
-      return structuredClone(DEFAULT_STATE);
+      return cloneDefaultState();
     }
   },
   save(state) {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+    } catch {}
   },
   reset() {
-    localStorage.removeItem(STORAGE_KEY);
-    return structuredClone(DEFAULT_STATE);
+    try {
+      localStorage.removeItem(STORAGE_KEY);
+    } catch {}
+    return cloneDefaultState();
   },
   calculateGrade(obtained, total = 100) {
     const pct = total > 0 ? (Number(obtained) / Number(total)) * 100 : 0;
