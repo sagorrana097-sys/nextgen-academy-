@@ -1169,8 +1169,7 @@ content.querySelector("#show-attendance-report").onclick = () => {
           toast("সেটিংস সংরক্ষণ করা যায়নি।", "error");
         }
       };
-  } 
-    
+  }  
   function stat(icon, label, value) {
     return `
       <article class="neu-card stat-card">
