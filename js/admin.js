@@ -1078,7 +1078,7 @@ content.querySelector("#show-attendance-report").onclick = () => {
       }
     };
   };
-}
+
    // ACADEMY SETTINGS
   async function showAcademySettings() {
 
