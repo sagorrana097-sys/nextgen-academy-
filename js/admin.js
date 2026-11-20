@@ -885,7 +885,7 @@ async function showAttendance() {
     }
 
     if (!students.length) {
-      list.innerHTML = <p class="muted">কোনো শিক্ষার্থী পাওয়া যায়নি।</p>;
+     list.innerHTML = <p class="muted">কোনো শিক্ষার্থী পাওয়া যায়নি।</p>;
       return;
     }
 
