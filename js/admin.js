@@ -15,12 +15,15 @@ export async function renderAdmin(root, { user, profile }) {
   let currentPage = "dashboard";
 
   const pages = [
-    ["dashboard", "▦", "ড্যাশবোর্ড"],
-    ["courses", "📚", "কোর্স"],
-    ["students", "👨‍🎓", "শিক্ষার্থী"],
-    ["admissions", "📝", "ভর্তি আবেদন"],
-    ["notices", "📢", "নোটিশ"]
-  ];
+  ["dashboard", "▦", "ড্যাশবোর্ড"],
+  ["courses", "📚", "কোর্স"],
+  ["students", "👨‍🎓", "শিক্ষার্থী"],
+  ["teachers", "👨‍🏫", "শিক্ষক"],
+  ["batches", "🏫", "ব্যাচ"],
+  ["attendance", "📅", "উপস্থিতি"],
+  ["admissions", "📝", "ভর্তি আবেদন"],
+  ["notices", "📢", "নোটিশ"]
+];
 
   root.innerHTML = `
     <div class="app-shell role-admin">
@@ -123,7 +126,17 @@ export async function renderAdmin(root, { user, profile }) {
       else if (page === "admissions") {
         await showAdmissions();
       }
+      else if (page === "teachers") {
+  await showTeachers();
+}
 
+else if (page === "batches") {
+  await showBatches();
+}
+
+else if (page === "attendance") {
+  await showAttendance();
+}
       else if (page === "notices") {
         await showNotices();
       }
@@ -574,8 +587,313 @@ export async function renderAdmin(root, { user, profile }) {
           toast("নোটিশ প্রকাশ করা যায়নি।", "error");
         }
       };
-  }
+  // TEACHER MANAGEMENT
+async function showTeachers() {
 
+  const teachers = await listRecords("teachers");
+
+  content.innerHTML = `
+    <h1>👨‍🏫 শিক্ষক ব্যবস্থাপনা</h1>
+
+    <section class="neu-card panel">
+      <h2 class="section-title">নতুন শিক্ষক যোগ করুন</h2>
+
+      <form id="teacher-form" class="form-stack">
+
+        <label class="field">
+          <span>শিক্ষকের নাম</span>
+          <input name="name" required>
+        </label>
+
+        <label class="field">
+          <span>মোবাইল</span>
+          <input name="phone">
+        </label>
+
+        <label class="field">
+          <span>ইমেইল</span>
+          <input name="email" type="email">
+        </label>
+
+        <label class="field">
+          <span>বিষয়</span>
+          <input name="subject">
+        </label>
+
+        <label class="field">
+          <span>মাসিক বেতন</span>
+          <input name="salary" type="number" min="0">
+        </label>
+
+        <button class="btn btn-primary">শিক্ষক সংরক্ষণ করুন</button>
+      </form>
+    </section>
+
+    <section class="neu-card panel">
+      <h2 class="section-title">শিক্ষক তালিকা (${teachers.length})</h2>
+      ${makeList(teachers, "name", "কোনো শিক্ষক যোগ করা হয়নি")}
+    </section>
+  `;
+
+  content.querySelector("#teacher-form").onsubmit = async event => {
+    event.preventDefault();
+
+    const f = new FormData(event.currentTarget);
+
+    try {
+      await createRecord("teachers", {
+        name: f.get("name").trim(),
+        phone: f.get("phone").trim(),
+        email: f.get("email").trim(),
+        subject: f.get("subject").trim(),
+        salary: Number(f.get("salary")) || 0,
+        createdBy: user.uid
+      });
+
+      toast("শিক্ষক যোগ হয়েছে।", "success");
+      await showTeachers();
+
+    } catch (error) {
+      console.error(error);
+      toast("শিক্ষক যোগ করা যায়নি।", "error");
+    }
+  };
+}
+
+
+// BATCH MANAGEMENT
+async function showBatches() {
+
+  const [batches, teachers] = await Promise.all([
+    listRecords("batches"),
+    listRecords("teachers")
+  ]);
+
+  content.innerHTML = `
+    <h1>🏫 ব্যাচ ব্যবস্থাপনা</h1>
+
+    <section class="neu-card panel">
+      <h2 class="section-title">নতুন ব্যাচ তৈরি করুন</h2>
+
+      <form id="batch-form" class="form-stack">
+
+        <label class="field">
+          <span>ব্যাচের নাম</span>
+          <input name="name" required>
+        </label>
+
+        <label class="field">
+          <span>শ্রেণি</span>
+          <input name="className">
+        </label>
+
+        <label class="field">
+          <span>বিভাগ</span>
+          <select name="division">
+            <option>General</option>
+            <option>Science</option>
+            <option>Humanities</option>
+            <option>Business Studies</option>
+          </select>
+        </label>
+
+        <label class="field">
+          <span>শিক্ষক</span>
+          <select name="teacherId">
+            <option value="">শিক্ষক নির্বাচন করুন</option>
+            ${teachers.map(t => `
+              <option value="${escapeHTML(t.id)}">
+                ${escapeHTML(t.name)}
+              </option>
+            `).join("")}
+          </select>
+        </label>
+
+        <label class="field">
+          <span>ক্লাসের সময়সূচি</span>
+          <input name="schedule" placeholder="যেমন: সকাল ১০টা">
+        </label>
+
+        <button class="btn btn-primary">ব্যাচ সংরক্ষণ করুন</button>
+      </form>
+    </section>
+
+    <section class="neu-card panel">
+      <h2 class="section-title">ব্যাচ তালিকা (${batches.length})</h2>
+
+      ${batches.length ? `
+        <ul class="simple-list">
+          ${batches.map(b => {
+            const teacher = teachers.find(t => t.id === b.teacherId);
+
+            return `
+              <li>
+                <span>
+                  ${escapeHTML(b.name || "—")}
+                  <small>
+                    ${escapeHTML(b.className || "")}
+                    · ${escapeHTML(b.division || "")}
+                  </small>
+                </span>
+                <small>
+                  ${escapeHTML(teacher?.name || "শিক্ষক নির্ধারিত নয়")}
+                  <br>
+                  ${escapeHTML(b.schedule || "")}
+                </small>
+              </li>
+            `;
+          }).join("")}
+        </ul>
+      ` : `<p class="muted">কোনো ব্যাচ তৈরি করা হয়নি।</p>`}
+    </section>
+  `;
+
+  content.querySelector("#batch-form").onsubmit = async event => {
+    event.preventDefault();
+
+    const f = new FormData(event.currentTarget);
+
+    try {
+      await createRecord("batches", {
+        name: f.get("name").trim(),
+        className: f.get("className").trim(),
+        division: f.get("division"),
+        teacherId: f.get("teacherId"),
+        schedule: f.get("schedule").trim(),
+        createdBy: user.uid
+      });
+
+      toast("নতুন ব্যাচ তৈরি হয়েছে।", "success");
+      await showBatches();
+
+    } catch (error) {
+      console.error(error);
+      toast("ব্যাচ তৈরি করা যায়নি।", "error");
+    }
+  };
+}
+
+
+// ATTENDANCE MANAGEMENT
+async function showAttendance() {
+
+  const [students, attendance] = await Promise.all([
+    listRecords("students"),
+    listRecords("attendance")
+  ]);
+
+  const today = new Date().toLocaleDateString("en-CA");
+
+  content.innerHTML = `
+    <h1>📅 উপস্থিতি ব্যবস্থাপনা</h1>
+
+    <section class="neu-card panel">
+
+      <div class="form-stack">
+
+        <label class="field">
+          <span>তারিখ</span>
+          <input type="date" id="attendance-date" value="${today}">
+        </label>
+
+        <button class="btn btn-primary" id="load-attendance">
+          শিক্ষার্থী তালিকা দেখুন
+        </button>
+
+      </div>
+
+      <div id="attendance-students"></div>
+
+    </section>
+  `;
+
+  const list = content.querySelector("#attendance-students");
+
+  content.querySelector("#load-attendance").onclick = () => {
+
+    const date = content.querySelector("#attendance-date").value;
+
+    if (!date) {
+      toast("তারিখ নির্বাচন করুন।", "error");
+      return;
+    }
+
+    if (!students.length) {
+      list.innerHTML = `<p class="muted">কোনো শিক্ষার্থী পাওয়া যায়নি।</p>`;
+      return;
+    }
+
+    list.innerHTML = `
+      <h2 class="section-title">শিক্ষার্থীদের উপস্থিতি</h2>
+
+      ${students.map(s => {
+        const old = attendance.find(a =>
+          a.studentId === s.id && a.date === date
+        );
+
+        return `
+          <div class="attendance-row">
+            <span>${escapeHTML(s.name || "—")}</span>
+
+            <select data-student="${escapeHTML(s.id)}">
+              <option value="present"
+                ${old?.status === "present" ? "selected" : ""}>
+                উপস্থিত
+              </option>
+
+              <option value="absent"
+                ${old?.status === "absent" ? "selected" : ""}>
+                অনুপস্থিত
+              </option>
+            </select>
+          </div>
+        `;
+      }).join("")}
+
+      <button class="btn btn-primary" id="save-attendance">
+        উপস্থিতি সংরক্ষণ করুন
+      </button>
+    `;
+
+    list.querySelector("#save-attendance").onclick =
+      async () => {
+
+        try {
+
+          const selects = list.querySelectorAll("[data-student]");
+
+          for (const select of selects) {
+
+            const studentId = select.dataset.student;
+
+            const old = attendance.find(a =>
+              a.studentId === studentId && a.date === date
+            );
+
+            const data = {
+              studentId,
+              studentName: students.find(s => s.id === studentId)?.name || "",
+              date,
+              status: select.value,
+              createdBy: user.uid
+            };
+
+            if (old) {
+              await updateRecord("attendance", old.id, data);
+            } else {
+              await createRecord("attendance", data);
+            }
+          }
+
+          toast("উপস্থিতি সংরক্ষণ হয়েছে।", "success");
+          await showAttendance();
+
+        } catch (error) {
+          console.error(error);
+          toast("উপস্থিতি সংরক্ষণ করা যায়নি।", "error");
+        }
+      };
+  };
   function stat(icon, label, value) {
     return `
       <article class="neu-card stat-card">
