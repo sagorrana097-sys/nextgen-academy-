@@ -1,7 +1,9 @@
 import {
   listRecords,
   createRecord,
-  updateRecord
+  updateRecord,
+  getAcademySettings,
+  saveAcademySettings
 } from "./store.js";
 
 import {
