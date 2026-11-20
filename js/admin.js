@@ -892,6 +892,65 @@ async function showAttendance() {
   `;
 
   const list = content.querySelector("#attendance-students");
+  // ATTENDANCE REPORT
+content.querySelector("#show-attendance-report").onclick = () => {
+
+  const date = content.querySelector("#report-date").value;
+  const result = content.querySelector("#attendance-report-result");
+
+  if (!date) {
+    toast("রিপোর্টের তারিখ নির্বাচন করুন।", "error");
+    return;
+  }
+
+  const presentStudents = students.filter(student =>
+    attendance.some(a =>
+      a.studentId === student.id &&
+      a.date === date &&
+      a.status === "present"
+    )
+  );
+
+  const absentStudents = students.filter(student =>
+    attendance.some(a =>
+      a.studentId === student.id &&
+      a.date === date &&
+      a.status === "absent"
+    )
+  );
+
+  const totalMarked = presentStudents.length + absentStudents.length;
+  const unmarked = students.length - totalMarked;
+
+  result.innerHTML = `
+    <div class="stats-grid" style="margin-top:20px">
+
+      ${stat("👨‍🎓", "মোট শিক্ষার্থী", students.length)}
+      ${stat("✅", "উপস্থিত", presentStudents.length)}
+      ${stat("❌", "অনুপস্থিত", absentStudents.length)}
+      ${stat("⏳", "হিসাব হয়নি", unmarked)}
+
+    </div>
+
+    <section class="neu-card panel" style="margin-top:20px">
+      <h3>✅ উপস্থিত শিক্ষার্থীরা</h3>
+
+      ${presentStudents.length
+        ? makeList(presentStudents, "name", "")
+        : `<p class="muted">কেউ উপস্থিত নেই।</p>`
+      }
+    </section>
+
+    <section class="neu-card panel" style="margin-top:20px">
+      <h3>❌ অনুপস্থিত শিক্ষার্থীরা</h3>
+
+      ${absentStudents.length
+        ? makeList(absentStudents, "name", "")
+        : `<p class="muted">কেউ অনুপস্থিত নেই।</p>`
+      }
+    </section>
+  `;
+};
 
   content.querySelector("#load-attendance").onclick = () => {
 
