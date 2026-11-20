@@ -869,6 +869,24 @@ async function showAttendance() {
       </div>
 
       <div id="attendance-students"></div>
+      <div class="attendance-report-section">
+
+  <hr style="margin:25px 0">
+
+  <h2 class="section-title">📊 উপস্থিতির রিপোর্ট</h2>
+
+  <label class="field">
+    <span>রিপোর্টের তারিখ নির্বাচন করুন</span>
+    <input type="date" id="report-date" value="${today}">
+  </label>
+
+  <button class="btn btn-primary" id="show-attendance-report">
+    রিপোর্ট দেখুন
+  </button>
+
+  <div id="attendance-report-result"></div>
+
+</div>
 
     </section>
   `;
