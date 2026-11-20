@@ -1088,96 +1088,125 @@ content.querySelector("#show-attendance-report").onclick = () => {
   
  } // showAttendance() ফাংশন শেষ
    // ACADEMY SETTINGS
-  async function showAcademySettings()  {
-    
-    const settings = await getAcademySettings();
+  async function showAcademySettings() {
 
-    content.innerHTML = `
-      <h1>⚙️ Academy Settings</h1>
+  const settings = await getAcademySettings();
 
-      <section class="neu-card panel">
-        <h2 class="section-title">একাডেমির পরিচিতি</h2>
+  content.innerHTML = `
+    <h1>⚙️ Academy Settings</h1>
 
-        <form id="academy-settings-form" class="form-stack">
+    <section class="neu-card panel">
+      <h2 class="section-title">একাডেমির পরিচিতি</h2>
 
-          <label class="field">
-            <span>একাডেমির নাম</span>
-            <input name="academyName"
-              value="${escapeHTML(settings.academyName || "NextGen Academy")}"
-              required>
-          </label>
+      <form id="academy-settings-form">
 
-          <label class="field">
-            <span>স্লোগান</span>
-            <input name="tagline"
-              value="${escapeHTML(settings.tagline || "")}">
-          </label>
+        <label>একাডেমির নাম</label>
+        <input name="academyName"
+          value="${settings.academyName || ""}"
+          required>
 
-          <label class="field">
-            <span>মোবাইল নম্বর</span>
-            <input name="phone"
-              value="${escapeHTML(settings.phone || "")}">
-          </label>
+        <label>স্লোগান</label>
+        <input name="tagline"
+          value="${settings.tagline || ""}">
 
-          <label class="field">
-            <span>ইমেইল</span>
-            <input name="email" type="email"
-              value="${escapeHTML(settings.email || "")}">
-          </label>
+        <label>মোবাইল নম্বর</label>
+        <input name="phone"
+          value="${settings.phone || ""}">
 
-          <label class="field">
-            <span>ওয়েবসাইট</span>
-            <input name="website"
-              value="${escapeHTML(settings.website || "")}">
-          </label>
+        <label>ইমেইল</label>
+        <input name="email"
+          value="${settings.email || ""}">
 
-          <label class="field">
-            <span>ঠিকানা</span>
-            <textarea name="address">${escapeHTML(settings.address || "")}</textarea>
-          </label>
+        <label>ওয়েবসাইট</label>
+        <input name="website"
+          value="${settings.website || ""}">
 
-          <label class="field">
-            <span>লোগোর URL</span>
-            <input name="logoUrl" type="url"
-              value="${escapeHTML(settings.logoUrl || "")}">
-          </label>
+        <label>ঠিকানা</label>
+        <textarea name="address">${settings.address || ""}</textarea>
 
-          <button class="btn btn-primary" type="submit">
-            💾 সেটিংস সংরক্ষণ করুন
-          </button>
+        <h3>একাডেমির লোগো</h3>
 
-        </form>
-      </section>
-    `;
+        <img id="logo-preview"
+          src="${settings.logoUrl || ""}"
+          style="max-width:150px;display:${settings.logoUrl ? "block" : "none"};margin:10px 0;">
 
-    content.querySelector("#academy-settings-form").onsubmit =
-      async event => {
+        <input type="file"
+          id="logo-file"
+          accept="image/png,image/jpeg,image/webp">
 
-        event.preventDefault();
+        <input type="hidden"
+          name="logoUrl"
+          value="${settings.logoUrl || ""}">
 
-        const form = new FormData(event.currentTarget);
+        <button type="submit" class="btn-primary">
+          💾 সেটিংস সংরক্ষণ করুন
+        </button>
 
-        const data = {
-          academyName: form.get("academyName").trim(),
-          tagline: form.get("tagline").trim(),
-          phone: form.get("phone").trim(),
-          email: form.get("email").trim(),
-          website: form.get("website").trim(),
-          address: form.get("address").trim(),
-          logoUrl: form.get("logoUrl").trim()
-        };
+      </form>
+    </section>
+  `;
 
-        try {
-          await saveAcademySettings(data);
-          toast("সেটিংস সংরক্ষণ হয়েছে।", "success");
-          await showAcademySettings();
+  const form = content.querySelector("#academy-settings-form");
+  const fileInput = content.querySelector("#logo-file");
+  const preview = content.querySelector("#logo-preview");
 
-        } catch (error) {
-          console.error(error);
-          toast("সেটিংস সংরক্ষণ করা যায়নি।", "error");
-        }
-      };
-  }  
+  fileInput.onchange = () => {
+    const file = fileInput.files[0];
+    if (!file) return;
+
+    if (!["image/png", "image/jpeg", "image/webp"].includes(file.type)) {
+      alert("শুধু PNG, JPG অথবা WEBP ছবি নির্বাচন করুন।");
+      fileInput.value = "";
+      return;
+    }
+
+    if (file.size > 2 * 1024 * 1024) {
+      alert("ছবির সাইজ ২ MB-এর কম হতে হবে।");
+      fileInput.value = "";
+      return;
+    }
+
+    preview.src = URL.createObjectURL(file);
+    preview.style.display = "block";
+  };
+
+  form.onsubmit = async (e) => {
+    e.preventDefault();
+
+    const button = form.querySelector('button[type="submit"]');
+    button.disabled = true;
+    button.textContent = "সংরক্ষণ হচ্ছে...";
+
+    try {
+      const data = Object.fromEntries(new FormData(form).entries());
+
+      const file = fileInput.files[0];
+
+      if (file) {
+        const logoRef = ref(
+          storage,
+          "academy/logo/" + Date.now() + "_" + file.name
+        );
+
+        await uploadBytes(logoRef, file);
+        data.logoUrl = await getDownloadURL(logoRef);
+      }
+
+      await saveAcademySettings(data);
+
+      alert("একাডেমির সেটিংস সফলভাবে সংরক্ষিত হয়েছে।");
+
+      await showAcademySettings();
+
+    } catch (error) {
+      console.error(error);
+      alert("সংরক্ষণ করা যায়নি: " + error.message);
+
+      button.disabled = false;
+      button.textContent = "💾 সেটিংস সংরক্ষণ করুন";
+    }
+  };
+}
   function stat(icon, label, value) {
     return `
       <article class="neu-card stat-card">
