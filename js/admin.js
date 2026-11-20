@@ -895,7 +895,7 @@ async function showAttendance() {
         }
       };
   };
-}
+} // showAttendance() শেষ
   function stat(icon, label, value) {
     return `
       <article class="neu-card stat-card">
