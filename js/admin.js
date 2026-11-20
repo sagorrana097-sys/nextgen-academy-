@@ -1200,7 +1200,97 @@ content.querySelector("#show-attendance-report").onclick = () => {
 
         }
       };
-  }
+   // ACADEMY SETTINGS
+  async function showAcademySettings() {
+
+    const settings = await getAcademySettings();
+
+    content.innerHTML = `
+      <h1>⚙️ Academy Settings</h1>
+
+      <section class="neu-card panel">
+        <h2 class="section-title">একাডেমির পরিচিতি</h2>
+
+        <form id="academy-settings-form" class="form-stack">
+
+          <label class="field">
+            <span>একাডেমির নাম</span>
+            <input name="academyName"
+              value="${escapeHTML(settings.academyName || "NextGen Academy")}"
+              required>
+          </label>
+
+          <label class="field">
+            <span>স্লোগান</span>
+            <input name="tagline"
+              value="${escapeHTML(settings.tagline || "")}">
+          </label>
+
+          <label class="field">
+            <span>মোবাইল নম্বর</span>
+            <input name="phone"
+              value="${escapeHTML(settings.phone || "")}">
+          </label>
+
+          <label class="field">
+            <span>ইমেইল</span>
+            <input name="email" type="email"
+              value="${escapeHTML(settings.email || "")}">
+          </label>
+
+          <label class="field">
+            <span>ওয়েবসাইট</span>
+            <input name="website"
+              value="${escapeHTML(settings.website || "")}">
+          </label>
+
+          <label class="field">
+            <span>ঠিকানা</span>
+            <textarea name="address">${escapeHTML(settings.address || "")}</textarea>
+          </label>
+
+          <label class="field">
+            <span>লোগোর URL</span>
+            <input name="logoUrl" type="url"
+              value="${escapeHTML(settings.logoUrl || "")}">
+          </label>
+
+          <button class="btn btn-primary" type="submit">
+            💾 সেটিংস সংরক্ষণ করুন
+          </button>
+
+        </form>
+      </section>
+    `;
+
+    content.querySelector("#academy-settings-form").onsubmit =
+      async event => {
+
+        event.preventDefault();
+
+        const form = new FormData(event.currentTarget);
+
+        const data = {
+          academyName: form.get("academyName").trim(),
+          tagline: form.get("tagline").trim(),
+          phone: form.get("phone").trim(),
+          email: form.get("email").trim(),
+          website: form.get("website").trim(),
+          address: form.get("address").trim(),
+          logoUrl: form.get("logoUrl").trim()
+        };
+
+        try {
+          await saveAcademySettings(data);
+          toast("সেটিংস সংরক্ষণ হয়েছে।", "success");
+          await showAcademySettings();
+
+        } catch (error) {
+          console.error(error);
+          toast("সেটিংস সংরক্ষণ করা যায়নি।", "error");
+        }
+      };
+    
   function stat(icon, label, value) {
     return `
       <article class="neu-card stat-card">
