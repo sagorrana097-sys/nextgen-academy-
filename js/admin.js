@@ -788,6 +788,69 @@ async function showAttendance() {
   const today = new Date().toLocaleDateString("en-CA");
 
   content.innerHTML = `
+    <style>
+      .attendance-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+        gap: 16px;
+        margin-top: 20px;
+      }
+
+      .attendance-card {
+        background: var(--card-bg, #fff);
+        border: 1px solid #e5e7eb;
+        border-radius: 16px;
+        padding: 18px;
+        box-shadow: 0 4px 14px rgba(0,0,0,.05);
+      }
+
+      .attendance-student-name {
+        font-size: 17px;
+        font-weight: 700;
+        margin-bottom: 16px;
+        display: block;
+      }
+
+      .attendance-options {
+        display: flex;
+        gap: 10px;
+      }
+
+      .attendance-options input {
+        display: none;
+      }
+
+      .attendance-options label {
+        flex: 1;
+        text-align: center;
+        padding: 11px 8px;
+        border-radius: 10px;
+        cursor: pointer;
+        font-weight: 600;
+        background: #f1f5f9;
+        color: #475569;
+        border: 2px solid transparent;
+        transition: .2s;
+      }
+
+      .attendance-options .present-option input:checked + label {
+        background: #dcfce7;
+        color: #15803d;
+        border-color: #22c55e;
+      }
+
+      .attendance-options .absent-option input:checked + label {
+        background: #fee2e2;
+        color: #b91c1c;
+        border-color: #ef4444;
+      }
+
+      .attendance-save-btn {
+        width: 100%;
+        margin-top: 22px;
+      }
+    </style>
+
     <h1>📅 উপস্থিতি ব্যবস্থাপনা</h1>
 
     <section class="neu-card panel">
@@ -795,7 +858,7 @@ async function showAttendance() {
       <div class="form-stack">
 
         <label class="field">
-          <span>তারিখ</span>
+          <span>তারিখ নির্বাচন করুন</span>
           <input type="date" id="attendance-date" value="${today}">
         </label>
 
@@ -822,82 +885,117 @@ async function showAttendance() {
     }
 
     if (!students.length) {
-      list.innerHTML = `<p class="muted">কোনো শিক্ষার্থী পাওয়া যায়নি।</p>`;
+      list.innerHTML = <p class="muted">কোনো শিক্ষার্থী পাওয়া যায়নি।</p>;
       return;
     }
 
     list.innerHTML = `
-      <h2 class="section-title">শিক্ষার্থীদের উপস্থিতি</h2>
+      <h2 class="section-title" style="margin-top:25px">
+        👨‍🎓 শিক্ষার্থীদের উপস্থিতি (${students.length})
+      </h2>
 
-      ${students.map(s => {
-        const old = attendance.find(a =>
-          a.studentId === s.id && a.date === date
-        );
+      <div class="attendance-grid">
 
-        return `
-          <div class="attendance-row">
-            <span>${escapeHTML(s.name || "—")}</span>
+        ${students.map((s, index) => {
 
-            <select data-student="${escapeHTML(s.id)}">
-              <option value="present"
-                ${old?.status === "present" ? "selected" : ""}>
-                উপস্থিত
-              </option>
+          const old = attendance.find(a =>
+            a.studentId === s.id && a.date === date
+          );
 
-              <option value="absent"
-                ${old?.status === "absent" ? "selected" : ""}>
-                অনুপস্থিত
-              </option>
-            </select>
-          </div>
-        `;
-      }).join("")}
+          const status = old?.status || "present";
 
-      <button class="btn btn-primary" id="save-attendance">
-        উপস্থিতি সংরক্ষণ করুন
+          return `
+            <div class="attendance-card">
+
+              <span class="attendance-student-name">
+                ${index + 1}. ${escapeHTML(s.name || "—")}
+              </span>
+
+              <div class="attendance-options">
+
+                <div class="present-option" style="flex:1">
+                  <input
+                    type="radio"
+                    id="present-${s.id}"
+                    name="status-${s.id}"
+                    value="present"
+                    data-student="${escapeHTML(s.id)}"
+                    ${status === "present" ? "checked" : ""}
+                  >
+                  <label for="present-${s.id}">
+                    ✓ উপস্থিত
+                  </label>
+                </div>
+
+                <div class="absent-option" style="flex:1">
+                  <input
+                    type="radio"
+                    id="absent-${s.id}"
+                    name="status-${s.id}"
+                    value="absent"
+                    data-student="${escapeHTML(s.id)}"
+                    ${status === "absent" ? "checked" : ""}
+                  >
+                  <label for="absent-${s.id}">
+                    ✕ অনুপস্থিত
+                  </label>
+                </div>
+
+              </div>
+            </div>
+          `;
+
+        }).join("")}
+
+      </div>
+
+      <button class="btn btn-primary attendance-save-btn" id="save-attendance">
+        💾 উপস্থিতি সংরক্ষণ করুন
       </button>
     `;
 
-    list.querySelector("#save-attendance").onclick =
-      async () => {
+    list.querySelector("#save-attendance").onclick = async () => {
 
-        try {
+      try {
 
-          const selects = list.querySelectorAll("[data-student]");
+        const selects = list.querySelectorAll("[data-student]:checked");
 
-          for (const select of selects) {
+        for (const select of selects) {
 
-            const studentId = select.dataset.student;
+          const studentId = select.dataset.student;
 
-            const old = attendance.find(a =>
-              a.studentId === studentId && a.date === date
-            );
+          const old = attendance.find(a =>
+            a.studentId === studentId && a.date === date
+          );
 
-            const data = {
-              studentId,
-              studentName: students.find(s => s.id === studentId)?.name || "",
-              date,
-              status: select.value,
-              createdBy: user.uid
-            };
+          const data = {
+            studentId,
+            studentName: students.find(s => s.id === studentId)?.name || "",
+            date,
+            status: select.value,
+            createdBy: user.uid
+          };
 
-            if (old) {
-              await updateRecord("attendance", old.id, data);
-            } else {
-              await createRecord("attendance", data);
-            }
+          if (old) {
+            await updateRecord("attendance", old.id, data);
+          } else {
+            await createRecord("attendance", data);
           }
-
-          toast("উপস্থিতি সংরক্ষণ হয়েছে।", "success");
-          await showAttendance();
-
-        } catch (error) {
-          console.error(error);
-          toast("উপস্থিতি সংরক্ষণ করা যায়নি।", "error");
         }
-      };
+
+        toast("উপস্থিতি সংরক্ষণ হয়েছে।", "success");
+
+        await showAttendance();
+
+      } catch (error) {
+
+        console.error(error);
+        toast("উপস্থিতি সংরক্ষণ করা যায়নি।", "error");
+
+      }
+    };
   };
-} // showAttendance() শেষ
+}
   function stat(icon, label, value) {
     return `
       <article class="neu-card stat-card">
