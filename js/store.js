@@ -61,3 +61,29 @@ doc(db, APP_CONFIG.collections[name], id),
 {...data, updatedAt: serverTimestamp()}
 );
 }
+// ACADEMY SETTINGS
+
+export async function getAcademySettings() {
+  const ref = doc(
+    db,
+    APP_CONFIG.collections.academySettings,
+    "main"
+  );
+
+  const snap = await getDoc(ref);
+
+  return snap.exists() ? snap.data() : {};
+}
+
+export async function saveAcademySettings(data) {
+  const ref = doc(
+    db,
+    APP_CONFIG.collections.academySettings,
+    "main"
+  );
+
+  await setDoc(ref, {
+    ...data,
+    updatedAt: serverTimestamp()
+  }, { merge: true });
+}
