@@ -141,15 +141,17 @@ else if (page === "attendance") {
         await showNotices();
       }
 
-    } catch (error) {
-      console.error(error);
+   } catch (error) {
+  console.error("Admin Page Error:", error);
 
-      content.innerHTML = `
-        <div class="error-panel">
-          তথ্য লোড করা যায়নি। আবার চেষ্টা করুন।
-        </div>
-      `;
-    }
+  content.innerHTML = `
+    <div class="error-panel">
+      <h3>তথ্য লোড করা যায়নি</h3>
+      <p>${escapeHTML(error.message || String(error))}</p>
+      <p>সমস্যার কোড: ${escapeHTML(error.code || "Unknown")}</p>
+    </div>
+  `;
+}
   }
 
   // Navigation
