@@ -587,6 +587,7 @@ else if (page === "attendance") {
           toast("নোটিশ প্রকাশ করা যায়নি।", "error");
         }
       };
+  }
   // TEACHER MANAGEMENT
 async function showTeachers() {
 
@@ -894,6 +895,7 @@ async function showAttendance() {
         }
       };
   };
+}
   function stat(icon, label, value) {
     return `
       <article class="neu-card stat-card">
