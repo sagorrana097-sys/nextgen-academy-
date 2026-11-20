@@ -1078,10 +1078,12 @@ content.querySelector("#show-attendance-report").onclick = () => {
       }
     };
   };
-
+  
+ } // showAttendance() ফাংশন শেষ
+  
    // ACADEMY SETTINGS
-  async function showAcademySettings() {
-
+  async function showAcademySettings()
+  {
     const settings = await getAcademySettings();
 
     content.innerHTML = `
