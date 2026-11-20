@@ -884,10 +884,10 @@ async function showAttendance() {
       return;
     }
 
-     if (!students.length) {
-     list.innerHTML = <p class="muted">কোনো শিক্ষার্থী পাওয়া যায়নি।</p>;
-      return;
-    }
+    if (!students.length) {
+  list.innerHTML = `<p class="muted">কোনো শিক্ষার্থী পাওয়া যায়নি।</p>`;
+  return;
+}
 
     list.innerHTML = `
       <h2 class="section-title" style="margin-top:25px">
