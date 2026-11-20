@@ -23,5 +23,6 @@ admissions: "admissions",
 teachers: "teachers",
 batches: "batches",
 attendance: "attendance"
+academySettings: "academySettings"
 }
 };
