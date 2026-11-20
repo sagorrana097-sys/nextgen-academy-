@@ -143,8 +143,11 @@ else if (page === "attendance") {
       else if (page === "notices") {
         await showNotices();
       }
+else if (page === "settings") {
+  await showAcademySettings();
+}
 
-   } catch (error) {
+    } catch (error) {
   console.error("Admin Page Error:", error);
 
   content.innerHTML = `
