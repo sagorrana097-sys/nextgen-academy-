@@ -24,7 +24,8 @@ export async function renderAdmin(root, { user, profile }) {
   ["batches", "🏫", "ব্যাচ"],
   ["attendance", "📅", "উপস্থিতি"],
   ["admissions", "📝", "ভর্তি আবেদন"],
-  ["notices", "📢", "নোটিশ"]
+  ["notices", "📢", "নোটিশ"],
+  ["settings", "⚙️", "Academy Settings"]
 ];
 
   root.innerHTML = `
