@@ -13,7 +13,12 @@ export const APP_CONFIG = {
     measurementId: "G-58XX0MKTPE"
   },
   collections: {
-    users: "users", courses: "courses", students: "students",
-    notices: "notices", admissions: "admissions"
-  }
-};
+  users: "users",
+  courses: "courses",
+  students: "students",
+  notices: "notices",
+  admissions: "admissions",
+  teachers: "teachers",
+  batches: "batches",
+  attendance: "attendance"
+}
