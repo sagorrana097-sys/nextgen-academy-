@@ -57,20 +57,17 @@ async function applyAcademyBranding() {
     const root = document.documentElement;
 // Academy Name
 if (settings.academyName) {
-  document.title = settings.academyName + " | Login";
+  document.title = settings.academyName;
 
-  const brandNames = document.querySelectorAll(
-    ".brand-lockup, .mobile-brand"
-  );
+  document.querySelectorAll(
+    ".academy-brand-name, .brand-name"
+  ).forEach(element => {
+    element.textContent = settings.academyName;
+  });
 
-  brandNames.forEach(element => {
-    const textElement = element.querySelector(".brand-name");
-
-    if (textElement) {
-      textElement.textContent = settings.academyName;
-    } else if (element.classList.contains("mobile-brand")) {
-      element.textContent = settings.academyName;
-    }
+  document.querySelectorAll(".mobile-brand").forEach(element => {
+    const name = element.querySelector(".brand-name");
+    if (name) name.textContent = settings.academyName;
   });
 }
 
