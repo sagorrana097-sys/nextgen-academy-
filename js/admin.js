@@ -40,13 +40,13 @@ export async function renderAdmin(root, { user, profile }) {
 
       <aside class="sidebar">
 
-        <div class="sidebar-brand">
-          <span class="brand-mark">N</span>
-          <div>
-            <b>NextGen</b>
-            <small>ACADEMY</small>
-          </div>
-        </div>
+       <div class="sidebar-brand">
+  <span class="brand-mark">N</span>
+  <div class="brand-lockup">
+    <b class="academy-brand-name">NextGen Academy</b>
+    <small>ACADEMY</small>
+  </div>
+</div>
 
         <nav class="side-nav">
           <span class="nav-caption">ADMIN WORKSPACE</span>
