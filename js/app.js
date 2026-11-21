@@ -53,7 +53,7 @@ function bindGlobalControls(user,profile){
 async function applyAcademyBranding() {
   try {
     const settings = await getAcademySettings();
-
+console.log("Academy Settings:", settings);
     const root = document.documentElement;
 // Academy Name
 if (settings.academyName) {
