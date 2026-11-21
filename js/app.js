@@ -48,4 +48,32 @@ function bindGlobalControls(user,profile){
   $("#mobile-menu-btn")?.addEventListener("click",()=>$(".sidebar")?.classList.toggle("open"));
   $$(".nav-link").forEach(link=>link.addEventListener("click",()=>{$$(".nav-link").forEach(x=>x.classList.remove("active"));link.classList.add("active");$(".sidebar")?.classList.remove("open");}));
 }
+async function applyAcademyBranding() {
+  try {
+    const settings = await getAcademySettings();
+
+    const root = document.documentElement;
+
+    if (settings.primaryColor) {
+      root.style.setProperty("--primary", settings.primaryColor);
+    }
+
+    if (settings.secondaryColor) {
+      root.style.setProperty("--secondary", settings.secondaryColor);
+    }
+
+    if (settings.fontFamily) {
+      root.style.setProperty("--font-family", `"${settings.fontFamily}", sans-serif`);
+    }
+
+    if (settings.theme) {
+      root.dataset.theme = settings.theme;
+      localStorage.setItem("nga-theme", settings.theme);
+    }
+
+  } catch (error) {
+    console.error("Branding settings load error:", error);
+  }
+}
+
 export {toast,escapeHTML,initials,APP_CONFIG};
