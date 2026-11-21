@@ -32,7 +32,8 @@ export async function renderAdmin(root, { user, profile }) {
   ["attendance", "📅", "উপস্থিতি"],
   ["admissions", "📝", "ভর্তি আবেদন"],
   ["notices", "📢", "নোটিশ"],
-  ["settings", "⚙️", "Academy Settings"]
+  ["settings", "⚙️", "Academy Settings"],
+  ["academic", "🎓", "Academic Settings"]
 ];
 
   root.innerHTML = `
