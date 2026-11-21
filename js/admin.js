@@ -1088,7 +1088,7 @@ content.querySelector("#show-attendance-report").onclick = () => {
   
  } // showAttendance() ফাংশন শেষ
    // ACADEMY SETTINGS
-  async function showAcademySettings() {
+async function showAcademySettings() {
 
   const settings = await getAcademySettings();
 
@@ -1096,49 +1096,64 @@ content.querySelector("#show-attendance-report").onclick = () => {
     <h1>⚙️ Academy Settings</h1>
 
     <section class="neu-card panel">
-      <h2 class="section-title">একাডেমির পরিচিতি</h2>
+      <h2 class="section-title">১. প্রতিষ্ঠান পরিচিতি</h2>
 
-      <form id="academy-settings-form">
+      <form id="academy-settings-form" class="form-stack">
 
-        <label>একাডেমির নাম</label>
-        <input name="academyName"
-          value="${settings.academyName || ""}"
-          required>
+        <label class="field">
+          <span>একাডেমির নাম</span>
+          <input name="academyName"
+            value="${escapeHTML(settings.academyName || "")}"
+            required>
+        </label>
 
-        <label>স্লোগান</label>
-        <input name="tagline"
-          value="${settings.tagline || ""}">
+        <label class="field">
+          <span>স্লোগান</span>
+          <input name="tagline"
+            value="${escapeHTML(settings.tagline || "")}">
+        </label>
 
-        <label>মোবাইল নম্বর</label>
-        <input name="phone"
-          value="${settings.phone || ""}">
+        <label class="field">
+          <span>প্রতিষ্ঠানের লোগো URL</span>
+          <input name="logoUrl"
+            type="url"
+            value="${escapeHTML(settings.logoUrl || "")}"
+            placeholder="https://example.com/logo.png">
+        </label>
 
-        <label>ইমেইল</label>
-        <input name="email"
-          value="${settings.email || ""}">
+        <div>
+          <img id="logo-preview"
+            src="${escapeHTML(settings.logoUrl || "")}"
+            alt="Academy Logo"
+            style="max-width:140px;max-height:100px;object-fit:contain;display:${settings.logoUrl ? "block" : "none"};">
+        </div>
 
-        <label>ওয়েবসাইট</label>
-        <input name="website"
-          value="${settings.website || ""}">
+        <label class="field">
+          <span>মোবাইল নম্বর</span>
+          <input name="phone"
+            value="${escapeHTML(settings.phone || "")}">
+        </label>
 
-        <label>ঠিকানা</label>
-        <textarea name="address">${settings.address || ""}</textarea>
+        <label class="field">
+          <span>ইমেইল</span>
+          <input name="email"
+            type="email"
+            value="${escapeHTML(settings.email || "")}">
+        </label>
 
-        <h3>একাডেমির লোগো</h3>
+        <label class="field">
+          <span>ওয়েবসাইট</span>
+          <input name="website"
+            type="url"
+            value="${escapeHTML(settings.website || "")}">
+        </label>
 
-        <img id="logo-preview"
-          src="${settings.logoUrl || ""}"
-          style="max-width:150px;display:${settings.logoUrl ? "block" : "none"};margin:10px 0;">
+        <label class="field">
+          <span>প্রতিষ্ঠানের ঠিকানা</span>
+          <textarea name="address">${escapeHTML(settings.address || "")}</textarea>
+        </label>
 
-        <input type="file"
-          id="logo-file"
-          accept="image/png,image/jpeg,image/webp">
-
-        <input type="hidden"
-          name="logoUrl"
-          value="${settings.logoUrl || ""}">
-
-        <button type="submit" class="btn-primary">
+        <button type="submit" class="btn btn-primary">
           💾 সেটিংস সংরক্ষণ করুন
         </button>
 
@@ -1147,66 +1162,45 @@ content.querySelector("#show-attendance-report").onclick = () => {
   `;
 
   const form = content.querySelector("#academy-settings-form");
-  const fileInput = content.querySelector("#logo-file");
+  const logoInput = form.querySelector('[name="logoUrl"]');
   const preview = content.querySelector("#logo-preview");
 
-  fileInput.onchange = () => {
-    const file = fileInput.files[0];
-    if (!file) return;
+  logoInput.oninput = () => {
+    const url = logoInput.value.trim();
 
-    if (!["image/png", "image/jpeg", "image/webp"].includes(file.type)) {
-      alert("শুধু PNG, JPG অথবা WEBP ছবি নির্বাচন করুন।");
-      fileInput.value = "";
-      return;
-    }
-
-    if (file.size > 2 * 1024 * 1024) {
-      alert("ছবির সাইজ ২ MB-এর কম হতে হবে।");
-      fileInput.value = "";
-      return;
-    }
-
-    preview.src = URL.createObjectURL(file);
-    preview.style.display = "block";
+    preview.src = url;
+    preview.style.display = url ? "block" : "none";
   };
 
-  form.onsubmit = async (e) => {
-    e.preventDefault();
+  form.onsubmit = async (event) => {
+    event.preventDefault();
 
     const button = form.querySelector('button[type="submit"]');
     button.disabled = true;
     button.textContent = "সংরক্ষণ হচ্ছে...";
 
     try {
-      const data = Object.fromEntries(new FormData(form).entries());
-
-      const file = fileInput.files[0];
-
-      if (file) {
-        const logoRef = ref(
-          storage,
-          "academy/logo/" + Date.now() + "_" + file.name
-        );
-
-        await uploadBytes(logoRef, file);
-        data.logoUrl = await getDownloadURL(logoRef);
-      }
+      const data = Object.fromEntries(
+        new FormData(form).entries()
+      );
 
       await saveAcademySettings(data);
 
-      alert("একাডেমির সেটিংস সফলভাবে সংরক্ষিত হয়েছে।");
+      toast("প্রতিষ্ঠানের তথ্য সংরক্ষিত হয়েছে।", "success");
 
       await showAcademySettings();
 
     } catch (error) {
       console.error(error);
-      alert("সংরক্ষণ করা যায়নি: " + error.message);
+
+      toast("সেটিংস সংরক্ষণ করা যায়নি।", "error");
 
       button.disabled = false;
       button.textContent = "💾 সেটিংস সংরক্ষণ করুন";
     }
   };
 }
+
   function stat(icon, label, value) {
     return `
       <article class="neu-card stat-card">
