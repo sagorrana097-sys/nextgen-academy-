@@ -1,3 +1,4 @@
+import { getAcademySettings } from "./store.js";
 import {APP_CONFIG} from "./config.js";
 import { $, $$, initTheme, toast, escapeHTML, initials } from "./utils.js";
 import {signUp,signIn,signOutUser,watchAuth,getUserProfile} from "./auth.js";
