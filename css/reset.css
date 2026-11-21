@@ -1,1 +1,8 @@
 *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;min-height:100vh;background:var(--bg);color:var(--text);font-family:var(--font-body);font-size:16px}button,input,select,textarea{font:inherit}button{cursor:pointer}a{color:inherit;text-decoration:none}img{max-width:100%}button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:3px solid rgba(40,104,215,.25);outline-offset:2px}.hidden{display:none!important}
+/* Academy Settings Form Design */ #academy-settings-form { display: grid; grid-template-columns: 1fr; gap: 12px; max-width: 650px; }
+#academy-settings-form label { display: block; font-weight: 600; margin-bottom: -7px; }
+#academy-settings-form input:not([type="file"]), #academy-settings-form textarea { width: 100%; padding: 12px; border: 1px solid #d1d5db; border-radius: 9px; font-size: 15px; box-sizing: border-box; }
+#academy-settings-form textarea { min-height: 90px; resize: vertical; }
+#academy-settings-form input[type="file"] { width: 100%; padding: 10px; border: 1px dashed #999; border-radius: 9px; box-sizing: border-box; }
+#academy-settings-form button { width: 100%; padding: 13px; border: none; border-radius: 9px; font-size: 16px; font-weight: 600; cursor: pointer; margin-top: 10px; }
+
