@@ -171,3 +171,67 @@
     font-size: 18px !important;
   }
 }
+/* =====================================
+   NEXTGEN ACADEMY SETTINGS ALIGNMENT FIX
+===================================== */
+
+/* Card content alignment */
+#central-settings-form .neu-card.panel {
+  text-align: left !important;
+}
+
+/* All normal fields */
+#central-settings-form label.field {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: stretch !important;
+  justify-content: flex-start !important;
+  text-align: left !important;
+  width: 100% !important;
+}
+
+/* Field labels */
+#central-settings-form label.field span {
+  display: block !important;
+  width: 100% !important;
+  text-align: left !important;
+  align-self: flex-start !important;
+  margin: 0 !important;
+}
+
+/* Input alignment */
+#central-settings-form label.field input:not([type="checkbox"]) {
+  display: block !important;
+  width: 100% !important;
+  text-align: left !important;
+  margin: 0 !important;
+}
+
+/* Checkbox rows */
+#central-settings-form label.field:has(input[type="checkbox"]) {
+  flex-direction: row !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  text-align: left !important;
+}
+
+/* Checkbox label */
+#central-settings-form label.field:has(input[type="checkbox"]) span {
+  text-align: left !important;
+}
+
+/* Section title */
+#central-settings-form .section-title {
+  text-align: left !important;
+}
+
+/* Mobile */
+@media (max-width: 600px) {
+  #central-settings-form .neu-card.panel {
+    padding: 16px !important;
+  }
+
+  #central-settings-form label.field {
+    text-align: left !important;
+  }
+}
