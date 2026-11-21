@@ -53,7 +53,37 @@ async function applyAcademyBranding() {
     const settings = await getAcademySettings();
 
     const root = document.documentElement;
+// Academy Name
+if (settings.academyName) {
+  document.title = settings.academyName + " | Login";
 
+  const brandNames = document.querySelectorAll(
+    ".brand-lockup, .mobile-brand"
+  );
+
+  brandNames.forEach(element => {
+    const textElement = element.querySelector(".brand-name");
+
+    if (textElement) {
+      textElement.textContent = settings.academyName;
+    } else if (element.classList.contains("mobile-brand")) {
+      element.textContent = settings.academyName;
+    }
+  });
+}
+
+// Academy Logo
+if (settings.logoUrl) {
+  const brandMark = document.querySelector(".brand-mark");
+
+  if (brandMark) {
+    brandMark.innerHTML = `
+      <img src="${escapeHTML(settings.logoUrl)}"
+           alt="Academy Logo"
+           style="width:100%;height:100%;object-fit:contain;">
+    `;
+  }
+}
     if (settings.primaryColor) {
   root.style.setProperty("--primary", settings.primaryColor);
   root.style.setProperty("--primary-dark", settings.primaryColor);
