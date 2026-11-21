@@ -235,3 +235,124 @@
     text-align: left !important;
   }
 }
+/* ==========================================
+   NEXTGEN ACADEMY - PREMIUM SETTINGS THEME
+   Layout preserved | Visual enhancement only
+========================================== */
+
+/* Settings Page Background */
+#central-settings-form {
+  background: transparent !important;
+}
+
+/* Premium Settings Cards */
+#central-settings-form .neu-card.panel {
+  background: linear-gradient(145deg, #ffffff, #f8faff) !important;
+  border: 1px solid #dce5f3 !important;
+  border-radius: 18px !important;
+  box-shadow:
+    0 5px 18px rgba(30, 64, 120, 0.07),
+    0 1px 3px rgba(30, 64, 120, 0.04) !important;
+}
+
+/* Card Hover */
+#central-settings-form .neu-card.panel:hover {
+  border-color: #b9cdf3 !important;
+  box-shadow:
+    0 9px 26px rgba(37, 99, 235, 0.11) !important;
+}
+
+/* Section Heading */
+#central-settings-form .section-title {
+  color: #1746a2 !important;
+  font-size: 21px !important;
+  font-weight: 750 !important;
+  border-bottom: 2px solid #e5ecfa !important;
+  padding-bottom: 15px !important;
+}
+
+/* Field Labels */
+#central-settings-form label.field {
+  color: #263a59 !important;
+  font-size: 14px !important;
+  font-weight: 650 !important;
+}
+
+/* Input Design */
+#central-settings-form .field input:not([type="checkbox"]) {
+  background: #f5f8ff !important;
+  color: #172b4d !important;
+  border: 1px solid #cbd7eb !important;
+  border-radius: 10px !important;
+  box-shadow: inset 0 1px 2px rgba(30, 50, 90, 0.025) !important;
+}
+
+/* Input Hover */
+#central-settings-form .field input:not([type="checkbox"]):hover {
+  background: #ffffff !important;
+  border-color: #8da9e5 !important;
+}
+
+/* Input Focus */
+#central-settings-form .field input:not([type="checkbox"]):focus {
+  background: #ffffff !important;
+  border-color: #3568d4 !important;
+  box-shadow: 0 0 0 4px rgba(53, 104, 212, 0.12) !important;
+}
+
+/* Checkbox Row */
+#central-settings-form label.field:has(input[type="checkbox"]) {
+  background: #f4f7ff !important;
+  border: 1px solid #dce5f5 !important;
+  border-radius: 10px !important;
+}
+
+/* Checkbox Row Hover */
+#central-settings-form label.field:has(input[type="checkbox"]):hover {
+  background: #eaf1ff !important;
+  border-color: #b8caf0 !important;
+}
+
+/* Checkbox */
+#central-settings-form input[type="checkbox"] {
+  background: #ffffff !important;
+  border: 1.5px solid #91a4c5 !important;
+  border-radius: 5px !important;
+}
+
+/* Checked Checkbox */
+#central-settings-form input[type="checkbox"]:checked {
+  background: #245bd1 !important;
+  border-color: #245bd1 !important;
+}
+
+/* Save Button */
+#central-settings-form button[type="submit"] {
+  background: linear-gradient(135deg, #245bd1, #6745c7) !important;
+  color: #ffffff !important;
+  border: none !important;
+  border-radius: 12px !important;
+  box-shadow: 0 6px 17px rgba(55, 82, 190, 0.22) !important;
+}
+
+/* Save Button Hover */
+#central-settings-form button[type="submit"]:hover {
+  background: linear-gradient(135deg, #194bb9, #5736b6) !important;
+  box-shadow: 0 9px 23px rgba(55, 82, 190, 0.30) !important;
+}
+
+/* Page Heading */
+#central-settings-form h1 {
+  color: #172f60 !important;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  #central-settings-form .neu-card.panel {
+    border-radius: 14px !important;
+  }
+
+  #central-settings-form .section-title {
+    font-size: 18px !important;
+  }
+}
