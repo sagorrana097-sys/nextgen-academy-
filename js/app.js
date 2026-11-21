@@ -6,7 +6,7 @@ import {renderAdmin} from "./admin.js";
 import {renderTeacher} from "./teacher.js";
 import {renderStudent} from "./student.js";
 
-initTheme();
+initTheme();applyAcademyBranding();
 const rolePages={admin:"admin.html",teacher:"teacher.html",student:"student.html"};
 const path=location.pathname.split("/").pop()||"index.html";
 const requiredRole=document.body.dataset.requiredRole;
