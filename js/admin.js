@@ -1152,6 +1152,38 @@ async function showAcademySettings() {
           <span>প্রতিষ্ঠানের ঠিকানা</span>
           <textarea name="address">${escapeHTML(settings.address || "")}</textarea>
         </label>
+       <hr>
+
+        <h2 class="section-title">২. Branding ও Design</h2>
+
+        <label class="field">
+          <span>প্রধান রং (Primary Color)</span>
+          <input type="color" name="primaryColor"
+            value="${escapeHTML(settings.primaryColor || "#2563eb")}">
+        </label>
+
+        <label class="field">
+          <span>সহায়ক রং (Secondary Color)</span>
+          <input type="color" name="secondaryColor"
+            value="${escapeHTML(settings.secondaryColor || "#0f172a")}">
+        </label>
+
+        <label class="field">
+          <span>ওয়েবসাইটের Theme</span>
+          <select name="theme">
+            <option value="light" ${settings.theme !== "dark" ? "selected" : ""}>Light</option>
+            <option value="dark" ${settings.theme === "dark" ? "selected" : ""}>Dark</option>
+          </select>
+        </label>
+
+        <label class="field">
+          <span>ওয়েবসাইটের Font</span>
+          <select name="fontFamily">
+            <option value="Hind Siliguri" ${settings.fontFamily === "Hind Siliguri" ? "selected" : ""}>Hind Siliguri</option>
+            <option value="Noto Sans Bengali" ${settings.fontFamily === "Noto Sans Bengali" ? "selected" : ""}>Noto Sans Bengali</option>
+            <option value="Arial" ${settings.fontFamily === "Arial" ? "selected" : ""}>Arial</option>
+          </select>
+        </label>
 
         <button type="submit" class="btn btn-primary">
           💾 সেটিংস সংরক্ষণ করুন
