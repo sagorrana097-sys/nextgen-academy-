@@ -5,4 +5,17 @@
 #academy-settings-form textarea { min-height: 90px; resize: vertical; }
 #academy-settings-form input[type="file"] { width: 100%; padding: 10px; border: 1px dashed #999; border-radius: 9px; box-sizing: border-box; }
 #academy-settings-form button { width: 100%; padding: 13px; border: none; border-radius: 9px; font-size: 16px; font-weight: 600; cursor: pointer; margin-top: 10px; }
+/* Dynamic Academy Branding */
+:root {
+  --primary: #2563eb;
+  --secondary: #0f172a;
+}
+
+.btn-primary {
+  background-color: var(--primary);
+}
+
+.section-title {
+  color: var(--primary);
+}
 
