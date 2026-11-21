@@ -1,11 +1,113 @@
-*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;min-height:100vh;background:var(--bg);color:var(--text);font-family:var(--font-body);font-size:16px}button,input,select,textarea{font:inherit}button{cursor:pointer}a{color:inherit;text-decoration:none}img{max-width:100%}button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:3px solid rgba(40,104,215,.25);outline-offset:2px}.hidden{display:none!important}
-/* Academy Settings Form Design */ #academy-settings-form { display: grid; grid-template-columns: 1fr; gap: 12px; max-width: 650px; }
-#academy-settings-form label { display: block; font-weight: 600; margin-bottom: -7px; }
-#academy-settings-form input:not([type="file"]), #academy-settings-form textarea { width: 100%; padding: 12px; border: 1px solid #d1d5db; border-radius: 9px; font-size: 15px; box-sizing: border-box; }
-#academy-settings-form textarea { min-height: 90px; resize: vertical; }
-#academy-settings-form input[type="file"] { width: 100%; padding: 10px; border: 1px dashed #999; border-radius: 9px; box-sizing: border-box; }
-#academy-settings-form button { width: 100%; padding: 13px; border: none; border-radius: 9px; font-size: 16px; font-weight: 600; cursor: pointer; margin-top: 10px; }
-/* Dynamic Academy Branding */
+/* =========================================
+   NEXTGEN ACADEMY - RESET CSS
+========================================= */
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 16px;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+img {
+  max-width: 100%;
+}
+
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: 3px solid rgba(40, 104, 215, 0.25);
+  outline-offset: 2px;
+}
+
+.hidden {
+  display: none !important;
+}
+
+
+/* =========================================
+   ACADEMY SETTINGS FORM DESIGN
+========================================= */
+
+#academy-settings-form {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+  max-width: 650px;
+}
+
+#academy-settings-form label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: -7px;
+}
+
+#academy-settings-form input:not([type="file"]),
+#academy-settings-form textarea {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #d1d5db;
+  border-radius: 9px;
+  font-size: 15px;
+  box-sizing: border-box;
+}
+
+#academy-settings-form textarea {
+  min-height: 90px;
+  resize: vertical;
+}
+
+#academy-settings-form input[type="file"] {
+  width: 100%;
+  padding: 10px;
+  border: 1px dashed #999;
+  border-radius: 9px;
+  box-sizing: border-box;
+}
+
+#academy-settings-form button {
+  width: 100%;
+  padding: 13px;
+  border: none;
+  border-radius: 9px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+
+/* =========================================
+   DYNAMIC ACADEMY BRANDING
+========================================= */
+
 :root {
   --primary: #2563eb;
   --secondary: #0f172a;
@@ -18,27 +120,260 @@
 .section-title {
   color: var(--primary);
 }
-/* Small and neat checkbox */
-.field input[type="checkbox"] {
-  width: 16px !important;
-  height: 16px !important;
-  min-width: 16px;
-  margin: 4px 8px;
-  padding: 0;
-  cursor: pointer;
-  accent-color: var(--primary);
-  vertical-align: middle;
+
+
+/* =========================================
+   NEXTGEN ACADEMY PREMIUM SETTINGS UI
+========================================= */
+
+#central-settings-form {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  width: 100%;
 }
 
-/* Checkbox label alignment */
-.field:has(input[type="checkbox"]) {
+
+/* Settings Cards */
+
+#central-settings-form .neu-card.panel {
+  width: 100%;
+  background: #ffffff;
+  border: 1px solid #e5eaf4;
+  border-radius: 18px;
+  padding: 26px;
+  margin: 0;
+  box-shadow: 0 5px 20px rgba(35, 55, 100, 0.06);
+  transition: box-shadow 0.25s ease,
+              transform 0.25s ease;
+}
+
+#central-settings-form .neu-card.panel:hover {
+  box-shadow: 0 10px 28px rgba(35, 55, 100, 0.10);
+  transform: translateY(-2px);
+}
+
+
+/* Section Headings */
+
+#central-settings-form .section-title {
+  font-size: 21px;
+  font-weight: 750;
+  color: #2457b8;
+  padding-bottom: 15px;
+  margin: 0 0 20px;
+  border-bottom: 1px solid #edf0f7;
+  line-height: 1.5;
+}
+
+
+/* Normal Field Layout */
+
+#central-settings-form .field {
   display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 9px;
+  margin: 0 0 19px;
+  color: #34415c;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.6;
+}
+
+
+/* Normal Input Boxes */
+
+#central-settings-form .field input:not([type="checkbox"]) {
+  display: block;
+  width: 100%;
+  min-height: 46px;
+  padding: 11px 15px;
+  border: 1px solid #dce3f0;
+  border-radius: 11px;
+  background: #f8faff;
+  color: #253653;
+  font-size: 14px;
+  font-weight: 500;
+  outline: none;
+  box-sizing: border-box;
+  transition: border-color 0.2s ease,
+              box-shadow 0.2s ease,
+              background 0.2s ease;
+}
+
+
+/* Input Focus */
+
+#central-settings-form .field input:not([type="checkbox"]):focus {
+  border-color: #527ce5;
+  background: #ffffff;
+  box-shadow: 0 0 0 4px rgba(82, 124, 229, 0.12);
+}
+
+
+/* Checkbox Row */
+
+#central-settings-form .field:has(input[type="checkbox"]) {
+  display: flex;
+  flex-direction: row;
   align-items: center;
   justify-content: space-between;
   gap: 12px;
+  min-height: 42px;
+  padding: 9px 13px;
+  margin-bottom: 10px;
+  border-radius: 10px;
+  background: #f7f9ff;
+  border: 1px solid #edf0f7;
+  cursor: pointer;
 }
 
-.field input[type="checkbox"] {
-  flex-shrink: 0;
+#central-settings-form .field:has(input[type="checkbox"]) span {
+  flex: 1;
 }
 
+
+/* Small Checkbox */
+
+#central-settings-form input[type="checkbox"] {
+  appearance: none !important;
+  -webkit-appearance: none !important;
+
+  display: inline-block !important;
+
+  width: 19px !important;
+  height: 19px !important;
+
+  min-width: 19px !important;
+  max-width: 19px !important;
+
+  flex: 0 0 19px !important;
+
+  margin: 0 5px !important;
+  padding: 0 !important;
+
+  border: 1.7px solid #aab7cc !important;
+  border-radius: 5px !important;
+
+  background: #ffffff !important;
+
+  cursor: pointer;
+  position: relative;
+  vertical-align: middle;
+}
+
+
+/* Checkbox Checked State */
+
+#central-settings-form input[type="checkbox"]:checked {
+  background: #4169df !important;
+  border-color: #4169df !important;
+}
+
+#central-settings-form input[type="checkbox"]:checked::after {
+  content: "";
+  position: absolute;
+  left: 5px;
+  top: 1px;
+  width: 5px;
+  height: 10px;
+  border: solid #ffffff;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+
+
+/* Checkbox Hover */
+
+#central-settings-form .field:has(input[type="checkbox"]):hover {
+  background: #eef3ff;
+  border-color: #cbd8f5;
+}
+
+
+/* Save Button */
+
+#central-settings-form button[type="submit"] {
+  display: block;
+  width: 100%;
+  min-height: 49px;
+  border: none;
+  border-radius: 12px;
+  padding: 12px 25px;
+
+  background: linear-gradient(
+    135deg,
+    #315fce,
+    #7656d9
+  );
+
+  color: #ffffff;
+  font-size: 15px;
+  font-weight: 700;
+
+  cursor: pointer;
+
+  box-shadow: 0 6px 16px rgba(65, 95, 210, 0.22);
+
+  transition: transform 0.25s ease,
+              box-shadow 0.25s ease;
+}
+
+#central-settings-form button[type="submit"]:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 9px 22px rgba(65, 95, 210, 0.30);
+}
+
+#central-settings-form button[type="submit"]:active {
+  transform: scale(0.99);
+}
+
+
+/* =========================================
+   RESPONSIVE DESIGN
+========================================= */
+
+@media (max-width: 768px) {
+
+  #central-settings-form {
+    gap: 16px;
+  }
+
+  #central-settings-form .neu-card.panel {
+    padding: 19px;
+    border-radius: 15px;
+  }
+
+  #central-settings-form .section-title {
+    font-size: 19px;
+  }
+
+}
+
+@media (max-width: 600px) {
+
+  #central-settings-form .neu-card.panel {
+    padding: 16px;
+    border-radius: 13px;
+  }
+
+  #central-settings-form .section-title {
+    font-size: 17px;
+  }
+
+  #central-settings-form .field {
+    font-size: 13px;
+  }
+
+  #central-settings-form .field input:not([type="checkbox"]) {
+    min-height: 43px;
+    font-size: 13px;
+  }
+
+  #central-settings-form .field:has(input[type="checkbox"]) {
+    min-height: 40px;
+    padding: 8px 10px;
+  }
+
+}
