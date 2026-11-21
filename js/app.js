@@ -86,6 +86,12 @@ if (settings.logoUrl) {
     `;
   }
 }
+    // Update Academy Name in Sidebar
+if (settings.academyName) {
+  document.querySelectorAll(".academy-brand-name").forEach(element => {
+    element.textContent = settings.academyName;
+  });
+}
     if (settings.primaryColor) {
   root.style.setProperty("--primary", settings.primaryColor);
   root.style.setProperty("--primary-dark", settings.primaryColor);
