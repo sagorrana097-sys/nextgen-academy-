@@ -87,3 +87,15 @@ export async function saveAcademySettings(data) {
     updatedAt: serverTimestamp()
   }, { merge: true });
 }
+// Academic Year Settings
+export async function getAcademicYears() {
+  const settings = await getAcademySettings();
+  return settings.academicYears || [];
+}
+
+export async function saveAcademicYears(years) {
+  await saveAcademySettings({
+    academicYears: years
+  });
+}
+
