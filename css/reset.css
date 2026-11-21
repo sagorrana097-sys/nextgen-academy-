@@ -18,4 +18,27 @@
 .section-title {
   color: var(--primary);
 }
+/* Small and neat checkbox */
+.field input[type="checkbox"] {
+  width: 16px !important;
+  height: 16px !important;
+  min-width: 16px;
+  margin: 4px 8px;
+  padding: 0;
+  cursor: pointer;
+  accent-color: var(--primary);
+  vertical-align: middle;
+}
+
+/* Checkbox label alignment */
+.field:has(input[type="checkbox"]) {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.field input[type="checkbox"] {
+  flex-shrink: 0;
+}
 
