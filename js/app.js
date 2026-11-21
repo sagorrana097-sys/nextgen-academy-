@@ -63,7 +63,7 @@ async function applyAcademyBranding() {
     }
 
     if (settings.fontFamily) {
-      root.style.setProperty("--font-family", `"${settings.fontFamily}", sans-serif`);
+      root.style.setProperty("--font-body", `"${settings.fontFamily}", sans-serif`);
     }
 
     if (settings.theme) {
