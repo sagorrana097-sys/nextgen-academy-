@@ -6,6 +6,7 @@ import {
 import { escapeHTML, toast } from "./utils.js";
 
 
+// Boolean Settings
 const BOOLEAN_FIELDS = [
   "admissionOpen",
   "attendanceEnabled",
@@ -29,10 +30,26 @@ const BOOLEAN_FIELDS = [
   "allowPDF",
   "allowVideo",
   "smsEnabled",
-  "emailEnabled"
+  "emailEnabled",
+  "libraryEnabled",
+  "holidayCalendarEnabled",
+  "parentPortalEnabled",
+  "guardianRequired",
+  "transportEnabled",
+  "employeeManagementEnabled",
+  "payrollEnabled",
+  "incomeExpenseEnabled",
+  "scholarshipEnabled",
+  "disciplineEnabled",
+  "complaintEnabled",
+  "activityLogEnabled",
+  "dataExportEnabled",
+  "twoFactorEnabled",
+  "dashboardCustomizationEnabled"
 ];
 
 
+// Number Settings
 const NUMBER_FIELDS = [
   "admissionFee",
   "lateTime",
@@ -40,10 +57,16 @@ const NUMBER_FIELDS = [
   "fullMark",
   "monthlyFee",
   "noticeExpiryDays",
-  "periodDuration"
+  "periodDuration",
+  "libraryBorrowDays",
+  "maxBooksPerStudent",
+  "transportMonthlyFee",
+  "salaryPaymentDate",
+  "defaultScholarshipPercent"
 ];
 
 
+// List Settings
 const ARRAY_FIELDS = [
   "classes",
   "divisions",
@@ -51,11 +74,14 @@ const ARRAY_FIELDS = [
   "terms",
   "examTypes",
   "requiredDocuments",
-  "paymentMethods"
+  "paymentMethods",
+  "exportFormats"
 ];
 
 
+// All Settings Groups
 const SETTINGS_GROUPS = [
+
   {
     id: "academic",
     title: "🎓 শিক্ষা কার্যক্রম",
@@ -227,11 +253,116 @@ const SETTINGS_GROUPS = [
       ["timezone", "টাইমজোন", "Asia/Dhaka"],
       ["academicSession", "শিক্ষাকাল", "২০২৬–২০২৭"]
     ]
+  },
+
+  {
+    id: "library",
+    title: "📚 Library Settings",
+    fields: [
+      ["libraryEnabled", "লাইব্রেরি চালু", "true"],
+      ["libraryBorrowDays", "বই ধার নেওয়ার মেয়াদ (দিন)", "14"],
+      ["maxBooksPerStudent", "একজন শিক্ষার্থীর সর্বোচ্চ বই", "3"],
+      ["libraryRules", "লাইব্রেরির নিয়মাবলি", ""]
+    ]
+  },
+
+  {
+    id: "holiday",
+    title: "🗓️ Holiday Calendar",
+    fields: [
+      ["holidayCalendarEnabled", "ছুটির ক্যালেন্ডার চালু", "true"],
+      ["holidayNotice", "ছুটির নির্দেশনা", ""]
+    ]
+  },
+
+  {
+    id: "parent",
+    title: "👨‍👩‍👧 Parent & Guardian Settings",
+    fields: [
+      ["parentPortalEnabled", "অভিভাবক পোর্টাল চালু", "true"],
+      ["guardianRequired", "অভিভাবকের তথ্য বাধ্যতামূলক", "true"],
+      ["parentPortalNotice", "অভিভাবকদের জন্য নির্দেশনা", ""]
+    ]
+  },
+
+  {
+    id: "transport",
+    title: "🚌 Transport Settings",
+    fields: [
+      ["transportEnabled", "পরিবহন ব্যবস্থা চালু", "true"],
+      ["transportMonthlyFee", "মাসিক পরিবহন ফি", "0"],
+      ["transportRoutes", "বাসের রুটসমূহ", ""],
+      ["transportRules", "পরিবহনের নিয়মাবলি", ""]
+    ]
+  },
+
+  {
+    id: "employee",
+    title: "👨‍🏫 Employee & Payroll Settings",
+    fields: [
+      ["employeeManagementEnabled", "কর্মচারী ব্যবস্থাপনা চালু", "true"],
+      ["payrollEnabled", "বেতন ব্যবস্থাপনা চালু", "true"],
+      ["salaryPaymentDate", "বেতন প্রদানের তারিখ", "5"],
+      ["payrollNote", "বেতন সংক্রান্ত নির্দেশনা", ""]
+    ]
+  },
+
+  {
+    id: "finance",
+    title: "💰 Income & Expense Settings",
+    fields: [
+      ["incomeExpenseEnabled", "আয়-ব্যয় ব্যবস্থাপনা চালু", "true"],
+      ["financialYear", "আর্থিক বছর", "2026-2027"],
+      ["financeNote", "হিসাব সংক্রান্ত নির্দেশনা", ""]
+    ]
+  },
+
+  {
+    id: "scholarship",
+    title: "🎓 Scholarship & Discount Settings",
+    fields: [
+      ["scholarshipEnabled", "বৃত্তি চালু", "true"],
+      ["defaultScholarshipPercent", "ডিফল্ট বৃত্তি (%)", "0"],
+      ["scholarshipRules", "বৃত্তির নিয়মাবলি", ""]
+    ]
+  },
+
+  {
+    id: "discipline",
+    title: "⚖️ Discipline & Complaint Settings",
+    fields: [
+      ["disciplineEnabled", "শৃঙ্খলা ব্যবস্থাপনা চালু", "true"],
+      ["complaintEnabled", "অভিযোগ ব্যবস্থা চালু", "true"],
+      ["disciplineRules", "শৃঙ্খলার নিয়মাবলি", ""],
+      ["complaintContact", "অভিযোগের যোগাযোগ", ""]
+    ]
+  },
+
+  {
+    id: "activity",
+    title: "📊 Activity Log & Data Export",
+    fields: [
+      ["activityLogEnabled", "Activity Log চালু", "true"],
+      ["dataExportEnabled", "Data Export চালু", "true"],
+      ["exportFormats", "Export Format", "PDF, Excel, CSV"]
+    ]
+  },
+
+  {
+    id: "security",
+    title: "🔐 Account Security & Dashboard",
+    fields: [
+      ["twoFactorEnabled", "Two Factor Authentication", "false"],
+      ["dashboardCustomizationEnabled", "Dashboard Customization", "true"],
+      ["loginNotice", "লগইন নির্দেশনা", ""],
+      ["dashboardWelcome", "Dashboard Welcome Message", ""]
+    ]
   }
+
 ];
 
 
-// সকল সেটিংস প্রদর্শন
+// Render Central Settings
 export async function renderCentralSettings(content) {
 
   try {
@@ -278,21 +409,19 @@ export async function renderCentralSettings(content) {
 
               }
 
+              const displayValue = Array.isArray(value)
+                ? value.join(", ")
+                : String(value);
+
               return `
                 <label class="field">
-
                   <span>${label}</span>
 
                   <input
                     name="${key}"
-                    value="${escapeHTML(String(
-                      Array.isArray(value)
-                        ? value.join(", ")
-                        : value
-                    ))}"
-                    ${NUMBER_FIELDS.includes(key) ? 'type="number"' : ""}
+                    type="${NUMBER_FIELDS.includes(key) ? "number" : "text"}"
+                    value="${escapeHTML(displayValue)}"
                   >
-
                 </label>
               `;
 
@@ -313,7 +442,6 @@ export async function renderCentralSettings(content) {
     `;
 
 
-    // সেটিংস সংরক্ষণ
     const formElement = content.querySelector(
       "#central-settings-form"
     );
@@ -323,7 +451,6 @@ export async function renderCentralSettings(content) {
       event.preventDefault();
 
       const form = new FormData(formElement);
-
       const data = {};
 
       for (const group of SETTINGS_GROUPS) {
@@ -332,14 +459,14 @@ export async function renderCentralSettings(content) {
 
           let value;
 
-          // Boolean সেটিংস
+          // Boolean
           if (BOOLEAN_FIELDS.includes(key)) {
 
             value = form.has(key);
 
           }
 
-          // Number সেটিংস
+          // Number
           else if (NUMBER_FIELDS.includes(key)) {
 
             const rawValue = String(
@@ -351,16 +478,18 @@ export async function renderCentralSettings(content) {
               : Number(rawValue);
 
             if (!Number.isFinite(value)) {
+
               toast(
                 "সঠিক সংখ্যা লিখুন: " + key,
                 "error"
               );
+
               return;
             }
 
           }
 
-          // Array সেটিংস
+          // Array
           else if (ARRAY_FIELDS.includes(key)) {
 
             value = String(
@@ -372,7 +501,7 @@ export async function renderCentralSettings(content) {
 
           }
 
-          // সাধারণ Text সেটিংস
+          // Text
           else {
 
             value = String(
@@ -423,7 +552,9 @@ export async function renderCentralSettings(content) {
     content.innerHTML = `
       <section class="neu-card panel">
         <h2>⚠️ সেটিংস লোড করা যায়নি</h2>
-        <p>ইন্টারনেট সংযোগ ও Firebase permissions পরীক্ষা করুন।</p>
+        <p>
+          ইন্টারনেট সংযোগ ও Firebase permissions পরীক্ষা করুন।
+        </p>
       </section>
     `;
 
