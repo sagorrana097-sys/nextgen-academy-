@@ -55,12 +55,13 @@ async function applyAcademyBranding() {
     const root = document.documentElement;
 
     if (settings.primaryColor) {
-      root.style.setProperty("--primary", settings.primaryColor);
-    }
+  root.style.setProperty("--primary", settings.primaryColor);
+  root.style.setProperty("--primary-dark", settings.primaryColor);
+}
 
-    if (settings.secondaryColor) {
-      root.style.setProperty("--secondary", settings.secondaryColor);
-    }
+if (settings.secondaryColor) {
+  root.style.setProperty("--accent", settings.secondaryColor);
+}
 
     if (settings.fontFamily) {
       root.style.setProperty("--font-body", `"${settings.fontFamily}", sans-serif`);
