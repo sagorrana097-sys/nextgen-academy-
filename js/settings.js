@@ -70,7 +70,99 @@ const SETTINGS_GROUPS = [
       ["contactEmail", "যোগাযোগের ইমেইল", ""],
       ["footerText", "Footer Text", ""]
     ]
-  }
+  },
+  {
+  id: "onlineClass",
+  title: "🎥 Online Class Settings",
+  fields: [
+    ["onlineClassEnabled", "অনলাইন ক্লাস চালু", "true"],
+    ["onlinePlatform", "ক্লাস প্ল্যাটফর্ম", "Google Meet"],
+    ["defaultMeetingLink", "ডিফল্ট ক্লাস লিংক", ""],
+    ["classRecordingEnabled", "ক্লাস রেকর্ডিং চালু", "false"],
+    ["onlineClassNotice", "অনলাইন ক্লাস নির্দেশনা", ""]
+  ]
+},
+{
+  id: "resultSheet",
+  title: "📄 Result Sheet & Marksheet Settings",
+  fields: [
+    ["resultSheetTitle", "রেজাল্ট শিটের শিরোনাম", "Academic Result Sheet"],
+    ["showAcademyLogo", "লোগো দেখান", "true"],
+    ["showStudentPhoto", "শিক্ষার্থীর ছবি দেখান", "true"],
+    ["showStudentRoll", "রোল নম্বর দেখান", "true"],
+    ["showGrade", "গ্রেড দেখান", "true"],
+    ["showGPA", "GPA দেখান", "true"],
+    ["showMeritPosition", "মেধাক্রম দেখান", "true"],
+    ["resultFooter", "রেজাল্ট শিটের Footer", ""],
+    ["principalSignature", "প্রধান শিক্ষকের স্বাক্ষরের নাম", ""]
+  ]
+},
+{
+  id: "routine",
+  title: "🗓️ Routine Settings",
+  fields: [
+    ["routineEnabled", "রুটিন চালু", "true"],
+    ["schoolStartTime", "ক্লাস শুরুর সময়", "09:00"],
+    ["schoolEndTime", "ক্লাস শেষের সময়", "15:00"],
+    ["periodDuration", "প্রতি ক্লাসের সময় (মিনিট)", "45"]
+  ]
+},
+{
+  id: "certificate",
+  title: "🏅 Certificate Settings",
+  fields: [
+    ["certificateEnabled", "সনদ তৈরি চালু", "true"],
+    ["certificateTitle", "সনদের শিরোনাম", "প্রশংসাপত্র"],
+    ["certificateFooter", "সনদের নিচের লেখা", ""],
+    ["certificateAuthority", "অনুমোদনকারীর পদবি", "প্রধান শিক্ষক"]
+  ]
+},
+{
+  id: "idCard",
+  title: "🪪 ID Card Settings",
+  fields: [
+    ["idCardEnabled", "আইডি কার্ড চালু", "true"],
+    ["idCardTitle", "আইডি কার্ডের শিরোনাম", "Student ID Card"],
+    ["idCardValidity", "কার্ডের মেয়াদ", "১ বছর"]
+  ]
+},
+{
+  id: "homework",
+  title: "📚 Homework Settings",
+  fields: [
+    ["homeworkEnabled", "হোমওয়ার্ক চালু", "true"],
+    ["homeworkSubmissionEnabled", "অনলাইন জমা চালু", "true"],
+    ["homeworkLateSubmission", "দেরিতে জমা অনুমোদন", "false"]
+  ]
+},
+{
+  id: "studyMaterials",
+  title: "📖 Study Materials Settings",
+  fields: [
+    ["studyMaterialsEnabled", "শিক্ষাসামগ্রী চালু", "true"],
+    ["allowPDF", "PDF আপলোড চালু", "true"],
+    ["allowVideo", "ভিডিও লিংক চালু", "true"]
+  ]
+},
+{
+  id: "communication",
+  title: "✉️ SMS & Email Settings",
+  fields: [
+    ["smsEnabled", "SMS বিজ্ঞপ্তি চালু", "false"],
+    ["emailEnabled", "ইমেইল বিজ্ঞপ্তি চালু", "false"],
+    ["notificationEmail", "বিজ্ঞপ্তির ইমেইল", ""]
+  ]
+},
+{
+  id: "general",
+  title: "🌐 General Settings",
+  fields: [
+    ["language", "ভাষা", "বাংলা"],
+    ["dateFormat", "তারিখের ফরম্যাট", "DD-MM-YYYY"],
+    ["timezone", "টাইমজোন", "Asia/Dhaka"],
+    ["academicSession", "শিক্ষাকাল", "২০২৬–২০২৭"]
+  ]
+}
 ];
 
 export async function renderCentralSettings(content) {
