@@ -1,3 +1,4 @@
+import { renderCentralSettings } from "./settings.js";
 import {
   listRecords,
   createRecord,
@@ -33,7 +34,7 @@ export async function renderAdmin(root, { user, profile }) {
   ["admissions", "📝", "ভর্তি আবেদন"],
   ["notices", "📢", "নোটিশ"],
   ["settings", "⚙️", "Academy Settings"],
-  ["academic", "🎓", "Academic Settings"]
+  ["central-settings", "⚙️", "সকল সেটিংস"]
 ];
 
   root.innerHTML = `
@@ -153,6 +154,9 @@ else if (page === "attendance") {
       }
 else if (page === "settings") {
   await showAcademySettings();
+}
+else if (page === "central-settings") {
+  await renderCentralSettings(content);
 }
 
     } catch (error) {
