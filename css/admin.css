@@ -1,1 +1,30 @@
 .admin-accent{--role-accent:#2868d7}.role-admin .sidebar-brand .brand-mark{color:var(--primary)}
+/* FIX: Central Settings Checkbox Size */
+
+#central-settings-form .field {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 12px !important;
+}
+
+#central-settings-form input[type="checkbox"] {
+  appearance: auto !important;
+  -webkit-appearance: checkbox !important;
+
+  display: inline-block !important;
+
+  width: 16px !important;
+  height: 16px !important;
+
+  min-width: 16px !important;
+  max-width: 16px !important;
+
+  flex: 0 0 16px !important;
+
+  margin: 0 8px !important;
+  padding: 0 !important;
+
+  cursor: pointer !important;
+  accent-color: var(--primary);
+}
