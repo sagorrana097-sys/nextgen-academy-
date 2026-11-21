@@ -23,6 +23,7 @@ if(path==="index.html"||path===""){
       if(profile.role!==requiredRole){location.replace(rolePages[profile.role]||"index.html");return;}
       const root=$("#dashboard-root");
       const render={admin:renderAdmin,teacher:renderTeacher,student:renderStudent}[requiredRole];
+      await applyAcademyBranding();
       await render(root,{user,profile});
       bindGlobalControls(user,profile);
     }catch(error){console.error(error);$("#dashboard-root").innerHTML='<div class="error-panel">ড্যাশবোর্ড লোড করা যায়নি। ইন্টারনেট ও Firebase সেটিংস পরীক্ষা করুন।</div>';}
