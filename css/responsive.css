@@ -356,3 +356,81 @@
     font-size: 18px !important;
   }
 }
+/* =====================================
+   NEXTGEN ACADEMY - FINAL CONTRAST FIX
+===================================== */
+
+/* Settings card */
+#central-settings-form .neu-card.panel {
+  background: #ffffff !important;
+  border: 1px solid #d6e0ef !important;
+  box-shadow: 0 6px 22px rgba(15, 35, 75, 0.10) !important;
+}
+
+/* Section title */
+#central-settings-form .section-title {
+  color: #1746a2 !important;
+  font-weight: 750 !important;
+  border-bottom: 2px solid #e2eaf7 !important;
+}
+
+/* Field labels */
+#central-settings-form label.field {
+  color: #243653 !important;
+  font-size: 14px !important;
+  font-weight: 700 !important;
+}
+
+/* Input boxes */
+#central-settings-form .field input:not([type="checkbox"]) {
+  background: #f0f4fb !important;
+  color: #172b4d !important;
+  border: 1.5px solid #bdcce2 !important;
+  border-radius: 10px !important;
+  min-height: 48px !important;
+  padding: 12px 15px !important;
+  font-size: 15px !important;
+}
+
+/* Input hover */
+#central-settings-form .field input:not([type="checkbox"]):hover {
+  background: #ffffff !important;
+  border-color: #7798d5 !important;
+}
+
+/* Input focus */
+#central-settings-form .field input:not([type="checkbox"]):focus {
+  background: #ffffff !important;
+  border-color: #2864d8 !important;
+  box-shadow: 0 0 0 3px rgba(40, 100, 216, 0.13) !important;
+}
+
+/* Checkbox rows */
+#central-settings-form label.field:has(input[type="checkbox"]) {
+  background: #f0f5ff !important;
+  border: 1px solid #d5e1f4 !important;
+  border-radius: 10px !important;
+}
+
+/* Checkbox */
+#central-settings-form input[type="checkbox"] {
+  width: 18px !important;
+  height: 18px !important;
+  min-width: 18px !important;
+  border: 1.5px solid #8298bd !important;
+  border-radius: 5px !important;
+}
+
+/* Checked checkbox */
+#central-settings-form input[type="checkbox"]:checked {
+  background: #245bd1 !important;
+  border-color: #245bd1 !important;
+}
+
+/* Save button */
+#central-settings-form button[type="submit"] {
+  min-height: 49px !important;
+  font-size: 16px !important;
+  font-weight: 700 !important;
+  background: linear-gradient(135deg, #245bd1, #6745c7) !important;
+}
