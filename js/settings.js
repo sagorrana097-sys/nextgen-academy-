@@ -604,3 +604,121 @@ export async function renderCentralSettings(content) {
   }
 
 }
+/* =================================
+   SETTINGS CHECKBOX REDESIGN
+================================= */
+
+/* Checkbox-এর আকার ও ডিজাইন */
+#central-settings-container
+.settings-toggle input[type="checkbox"] {
+  appearance: none;
+  -webkit-appearance: none;
+
+  width: 24px !important;
+  height: 24px !important;
+
+  min-width: 24px;
+  min-height: 24px;
+
+  margin: 0 5px 0 12px;
+  padding: 0;
+
+  border: 2px solid #94a3b8;
+  border-radius: 7px;
+
+  background: #ffffff;
+
+  cursor: pointer;
+  flex-shrink: 0;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  transition: all 0.2s ease;
+}
+
+/* Checked অবস্থায় */
+#central-settings-container
+.settings-toggle input[type="checkbox"]:checked {
+  background: var(--primary, #2563eb);
+  border-color: var(--primary, #2563eb);
+}
+
+/* টিক চিহ্ন */
+#central-settings-container
+.settings-toggle input[type="checkbox"]:checked::after {
+  content: "";
+
+  width: 6px;
+  height: 12px;
+
+  border: solid #ffffff;
+  border-width: 0 2.5px 2.5px 0;
+
+  transform: rotate(45deg);
+
+  margin-top: -3px;
+}
+
+/* Checkbox-এর সারি */
+#central-settings-container
+.settings-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 15px;
+
+  padding: 13px 15px;
+  margin: 8px 0;
+
+  border: 1px solid var(--border, #e2e8f0);
+  border-radius: 10px;
+
+  background: var(--surface, #ffffff);
+
+  cursor: pointer;
+}
+
+/* Label */
+#central-settings-container
+.settings-toggle span {
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1.5;
+}
+
+/* Mouse hover */
+#central-settings-container
+.settings-toggle:hover {
+  border-color: var(--primary, #2563eb);
+}
+
+/* Keyboard focus */
+#central-settings-container
+.settings-toggle input[type="checkbox"]:focus-visible {
+  outline: 3px solid rgba(37, 99, 235, 0.25);
+  outline-offset: 3px;
+}
+
+/* Mobile responsive */
+@media (max-width: 600px) {
+  #central-settings-container
+  .settings-toggle {
+    padding: 12px;
+  }
+
+  #central-settings-container
+  .settings-toggle span {
+    font-size: 14px;
+  }
+
+  #central-settings-container
+  .settings-toggle input[type="checkbox"] {
+    width: 26px !important;
+    height: 26px !important;
+    min-width: 26px;
+    min-height: 26px;
+  }
+}
