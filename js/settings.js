@@ -362,6 +362,41 @@ const SETTINGS_GROUPS = [
 ];
 
 
+// Convert a field value to its saved data type
+function getFieldValue(form, key) {
+
+  if (BOOLEAN_FIELDS.includes(key)) {
+    return form.has(key);
+  }
+
+  const rawValue = String(form.get(key) ?? "").trim();
+
+  if (NUMBER_FIELDS.includes(key)) {
+
+    if (rawValue === "") {
+      return 0;
+    }
+
+    const numberValue = Number(rawValue);
+
+    if (!Number.isFinite(numberValue)) {
+      throw new Error("সঠিক সংখ্যা লিখুন: " + key);
+    }
+
+    return numberValue;
+  }
+
+  if (ARRAY_FIELDS.includes(key)) {
+    return rawValue
+      .split(",")
+      .map(item => item.trim())
+      .filter(Boolean);
+  }
+
+  return rawValue;
+}
+
+
 // Render Central Settings
 export async function renderCentralSettings(content) {
 
@@ -373,172 +408,179 @@ export async function renderCentralSettings(content) {
       <h1>⚙️ সকল সেটিংস</h1>
 
       <p class="muted">
-        এক জায়গা থেকে একাডেমির বিভিন্ন সেটিং নিয়ন্ত্রণ করুন।
+        প্রতিটি বিভাগের সেটিংস আলাদাভাবে পরিবর্তন ও সংরক্ষণ করুন।
       </p>
 
-      <form id="central-settings-form" class="form-stack">
+      <div id="central-settings-container">
 
         ${SETTINGS_GROUPS.map(group => `
 
-          <section class="neu-card panel">
+          <section class="neu-card panel settings-group">
 
-            <h2 class="section-title">
-              ${group.title}
-            </h2>
+            <form
+              class="central-settings-form"
+              data-group="${group.id}"
+            >
 
-            ${group.fields.map(([key, label, fallback]) => {
+              <h2 class="section-title">
+                ${group.title}
+              </h2>
 
-              const value = settings[key] ?? fallback;
+              <div class="settings-fields">
 
-              if (BOOLEAN_FIELDS.includes(key)) {
+                ${group.fields.map(([key, label, fallback]) => {
 
-                const checked =
-                  value === true || value === "true";
+                  const value = settings[key] ?? fallback;
 
-                return `
-                  <label class="field">
-                    <span>${label}</span>
+                  if (BOOLEAN_FIELDS.includes(key)) {
 
-                    <input
-                      type="checkbox"
-                      name="${key}"
-                      ${checked ? "checked" : ""}
-                    >
-                  </label>
-                `;
+                    const checked =
+                      value === true || value === "true";
 
-              }
+                    return `
+                      <label class="field settings-toggle">
+                        <span>${label}</span>
 
-              const displayValue = Array.isArray(value)
-                ? value.join(", ")
-                : String(value);
+                        <input
+                          type="checkbox"
+                          name="${key}"
+                          ${checked ? "checked" : ""}
+                        >
+                      </label>
+                    `;
+                  }
 
-              return `
-                <label class="field">
-                  <span>${label}</span>
+                  const displayValue = Array.isArray(value)
+                    ? value.join(", ")
+                    : String(value);
 
-                  <input
-                    name="${key}"
-                    type="${NUMBER_FIELDS.includes(key) ? "number" : "text"}"
-                    value="${escapeHTML(displayValue)}"
-                  >
-                </label>
-              `;
+                  return `
+                    <label class="field">
+                      <span>${label}</span>
 
-            }).join("")}
+                      <input
+                        name="${key}"
+                        type="${NUMBER_FIELDS.includes(key) ? "number" : "text"}"
+                        value="${escapeHTML(displayValue)}"
+                      >
+                    </label>
+                  `;
+
+                }).join("")}
+
+              </div>
+
+              <div class="settings-save-area">
+
+                <button
+                  class="btn btn-primary settings-save-btn"
+                  type="submit"
+                >
+                  💾 ${group.title} সংরক্ষণ করুন
+                </button>
+
+              </div>
+
+            </form>
 
           </section>
 
         `).join("")}
 
-        <button
-          class="btn btn-primary"
-          type="submit"
-        >
-          সকল সেটিংস সংরক্ষণ করুন
-        </button>
-
-      </form>
+      </div>
     `;
 
 
-    const formElement = content.querySelector(
-      "#central-settings-form"
+    // প্রতিটি বিভাগের জন্য আলাদা Save Event
+    const forms = content.querySelectorAll(
+      ".central-settings-form"
     );
 
-    formElement.addEventListener("submit", async event => {
+    forms.forEach(formElement => {
 
-      event.preventDefault();
+      formElement.addEventListener("submit", async event => {
 
-      const form = new FormData(formElement);
-      const data = {};
+        event.preventDefault();
 
-      for (const group of SETTINGS_GROUPS) {
+        const button = formElement.querySelector(
+          ".settings-save-btn"
+        );
 
-        for (const [key] of group.fields) {
+        const groupId = formElement.dataset.group;
 
-          let value;
+        const group = SETTINGS_GROUPS.find(
+          item => item.id === groupId
+        );
 
-          // Boolean
-          if (BOOLEAN_FIELDS.includes(key)) {
+        if (!group || button.disabled) {
+          return;
+        }
 
-            value = form.has(key);
+        const form = new FormData(formElement);
+        const data = {};
 
+        try {
+
+          // শুধু নির্বাচিত বিভাগের তথ্য সংগ্রহ
+          for (const [key] of group.fields) {
+            data[key] = getFieldValue(form, key);
           }
 
-          // Number
-          else if (NUMBER_FIELDS.includes(key)) {
+        } catch (error) {
 
-            const rawValue = String(
-              form.get(key) ?? ""
-            ).trim();
-
-            value = rawValue === ""
-              ? 0
-              : Number(rawValue);
-
-            if (!Number.isFinite(value)) {
-
-              toast(
-                "সঠিক সংখ্যা লিখুন: " + key,
-                "error"
-              );
-
-              return;
-            }
-
-          }
-
-          // Array
-          else if (ARRAY_FIELDS.includes(key)) {
-
-            value = String(
-              form.get(key) ?? ""
-            )
-              .split(",")
-              .map(item => item.trim())
-              .filter(Boolean);
-
-          }
-
-          // Text
-          else {
-
-            value = String(
-              form.get(key) ?? ""
-            ).trim();
-
-          }
-
-          data[key] = value;
+          toast(error.message, "error");
+          return;
 
         }
 
-      }
 
+        // শুধু এই বিভাগের তথ্য Firestore-এ Save
+        try {
 
-      try {
+          button.disabled = true;
+          button.textContent = "⏳ সংরক্ষণ হচ্ছে...";
 
-        await saveAcademySettings(data);
+          await saveAcademySettings(data);
 
-        toast(
-          "সকল সেটিংস সফলভাবে সংরক্ষিত হয়েছে।",
-          "success"
-        );
+          toast(
+            group.title + " সফলভাবে সংরক্ষিত হয়েছে।",
+            "success"
+          );
 
-      } catch (error) {
+          button.textContent = "✅ সংরক্ষিত হয়েছে";
 
-        console.error(
-          "Settings Save Error:",
-          error
-        );
+        } catch (error) {
 
-        toast(
-          "সেটিংস সংরক্ষণ করা যায়নি। আবার চেষ্টা করুন।",
-          "error"
-        );
+          console.error(
+            "Settings Save Error:",
+            error
+          );
 
-      }
+          toast(
+            "সেটিংস সংরক্ষণ করা যায়নি। আবার চেষ্টা করুন।",
+            "error"
+          );
+
+          button.textContent = "❌ আবার চেষ্টা করুন";
+
+        } finally {
+
+          button.disabled = false;
+
+          setTimeout(() => {
+
+            if (button.isConnected) {
+
+              button.textContent =
+                "💾 " + group.title + " সংরক্ষণ করুন";
+
+            }
+
+          }, 2000);
+
+        }
+
+      });
 
     });
 
@@ -552,6 +594,7 @@ export async function renderCentralSettings(content) {
     content.innerHTML = `
       <section class="neu-card panel">
         <h2>⚠️ সেটিংস লোড করা যায়নি</h2>
+
         <p>
           ইন্টারনেট সংযোগ ও Firebase permissions পরীক্ষা করুন।
         </p>
