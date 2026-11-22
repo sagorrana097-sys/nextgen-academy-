@@ -1,4 +1,5 @@
 import { renderCentralSettings } from "./settings.js";
+import { showExamManagement } from "./exam.js";
 
 import {
   listRecords,
@@ -27,6 +28,7 @@ export async function renderAdmin(root, { user, profile }) {
     ["teachers", "👨‍🏫", "শিক্ষক"],
     ["batches", "🏫", "ব্যাচ"],
     ["academic", "🎓", "Class & Subject"],
+    ["exams", "📝", "পরীক্ষা ব্যবস্থাপনা"],
     ["attendance", "📅", "উপস্থিতি"],
     ["admissions", "📝", "ভর্তি আবেদন"],
     ["notices", "📢", "নোটিশ"],
@@ -160,6 +162,10 @@ export async function renderAdmin(root, { user, profile }) {
 
       else if (page === "academic") {
         await showAcademicManagement();
+      }
+
+      else if (page === "exams") {
+        await showExamManagement(content);
       }
 
       else if (page === "attendance") {
@@ -1163,12 +1169,9 @@ export async function renderAdmin(root, { user, profile }) {
     }
 
 
-    // CLASS MANAGEMENT
-
     async function renderClasses() {
 
       const classes = await listRecords("classes");
-
       const subjects = await listRecords("subjects");
 
       tabContent.innerHTML = `
@@ -1323,48 +1326,32 @@ export async function renderAdmin(root, { user, profile }) {
         event.preventDefault();
 
         const f = new FormData(form);
-
         const editId = f.get("editId");
 
         const data = {
-
           name: f.get("name").trim(),
-
           code: f.get("code").trim(),
-
           description: f.get("description").trim(),
-
           active: f.get("active") === "true",
-
           createdBy: user.uid
-
         };
 
 
         try {
 
           if (editId) {
-
             await updateRecord("classes", editId, data);
-
             toast("ক্লাস আপডেট হয়েছে।", "success");
-
           } else {
-
             await createRecord("classes", data);
-
             toast("নতুন ক্লাস তৈরি হয়েছে।", "success");
-
           }
 
           await renderClasses();
 
         } catch (error) {
-
           console.error(error);
-
           toast("ক্লাস সংরক্ষণ করা যায়নি।", "error");
-
         }
 
       };
@@ -1381,13 +1368,9 @@ export async function renderAdmin(root, { user, profile }) {
           if (!item) return;
 
           form.elements.editId.value = item.id;
-
           form.elements.name.value = item.name || "";
-
           form.elements.code.value = item.code || "";
-
           form.elements.description.value = item.description || "";
-
           form.elements.active.value =
             item.active === false ? "false" : "true";
 
@@ -1412,34 +1395,22 @@ export async function renderAdmin(root, { user, profile }) {
           );
 
           if (linkedSubjects.length) {
-
             toast(
               "এই ক্লাসের সঙ্গে বিষয় যুক্ত আছে। আগে বিষয়গুলো থেকে ক্লাসটি সরান।",
               "error"
             );
-
             return;
-
           }
-
 
           if (!confirm("এই ক্লাসটি মুছে ফেলবেন?")) return;
 
-
           try {
-
             await deleteRecord("classes", id);
-
             toast("ক্লাস মুছে ফেলা হয়েছে।", "success");
-
             await renderClasses();
-
           } catch (error) {
-
             console.error(error);
-
             toast("ক্লাস মুছে ফেলা যায়নি।", "error");
-
           }
 
         };
@@ -1449,16 +1420,11 @@ export async function renderAdmin(root, { user, profile }) {
     }
 
 
-    // SUBJECT MANAGEMENT
-
     async function renderSubjects() {
 
       const [subjects, classes] = await Promise.all([
-
         listRecords("subjects"),
-
         listRecords("classes")
-
       ]);
 
 
@@ -1652,51 +1618,33 @@ export async function renderAdmin(root, { user, profile }) {
         event.preventDefault();
 
         const f = new FormData(form);
-
         const editId = f.get("editId");
-
         const classIds = f.getAll("classIds");
 
-
         const data = {
-
           name: f.get("name").trim(),
-
           code: f.get("code").trim(),
-
           classIds,
-
           active: f.get("active") === "true",
-
           createdBy: user.uid
-
         };
 
 
         try {
 
           if (editId) {
-
             await updateRecord("subjects", editId, data);
-
             toast("বিষয় আপডেট হয়েছে।", "success");
-
           } else {
-
             await createRecord("subjects", data);
-
             toast("নতুন বিষয় তৈরি হয়েছে।", "success");
-
           }
 
           await renderSubjects();
 
         } catch (error) {
-
           console.error(error);
-
           toast("বিষয় সংরক্ষণ করা যায়নি।", "error");
-
         }
 
       };
@@ -1713,22 +1661,15 @@ export async function renderAdmin(root, { user, profile }) {
           if (!item) return;
 
           form.elements.editId.value = item.id;
-
           form.elements.name.value = item.name || "";
-
           form.elements.code.value = item.code || "";
-
           form.elements.active.value =
             item.active === false ? "false" : "true";
 
-
           form.querySelectorAll('[name="classIds"]').forEach(checkbox => {
-
             checkbox.checked =
               (item.classIds || []).includes(checkbox.value);
-
           });
-
 
           form.scrollIntoView({
             behavior: "smooth",
@@ -1749,19 +1690,12 @@ export async function renderAdmin(root, { user, profile }) {
           if (!confirm("এই বিষয়টি মুছে ফেলবেন?")) return;
 
           try {
-
             await deleteRecord("subjects", id);
-
             toast("বিষয় মুছে ফেলা হয়েছে।", "success");
-
             await renderSubjects();
-
           } catch (error) {
-
             console.error(error);
-
             toast("বিষয় মুছে ফেলা যায়নি।", "error");
-
           }
 
         };
@@ -1781,13 +1715,9 @@ export async function renderAdmin(root, { user, profile }) {
   async function showAttendance() {
 
     const [students, attendance] = await Promise.all([
-
       listRecords("students"),
-
       listRecords("attendance")
-
     ]);
-
 
     const today = new Date().toLocaleDateString("en-CA");
 
@@ -1912,23 +1842,15 @@ export async function renderAdmin(root, { user, profile }) {
     const list = content.querySelector("#attendance-students");
 
 
-    // ATTENDANCE REPORT
-
     content.querySelector("#show-attendance-report").onclick = () => {
 
       const date = content.querySelector("#report-date").value;
-
       const result = content.querySelector("#attendance-report-result");
 
-
       if (!date) {
-
         toast("রিপোর্টের তারিখ নির্বাচন করুন।", "error");
-
         return;
-
       }
-
 
       const presentStudents = students.filter(student =>
         attendance.some(a =>
@@ -1938,7 +1860,6 @@ export async function renderAdmin(root, { user, profile }) {
         )
       );
 
-
       const absentStudents = students.filter(student =>
         attendance.some(a =>
           a.studentId === student.id &&
@@ -1947,49 +1868,40 @@ export async function renderAdmin(root, { user, profile }) {
         )
       );
 
-
       const totalMarked =
         presentStudents.length + absentStudents.length;
 
       const unmarked = students.length - totalMarked;
-
 
       result.innerHTML = `
 
         <div class="stats-grid" style="margin-top:20px">
 
           ${stat("👨‍🎓", "মোট শিক্ষার্থী", students.length)}
-
           ${stat("✅", "উপস্থিত", presentStudents.length)}
-
           ${stat("❌", "অনুপস্থিত", absentStudents.length)}
-
           ${stat("⏳", "হিসাব হয়নি", unmarked)}
 
         </div>
 
 
         <section class="neu-card panel" style="margin-top:20px">
-
           <h3>✅ উপস্থিত শিক্ষার্থীরা</h3>
 
           ${presentStudents.length
             ? makeList(presentStudents, "name", "")
             : `<p class="muted">কেউ উপস্থিত নেই।</p>`
           }
-
         </section>
 
 
         <section class="neu-card panel" style="margin-top:20px">
-
           <h3>❌ অনুপস্থিত শিক্ষার্থীরা</h3>
 
           ${absentStudents.length
             ? makeList(absentStudents, "name", "")
             : `<p class="muted">কেউ অনুপস্থিত নেই।</p>`
           }
-
         </section>
 
       `;
@@ -1997,32 +1909,21 @@ export async function renderAdmin(root, { user, profile }) {
     };
 
 
-    // LOAD ATTENDANCE
-
     content.querySelector("#load-attendance").onclick = () => {
 
       const date = content.querySelector("#attendance-date").value;
 
-
       if (!date) {
-
         toast("তারিখ নির্বাচন করুন।", "error");
-
         return;
-
       }
 
-
       if (!students.length) {
-
         list.innerHTML = `
           <p class="muted">কোনো শিক্ষার্থী পাওয়া যায়নি।</p>
         `;
-
         return;
-
       }
-
 
       list.innerHTML = `
 
@@ -2040,7 +1941,6 @@ export async function renderAdmin(root, { user, profile }) {
             );
 
             const status = old?.status || "present";
-
 
             return `
 
@@ -2112,56 +2012,37 @@ export async function renderAdmin(root, { user, profile }) {
 
           const selects = list.querySelectorAll("[data-student]:checked");
 
-
           for (const select of selects) {
 
             const studentId = select.dataset.student;
-
 
             const old = attendance.find(a =>
               a.studentId === studentId && a.date === date
             );
 
-
             const data = {
-
               studentId,
-
               studentName:
                 students.find(s => s.id === studentId)?.name || "",
-
               date,
-
               status: select.value,
-
               createdBy: user.uid
-
             };
 
-
             if (old) {
-
               await updateRecord("attendance", old.id, data);
-
             } else {
-
               await createRecord("attendance", data);
-
             }
 
           }
 
-
           toast("উপস্থিতি সংরক্ষণ হয়েছে।", "success");
-
           await showAttendance();
 
         } catch (error) {
-
           console.error(error);
-
           toast("উপস্থিতি সংরক্ষণ করা যায়নি।", "error");
-
         }
 
       };
@@ -2176,7 +2057,6 @@ export async function renderAdmin(root, { user, profile }) {
   async function showAcademySettings() {
 
     const settings = await getAcademySettings();
-
 
     content.innerHTML = `
 
@@ -2344,22 +2224,14 @@ export async function renderAdmin(root, { user, profile }) {
 
 
     const form = content.querySelector("#academy-settings-form");
-
     const logoInput = form.querySelector('[name="logoUrl"]');
-
     const preview = content.querySelector("#logo-preview");
 
-
     logoInput.oninput = () => {
-
       const url = logoInput.value.trim();
-
       preview.src = url;
-
       preview.style.display = url ? "block" : "none";
-
     };
-
 
     form.onsubmit = async event => {
 
@@ -2368,9 +2240,7 @@ export async function renderAdmin(root, { user, profile }) {
       const button = form.querySelector('button[type="submit"]');
 
       button.disabled = true;
-
       button.textContent = "সংরক্ষণ হচ্ছে...";
-
 
       try {
 
@@ -2378,9 +2248,7 @@ export async function renderAdmin(root, { user, profile }) {
           new FormData(form).entries()
         );
 
-
         await saveAcademySettings(data);
-
 
         toast("প্রতিষ্ঠানের তথ্য সংরক্ষণ করা হয়েছে।", "success");
 
@@ -2393,7 +2261,6 @@ export async function renderAdmin(root, { user, profile }) {
         toast("সেটিংস সংরক্ষণ করা যায়নি।", "error");
 
         button.disabled = false;
-
         button.textContent = "💾 সেটিংস সংরক্ষণ করুন";
 
       }
@@ -2408,18 +2275,13 @@ export async function renderAdmin(root, { user, profile }) {
   function stat(icon, label, value) {
 
     return `
-
       <article class="neu-card stat-card">
-
         <div class="stat-icon">${icon}</div>
-
         <div>
           <strong>${value}</strong>
           <span>${label}</span>
         </div>
-
       </article>
-
     `;
 
   }
@@ -2428,36 +2290,20 @@ export async function renderAdmin(root, { user, profile }) {
   function makeList(items, key, empty) {
 
     if (!items.length) {
-
       return `
         <p class="muted empty-state">${empty}</p>
       `;
-
     }
 
-
     return `
-
       <ul class="simple-list">
-
         ${items.map(item => `
-
           <li>
-
-            <span>
-              ${escapeHTML(item[key] || "—")}
-            </span>
-
-            <small>
-              ${formatDate(item.createdAt)}
-            </small>
-
+            <span>${escapeHTML(item[key] || "—")}</span>
+            <small>${formatDate(item.createdAt)}</small>
           </li>
-
         `).join("")}
-
       </ul>
-
     `;
 
   }
@@ -2466,43 +2312,24 @@ export async function renderAdmin(root, { user, profile }) {
   function studentList(items) {
 
     if (!items.length) {
-
       return `
         <p class="muted">কোনো শিক্ষার্থী পাওয়া যায়নি।</p>
       `;
-
     }
 
-
     return `
-
       <ul class="simple-list">
-
         ${items.map(student => `
-
           <li>
-
             <span>
-
               ${escapeHTML(student.name || "—")}
-
-              <small>
-                ${escapeHTML(student.phone || "")}
-              </small>
-
+              <small>${escapeHTML(student.phone || "")}</small>
             </span>
 
-
-            <small>
-              ${escapeHTML(student.className || "")}
-            </small>
-
+            <small>${escapeHTML(student.className || "")}</small>
           </li>
-
         `).join("")}
-
       </ul>
-
     `;
 
   }
