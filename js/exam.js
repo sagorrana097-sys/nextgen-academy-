@@ -5,415 +5,332 @@ import {
   deleteRecord
 } from "./store.js";
 
-import {
-  escapeHTML,
-  toast
-} from "./utils.js";
+import { escapeHTML, formatDate, toast } from "./utils.js";
 
-const EXAM_COLLECTION = "examinations";
+const EXAMS = "examinations";
+const STUDENTS = "students";
+const CLASSES = "classes";
+const SUBJECTS = "subjects";
+const RESULTS = "results";
 
-export async function showExamManagement(root) {
+let exams = [];
+let students = [];
+let classes = [];
+let subjects = [];
+let results = [];
+
+let rootElement;
+
+const safe = value => escapeHTML(String(value ?? ""));
+
+function getClassName(exam) {
+  const cls = classes.find(c => c.id === exam.classId);
+  return cls?.name || exam.className || "";
+}
+
+function getSubjectName(exam) {
+  const subject = subjects.find(s => s.id === exam.subjectId);
+  return subject?.name || exam.subjectName || "বিষয়";
+}
+
+function getExamStudents(exam) {
+  const className = getClassName(exam);
+
+  return students.filter(student => {
+    if (exam.classId && student.classId) {
+      return student.classId === exam.classId;
+    }
+
+    return Boolean(
+      className &&
+      student.className &&
+      student.className === className
+    );
+  });
+}
+
+function calculateGrade(mark, fullMark, passMark) {
+  const percentage = (mark / fullMark) * 100;
+
+  if (mark < passMark) return { grade: "F", gpa: 0 };
+  if (percentage >= 80) return { grade: "A+", gpa: 5 };
+  if (percentage >= 70) return { grade: "A", gpa: 4 };
+  if (percentage >= 60) return { grade: "A-", gpa: 3.5 };
+  if (percentage >= 50) return { grade: "B", gpa: 3 };
+  if (percentage >= 40) return { grade: "C", gpa: 2 };
+  if (percentage >= 33) return { grade: "D", gpa: 1 };
+
+  return { grade: "F", gpa: 0 };
+}
+
+async function loadData() {
+  [exams, students, classes, subjects, results] = await Promise.all([
+    listRecords(EXAMS),
+    listRecords(STUDENTS),
+    listRecords(CLASSES),
+    listRecords(SUBJECTS),
+    listRecords(RESULTS)
+  ]);
+}
+
+export async function showMarksManagement(root) {
+  rootElement = root;
+
   root.innerHTML = `
-    <div class="page-heading">
-      <div>
-        <h1>📝 পরীক্ষা ব্যবস্থাপনা</h1>
-        <p class="muted">পরীক্ষা তৈরি ও পরিচালনা করুন।</p>
+    <section class="card">
+      <h2>📝 নম্বর এন্ট্রি ও ফলাফল</h2>
+      <p class="muted">
+        পরীক্ষা নির্বাচন করে শিক্ষার্থীদের প্রাপ্ত নম্বর লিখে ফলাফল সংরক্ষণ করুন।
+      </p>
+
+      <div class="form-group">
+        <label>পরীক্ষা নির্বাচন করুন</label>
+        <select id="marksExam">
+          <option value="">পরীক্ষা নির্বাচন করুন</option>
+          ${exams.map(exam => `
+            <option value="${safe(exam.id)}">
+              ${safe(exam.title)}
+            </option>
+          `).join("")}
+        </select>
       </div>
-    </div>
 
-    <section class="neu-card panel">
-      <h2 class="section-title" id="exam-form-title">
-        নতুন পরীক্ষা তৈরি
-      </h2>
-
-      <form id="exam-form" class="form-grid">
-        <input type="hidden" name="examId">
-
-        <label class="field">
-          <span>পরীক্ষার নাম *</span>
-          <input name="title" required
-            placeholder="যেমন: অর্ধবার্ষিক পরীক্ষা">
-        </label>
-
-        <label class="field">
-          <span>পরীক্ষার ধরন *</span>
-          <select name="examType" required>
-            <option value="">নির্বাচন করুন</option>
-            <option value="সাময়িক">সাময়িক</option>
-            <option value="অর্ধবার্ষিক">অর্ধবার্ষিক</option>
-            <option value="বার্ষিক">বার্ষিক</option>
-            <option value="মডেল টেস্ট">মডেল টেস্ট</option>
-            <option value="নির্বাচনী">নির্বাচনী</option>
-            <option value="অন্যান্য">অন্যান্য</option>
-          </select>
-        </label>
-
-        <label class="field">
-          <span>Class *</span>
-          <select name="classId" id="exam-class" required>
-            <option value="">Class নির্বাচন করুন</option>
-          </select>
-        </label>
-
-        <label class="field">
-          <span>Subject *</span>
-          <select name="subjectId" id="exam-subject" required>
-            <option value="">Subject নির্বাচন করুন</option>
-          </select>
-        </label>
-
-        <label class="field">
-          <span>পূর্ণমান *</span>
-          <input type="number" name="fullMark"
-            min="1" required>
-        </label>
-
-        <label class="field">
-          <span>পাস নম্বর *</span>
-          <input type="number" name="passMark"
-            min="0" required>
-        </label>
-
-        <label class="field">
-          <span>পরীক্ষার তারিখ *</span>
-          <input type="date" name="examDate" required>
-        </label>
-
-        <label class="field">
-          <span>শিক্ষাবর্ষ</span>
-          <input type="number" name="academicYear"
-            min="2000" max="2100"
-            value="${new Date().getFullYear()}">
-        </label>
-
-        <label class="field">
-          <span>অবস্থা</span>
-          <select name="status">
-            <option value="active">চলমান</option>
-            <option value="completed">সম্পন্ন</option>
-          </select>
-        </label>
-
-        <div class="form-actions">
-          <button type="submit"
-            class="btn btn-primary"
-            id="exam-save-btn">
-            পরীক্ষা সংরক্ষণ করুন
-          </button>
-
-          <button type="button"
-            class="btn btn-soft"
-            id="exam-cancel-btn"
-            hidden>
-            বাতিল
-          </button>
-        </div>
-      </form>
+      <div id="marksDetails"></div>
     </section>
 
-    <section class="neu-card panel">
-      <h2 class="section-title">পরীক্ষার তালিকা</h2>
-      <div id="exam-list">
-        <p class="muted">তথ্য লোড হচ্ছে...</p>
-      </div>
+    <section class="card">
+      <h3>📊 সংরক্ষিত ফলাফল</h3>
+      <div id="savedResults"></div>
     </section>
   `;
 
-  const form = root.querySelector("#exam-form");
-  const classSelect = root.querySelector("#exam-class");
-  const subjectSelect = root.querySelector("#exam-subject");
-  const examList = root.querySelector("#exam-list");
-  const saveButton = root.querySelector("#exam-save-btn");
-  const cancelButton = root.querySelector("#exam-cancel-btn");
-
-  let classes = [];
-  let subjects = [];
-  let exams = [];
-
-  // Load Classes and Subjects
   try {
-    [classes, subjects] = await Promise.all([
-      listRecords("classes"),
-      listRecords("subjects")
-    ]);
-
-    classSelect.innerHTML = `
-      <option value="">Class নির্বাচন করুন</option>
-      ${classes.map(item => `
-        <option value="${escapeHTML(item.id)}">
-          ${escapeHTML(item.name || item.title || "Unnamed Class")}
-        </option>
-      `).join("")}
-    `;
-
-    renderSubjects();
-    await loadExams();
-
+    await loadData();
+    renderMarksPage();
   } catch (error) {
-    console.error("Exam Initial Load Error:", error);
-
-    toast("পরীক্ষার তথ্য লোড করা যায়নি।", "error");
-
-    examList.innerHTML = `
-      <p class="muted">তথ্য লোড করা যায়নি।</p>
+    console.error(error);
+    root.innerHTML += `
+      <p class="error">
+        তথ্য লোড করা যায়নি: ${safe(error.message)}
+      </p>
     `;
   }
+}
 
-  // Subject Options
-  classSelect.addEventListener("change", renderSubjects);
+function renderMarksPage() {
+  const examSelect = rootElement.querySelector("#marksExam");
 
-  function renderSubjects() {
-    const classId = classSelect.value;
+  examSelect.innerHTML = `
+    <option value="">পরীক্ষা নির্বাচন করুন</option>
+    ${exams.map(exam => `
+      <option value="${safe(exam.id)}">${safe(exam.title)}</option>
+    `).join("")}
+  `;
 
-    const filtered = subjects.filter(subject => {
-      if (!classId) return true;
-
-      const ids = Array.isArray(subject.classIds)
-        ? subject.classIds
-        : [];
-
-      return ids.length === 0 || ids.includes(classId);
-    });
-
-    subjectSelect.innerHTML = `
-      <option value="">Subject নির্বাচন করুন</option>
-      ${filtered.map(subject => `
-        <option value="${escapeHTML(subject.id)}">
-          ${escapeHTML(subject.name || subject.title || "Unnamed Subject")}
-        </option>
-      `).join("")}
-    `;
-  }
-
-  // Load Exams
-  async function loadExams() {
-    exams = await listRecords(EXAM_COLLECTION);
-    renderExamList();
-  }
-
-  // Render Exam List
-  function renderExamList() {
-    if (!exams.length) {
-      examList.innerHTML = `
-        <p class="muted empty-state">
-          এখনো কোনো পরীক্ষা তৈরি করা হয়নি।
-        </p>
-      `;
-      return;
-    }
-
-    examList.innerHTML = `
-      <div class="table-responsive">
-        <table class="data-table">
-          <thead>
-            <tr>
-              <th>পরীক্ষার নাম</th>
-              <th>Class</th>
-              <th>Subject</th>
-              <th>পূর্ণমান</th>
-              <th>পাস নম্বর</th>
-              <th>তারিখ</th>
-              <th>অবস্থা</th>
-              <th>কার্যক্রম</th>
-            </tr>
-          </thead>
-
-          <tbody>
-            ${exams.map(exam => {
-              const cls = classes.find(x => x.id === exam.classId);
-              const subject = subjects.find(x => x.id === exam.subjectId);
-
-              return `
-                <tr>
-                  <td>${escapeHTML(exam.title || "—")}</td>
-
-                  <td>
-                    ${escapeHTML(cls?.name || cls?.title || exam.className || "—")}
-                  </td>
-
-                  <td>
-                    ${escapeHTML(subject?.name || subject?.title || exam.subjectName || "—")}
-                  </td>
-
-                  <td>${Number(exam.fullMark || 0)}</td>
-
-                  <td>${Number(exam.passMark || 0)}</td>
-
-                  <td>${escapeHTML(exam.examDate || "—")}</td>
-
-                  <td>
-                    ${exam.status === "completed" ? "সম্পন্ন" : "চলমান"}
-                  </td>
-
-                  <td>
-                    <button class="btn btn-soft btn-sm"
-                      data-edit="${escapeHTML(exam.id)}">
-                      সম্পাদনা
-                    </button>
-
-                    <button class="btn btn-danger btn-sm"
-                      data-delete="${escapeHTML(exam.id)}">
-                      মুছুন
-                    </button>
-                  </td>
-                </tr>
-              `;
-            }).join("")}
-          </tbody>
-        </table>
-      </div>
-    `;
-  }
-
-  // Save or Update Exam
-  form.addEventListener("submit", async event => {
-    event.preventDefault();
-
-    const data = Object.fromEntries(
-      new FormData(form).entries()
-    );
-
-    const fullMark = Number(data.fullMark);
-    const passMark = Number(data.passMark);
-
-    if (
-      !Number.isFinite(fullMark) ||
-      !Number.isFinite(passMark) ||
-      fullMark <= 0 ||
-      passMark < 0 ||
-      passMark > fullMark
-    ) {
-      toast("পূর্ণমান ও পাস নম্বর সঠিকভাবে দিন।", "error");
-      return;
-    }
-
-    const selectedClass = classes.find(
-      x => x.id === data.classId
-    );
-
-    const selectedSubject = subjects.find(
-      x => x.id === data.subjectId
-    );
-
-    if (!selectedClass || !selectedSubject) {
-      toast("Class ও Subject নির্বাচন করুন।", "error");
-      return;
-    }
-
-    const examId = data.examId;
-    delete data.examId;
-
-    const payload = {
-      ...data,
-      fullMark,
-      passMark,
-      academicYear: Number(data.academicYear),
-      className: selectedClass.name || selectedClass.title || "",
-      subjectName: selectedSubject.name || selectedSubject.title || ""
-    };
-
-    saveButton.disabled = true;
-    saveButton.textContent = "সংরক্ষণ হচ্ছে...";
-
-    try {
-      if (examId) {
-        await updateRecord(EXAM_COLLECTION, examId, payload);
-        toast("পরীক্ষার তথ্য আপডেট হয়েছে।", "success");
-      } else {
-        await createRecord(EXAM_COLLECTION, payload);
-        toast("নতুন পরীক্ষা তৈরি হয়েছে।", "success");
-      }
-
-      resetForm();
-      await loadExams();
-
-    } catch (error) {
-      console.error("Exam Save Error:", error);
-      toast("পরীক্ষার তথ্য সংরক্ষণ করা যায়নি।", "error");
-
-    } finally {
-      saveButton.disabled = false;
-      saveButton.textContent = form.elements.examId.value
-        ? "পরিবর্তন সংরক্ষণ করুন"
-        : "পরীক্ষা সংরক্ষণ করুন";
-    }
+  examSelect.addEventListener("change", () => {
+    renderSelectedExam(examSelect.value);
   });
 
-  // Edit and Delete
-  examList.addEventListener("click", async event => {
-    const editButton = event.target.closest("[data-edit]");
-    const deleteButton = event.target.closest("[data-delete]");
+  renderSavedResults();
+}
 
-    if (editButton) {
-      const exam = exams.find(
-        x => x.id === editButton.dataset.edit
-      );
+function renderSelectedExam(examId) {
+  const box = rootElement.querySelector("#marksDetails");
 
-      if (!exam) return;
+  if (!examId) {
+    box.innerHTML = "";
+    return;
+  }
 
-      form.elements.examId.value = exam.id;
-      form.elements.title.value = exam.title || "";
-      form.elements.examType.value = exam.examType || "";
+  const exam = exams.find(item => item.id === examId);
 
-      classSelect.value = exam.classId || "";
-      renderSubjects();
+  if (!exam) {
+    box.innerHTML = `<p>পরীক্ষার তথ্য পাওয়া যায়নি।</p>`;
+    return;
+  }
 
-      subjectSelect.value = exam.subjectId || "";
+  const examStudents = getExamStudents(exam);
+  const fullMark = Number(exam.fullMark || 100);
+  const passMark = Number(exam.passMark || 33);
 
-      form.elements.fullMark.value = exam.fullMark ?? "";
-      form.elements.passMark.value = exam.passMark ?? "";
-      form.elements.examDate.value = exam.examDate || "";
-      form.elements.academicYear.value =
-        exam.academicYear || new Date().getFullYear();
+  box.innerHTML = `
+    <hr>
+    <h3>${safe(exam.title)}</h3>
+    <p>
+      শ্রেণি: ${safe(getClassName(exam))}<br>
+      বিষয়: ${safe(getSubjectName(exam))}<br>
+      পূর্ণমান: ${fullMark} |
+      পাস নম্বর: ${passMark}
+    </p>
 
-      form.elements.status.value = exam.status || "active";
+    ${
+      examStudents.length
+        ? `
+          <form id="marksForm">
+            <div class="table-wrap" style="overflow-x:auto">
+              <table>
+                <thead>
+                  <tr>
+                    <th>শিক্ষার্থী</th>
+                    <th>Student ID</th>
+                    <th>প্রাপ্ত নম্বর</th>
+                    <th>গ্রেড</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  ${examStudents.map(student => {
+                    const existing = results.find(r =>
+                      r.examId === exam.id &&
+                      r.studentId === student.id
+                    );
 
-      root.querySelector("#exam-form-title").textContent =
-        "পরীক্ষার তথ্য সম্পাদনা";
+                    const mark = existing?.obtainedMarks ?? "";
 
-      saveButton.textContent = "পরিবর্তন সংরক্ষণ করুন";
-      cancelButton.hidden = false;
+                    return `
+                      <tr>
+                        <td>${safe(student.name)}</td>
+                        <td>${safe(student.studentCode || student.id)}</td>
+                        <td>
+                          <input
+                            type="number"
+                            class="student-mark"
+                            data-student-id="${safe(student.id)}"
+                            value="${safe(mark)}"
+                            min="0"
+                            max="${fullMark}"
+                            step="0.01"
+                            required
+                            style="width:100px"
+                          >
+                        </td>
+                        <td class="grade-preview">
+                          ${existing ? safe(existing.grade) : "—"}
+                        </td>
+                      </tr>
+                    `;
+                  }).join("")}
+                </tbody>
+              </table>
+            </div>
 
-      form.scrollIntoView({ behavior: "smooth" });
+            <button type="submit">💾 নম্বর সংরক্ষণ করুন</button>
+          </form>
+        `
+        : `
+          <p class="muted">
+            এই পরীক্ষার শ্রেণিতে কোনো শিক্ষার্থী পাওয়া যায়নি।
+            শিক্ষার্থীর classId/className পরীক্ষা করে দেখুন।
+          </p>
+        `
     }
+  `;
 
-    if (deleteButton) {
-      const id = deleteButton.dataset.delete;
+  const form = box.querySelector("#marksForm");
 
-      if (!confirm("আপনি কি এই পরীক্ষাটি মুছে ফেলতে চান?")) {
+  if (form) {
+    form.addEventListener("submit", event => {
+      saveMarks(event, exam, examStudents);
+    });
+  }
+}
+
+async function saveMarks(event, exam, examStudents) {
+  event.preventDefault();
+
+  const fullMark = Number(exam.fullMark || 100);
+  const passMark = Number(exam.passMark || 33);
+
+  const inputs = [
+    ...rootElement.querySelectorAll(".student-mark")
+  ];
+
+  try {
+    for (const input of inputs) {
+      const studentId = input.dataset.studentId;
+      const student = examStudents.find(s => s.id === studentId);
+      const mark = Number(input.value);
+
+      if (!Number.isFinite(mark) || mark < 0 || mark > fullMark) {
+        toast(`নম্বর ০ থেকে ${fullMark}-এর মধ্যে হতে হবে।`);
+        input.focus();
         return;
       }
 
-      try {
-        await deleteRecord(EXAM_COLLECTION, id);
+      const gradeInfo = calculateGrade(mark, fullMark, passMark);
+      const percentage = (mark / fullMark) * 100;
 
-        toast("পরীক্ষা মুছে ফেলা হয়েছে।", "success");
+      const data = {
+        examId: exam.id,
+        examName: exam.title,
+        studentId,
+        studentName: student?.name || "",
+        studentCode: student?.studentCode || "",
+        className: getClassName(exam),
+        subjectId: exam.subjectId || "",
+        subject: getSubjectName(exam),
+        fullMarks: fullMark,
+        passMark,
+        obtainedMarks: mark,
+        percentage: Number(percentage.toFixed(2)),
+        grade: gradeInfo.grade,
+        gpa: gradeInfo.gpa
+      };
 
-        await loadExams();
+      const existing = results.find(r =>
+        r.examId === exam.id &&
+        r.studentId === studentId
+      );
 
-      } catch (error) {
-        console.error("Exam Delete Error:", error);
-        toast("পরীক্ষা মুছে ফেলা যায়নি।", "error");
+      if (existing) {
+        await updateRecord(RESULTS, existing.id, data);
+      } else {
+        await createRecord(RESULTS, data);
       }
     }
-  });
 
-  // Cancel Editing
-  cancelButton.addEventListener("click", resetForm);
+    await loadData();
+    renderSavedResults();
+    renderSelectedExam(exam.id);
 
-  // Reset Form
-  function resetForm() {
-    form.reset();
-
-    form.elements.examId.value = "";
-    form.elements.academicYear.value = new Date().getFullYear();
-
-    root.querySelector("#exam-form-title").textContent =
-      "নতুন পরীক্ষা তৈরি";
-
-    saveButton.textContent = "পরীক্ষা সংরক্ষণ করুন";
-    cancelButton.hidden = true;
-
-    renderSubjects();
+    toast("ফলাফল সফলভাবে সংরক্ষণ হয়েছে।");
+  } catch (error) {
+    console.error(error);
+    toast("ফলাফল সংরক্ষণ করা যায়নি: " + error.message);
   }
+}
+
+function renderSavedResults() {
+  const box = rootElement.querySelector("#savedResults");
+
+  if (!results.length) {
+    box.innerHTML = `<p class="muted">এখনো কোনো ফলাফল সংরক্ষণ করা হয়নি।</p>`;
+    return;
+  }
+
+  box.innerHTML = `
+    <div class="table-wrap" style="overflow-x:auto">
+      <table>
+        <thead>
+          <tr>
+            <th>পরীক্ষা</th>
+            <th>শিক্ষার্থী</th>
+            <th>বিষয়</th>
+            <th>নম্বর</th>
+            <th>গ্রেড</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${results.map(result => `
+            <tr>
+              <td>${safe(result.examName)}</td>
+              <td>${safe(result.studentName)}</td>
+              <td>${safe(result.subject)}</td>
+              <td>${safe(result.obtainedMarks)} / ${safe(result.fullMarks)}</td>
+              <td><strong>${safe(result.grade)}</strong></td>
+            </tr>
+          `).join("")}
+        </tbody>
+      </table>
+    </div>
+  `;
 }
