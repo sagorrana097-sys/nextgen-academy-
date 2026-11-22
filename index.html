@@ -1,552 +1,207 @@
-import { getAcademySettings } from "./store.js";
+<!doctype html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#edf1f8">
 
-import { APP_CONFIG } from "./config.js";
+  <title>NextGen Academy | Login</title>
 
-import {
-  $,
-  $$,
-  initTheme,
-  toast,
-  escapeHTML,
-  initials
-} from "./utils.js";
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-import {
-  signUp,
-  signIn,
-  signOutUser,
-  watchAuth,
-  getUserProfile
-} from "./auth.js";
+  <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
-import { renderAdmin } from "./admin.js";
-import { renderTeacher } from "./teacher.js";
-import { renderStudent } from "./student.js";
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/reset.css">
+  <link rel="stylesheet" href="css/common.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/auth.css">
+  <link rel="stylesheet" href="css/responsive.css">
+</head>
 
+<body class="auth-page">
 
-// Theme Initialization
-initTheme();
+  <div class="ambient ambient-one"></div>
+  <div class="ambient ambient-two"></div>
+  <div class="ambient ambient-three"></div>
 
+  <main class="auth-shell">
 
-// Role Pages
-const rolePages = {
-  admin: "admin.html",
-  teacher: "teacher.html",
-  student: "student.html"
-};
+    <section class="brand-panel">
 
+      <div class="brand-lockup">
+        <span class="brand-mark">N</span>
+        <span class="login-academy-name">NextGen Academy</span>
+      </div>
 
-// Current Page
-const path = location.pathname.split("/").pop() || "index.html";
+      <div class="brand-copy">
 
-const requiredRole = document.body.dataset.requiredRole;
+        <span class="eyebrow">
+          LEARN • GROW • ACHIEVE
+        </span>
 
+        <h1>
+          শেখার প্রতিটি ধাপে<br>
+          <em>আগামীর প্রস্তুতি।</em>
+        </h1>
 
-// Apply Branding
-applyAcademyBranding();
+        <p>
+          একটি স্মার্ট, সহজ ও সংগঠিত শিক্ষা ব্যবস্থাপনা প্ল্যাটফর্ম।
+        </p>
 
+      </div>
 
-// Authentication Routing
-if (path === "index.html" || path === "") {
+      <div class="brand-foot">
+        <span class="status-dot"></span>
+        আপনার শেখার যাত্রা শুরু হোক আজই
+      </div>
 
-  setupAuthPage();
+    </section>
 
-  watchAuth(async user => {
 
-    if (!user) return;
+    <section class="auth-card neu-card">
 
-    try {
+      <div class="mobile-brand">
+        <span class="brand-mark">N</span>
+        <strong class="login-academy-name">NextGen Academy</strong>
+      </div>
 
-      const profile = await getUserProfile(user.uid);
+      <div class="auth-icon">✦</div>
 
-      if (profile?.role) {
+      <div class="auth-heading">
 
-        location.replace(
-          rolePages[profile.role] || "student.html"
-        );
+        <span class="eyebrow">
+          WELCOME TO NEXTGEN
+        </span>
 
-      }
+        <h2 id="auth-title">
+          অ্যাকাউন্টে প্রবেশ করুন
+        </h2>
 
-    } catch (error) {
+        <p id="auth-subtitle">
+          আপনার শেখার জগতে ফিরে আসুন
+        </p>
 
-      console.error("Login Routing Error:", error);
+      </div>
 
-    }
 
-  });
+      <div class="auth-tabs">
 
-} else {
+        <button
+          class="tab-btn active"
+          data-auth-tab="login"
+          type="button">
+          লগইন
+        </button>
 
-  watchAuth(async user => {
+        <button
+          class="tab-btn"
+          data-auth-tab="signup"
+          type="button">
+          নতুন অ্যাকাউন্ট
+        </button>
 
-    if (!user) {
+      </div>
 
-      location.replace("index.html");
-      return;
 
-    }
+      <form id="auth-form" class="form-stack">
 
-    try {
+        <label id="name-field" class="field hidden">
 
-      const profile = await getUserProfile(user.uid);
+          <span>পূর্ণ নাম</span>
 
-      if (!profile) {
+          <input
+            id="full-name"
+            type="text"
+            autocomplete="name"
+            placeholder="আপনার নাম লিখুন">
 
-        toast(
-          "আপনার প্রোফাইল পাওয়া যায়নি।",
-          "error"
-        );
+        </label>
 
-        await signOutUser();
 
-        return;
+        <label class="field">
 
-      }
+          <span>ইমেইল ঠিকানা</span>
 
-      if (profile.role !== requiredRole) {
+          <input
+            id="email"
+            type="email"
+            autocomplete="email"
+            placeholder="name@example.com"
+            required>
 
-        location.replace(
-          rolePages[profile.role] || "index.html"
-        );
+        </label>
 
-        return;
 
-      }
+        <label class="field">
 
-      const root = $("#dashboard-root");
+          <span>পাসওয়ার্ড</span>
 
-      const render = {
-        admin: renderAdmin,
-        teacher: renderTeacher,
-        student: renderStudent
-      }[requiredRole];
+          <div class="password-wrap">
 
-      if (!render) {
+            <input
+              id="password"
+              type="password"
+              autocomplete="current-password"
+              placeholder="কমপক্ষে ৬ অক্ষর"
+              minlength="6"
+              required>
 
-        throw new Error("অবৈধ User Role");
+            <button
+              class="password-toggle"
+              type="button"
+              aria-label="পাসওয়ার্ড দেখান">
+              ◉
+            </button>
 
-      }
+          </div>
 
-      await render(root, {
-        user,
-        profile
-      });
+        </label>
 
-      await applyAcademyBranding();
 
-      bindGlobalControls(user, profile);
+        <label id="confirm-field" class="field hidden">
 
-    } catch (error) {
+          <span>পাসওয়ার্ড নিশ্চিত করুন</span>
 
-      console.error("Dashboard Error:", error);
+          <input
+            id="confirm-password"
+            type="password"
+            autocomplete="new-password"
+            placeholder="আবার পাসওয়ার্ড লিখুন">
 
-      $("#dashboard-root").innerHTML = `
-        <div class="error-panel">
-          ড্যাশবোর্ড লোড করা যায়নি।
-          ইন্টারনেট ও Firebase সেটিংস পরীক্ষা করুন।
-        </div>
-      `;
+        </label>
 
-    }
 
-  });
+        <button
+          id="auth-submit"
+          class="btn btn-primary btn-block"
+          type="submit">
 
-}
+          লগইন করুন <span>→</span>
 
+        </button>
 
+      </form>
 
-// Authentication Page
-function setupAuthPage() {
 
-  const form = $("#auth-form");
+      <p
+        id="auth-message"
+        class="form-message"
+        role="status">
+      </p>
 
-  if (!form) return;
 
-  let mode = "login";
+      <p class="auth-note">
+        প্রবেশের মাধ্যমে আপনি আমাদের ব্যবহারের শর্তাবলিতে সম্মতি দিচ্ছেন।
+      </p>
 
+    </section>
 
-  // Login / Signup Tabs
-  $$("[data-auth-tab]").forEach(button => {
+  </main>
 
-    button.addEventListener("click", () => {
 
-      mode = button.dataset.authTab;
+  <script type="module" src="js/app.js"></script>
 
-      $$("[data-auth-tab]").forEach(item => {
-
-        item.classList.toggle(
-          "active",
-          item === button
-        );
-
-      });
-
-
-      $("#name-field").classList.toggle(
-        "hidden",
-        mode !== "signup"
-      );
-
-      $("#confirm-field").classList.toggle(
-        "hidden",
-        mode !== "signup"
-      );
-
-
-      $("#auth-title").textContent =
-        mode === "login"
-          ? "অ্যাকাউন্টে প্রবেশ করুন"
-          : "নতুন অ্যাকাউন্ট তৈরি করুন";
-
-
-      $("#auth-subtitle").textContent =
-        mode === "login"
-          ? "আপনার শেখার জগতে ফিরে আসুন"
-          : "NextGen Academy-তে স্বাগতম";
-
-
-      $("#auth-submit").innerHTML =
-        mode === "login"
-          ? 'লগইন করুন <span>→</span>'
-          : 'অ্যাকাউন্ট তৈরি করুন <span>→</span>';
-
-
-      $("#auth-message").textContent = "";
-
-    });
-
-  });
-
-
-
-  // Password Visibility
-  $(".password-toggle")?.addEventListener("click", () => {
-
-    const input = $("#password");
-
-    input.type =
-      input.type === "password"
-        ? "text"
-        : "password";
-
-  });
-
-
-
-  // Form Submit
-  form.addEventListener("submit", async event => {
-
-    event.preventDefault();
-
-    const message = $("#auth-message");
-
-    const button = $("#auth-submit");
-
-    message.className = "form-message";
-
-    message.textContent = "";
-
-    button.disabled = true;
-
-    button.textContent = "অপেক্ষা করুন…";
-
-
-    const email = $("#email").value.trim();
-
-    const password = $("#password").value;
-
-
-    try {
-
-      if (mode === "signup") {
-
-        const name = $("#full-name").value.trim();
-
-        if (!name) {
-
-          throw new Error("আপনার পূর্ণ নাম লিখুন।");
-
-        }
-
-        if (password !== $("#confirm-password").value) {
-
-          throw new Error("দুটি পাসওয়ার্ড এক হয়নি।");
-
-        }
-
-        await signUp({
-          name,
-          email,
-          password
-        });
-
-        message.classList.add("success");
-
-        message.textContent =
-          "অ্যাকাউন্ট তৈরি হয়েছে। ড্যাশবোর্ডে নেওয়া হচ্ছে…";
-
-        setTimeout(() => {
-
-          location.replace("student.html");
-
-        }, 500);
-
-      } else {
-
-        await signIn(email, password);
-
-        message.classList.add("success");
-
-        message.textContent = "লগইন সফল হয়েছে…";
-
-      }
-
-    } catch (error) {
-
-      message.textContent = friendlyError(error);
-
-      button.disabled = false;
-
-      button.innerHTML =
-        mode === "login"
-          ? 'লগইন করুন <span>→</span>'
-          : 'অ্যাকাউন্ট তৈরি করুন <span>→</span>';
-
-    }
-
-  });
-
-}
-
-
-
-// Friendly Authentication Errors
-function friendlyError(error) {
-
-  const code = error?.code || "";
-
-  const map = {
-
-    "auth/invalid-email":
-      "ইমেইল ঠিকানা সঠিক নয়।",
-
-    "auth/user-not-found":
-      "এই ইমেইলে কোনো অ্যাকাউন্ট পাওয়া যায়নি।",
-
-    "auth/wrong-password":
-      "পাসওয়ার্ড সঠিক নয়।",
-
-    "auth/invalid-credential":
-      "ইমেইল অথবা পাসওয়ার্ড সঠিক নয়।",
-
-    "auth/email-already-in-use":
-      "এই ইমেইলে আগে থেকেই অ্যাকাউন্ট আছে।",
-
-    "auth/weak-password":
-      "পাসওয়ার্ড কমপক্ষে ৬ অক্ষরের হতে হবে।",
-
-    "auth/too-many-requests":
-      "অনেকবার চেষ্টা করা হয়েছে। কিছুক্ষণ পর আবার চেষ্টা করুন।"
-
-  };
-
-  return map[code] ||
-    error.message ||
-    "কোনো সমস্যা হয়েছে। আবার চেষ্টা করুন।";
-
-}
-
-
-
-// Global Dashboard Controls
-function bindGlobalControls(user, profile) {
-
-  $("#logout-btn")?.addEventListener("click", async () => {
-
-    await signOutUser();
-
-    location.replace("index.html");
-
-  });
-
-
-  $("#theme-btn")?.addEventListener("click", () => {
-
-    const next =
-      document.documentElement.dataset.theme === "dark"
-        ? "light"
-        : "dark";
-
-    document.documentElement.dataset.theme = next;
-
-    localStorage.setItem("nga-theme", next);
-
-  });
-
-
-  $("#mobile-menu-btn")?.addEventListener("click", () => {
-
-    $(".sidebar")?.classList.toggle("open");
-
-  });
-
-
-  $$(".nav-link").forEach(link => {
-
-    link.addEventListener("click", () => {
-
-      $$(".nav-link").forEach(item => {
-
-        item.classList.remove("active");
-
-      });
-
-      link.classList.add("active");
-
-      $(".sidebar")?.classList.remove("open");
-
-    });
-
-  });
-
-}
-
-
-
-// Academy Branding
-async function applyAcademyBranding() {
-
-  try {
-
-    const settings = await getAcademySettings();
-
-    const root = document.documentElement;
-
-
-    // Academy Name
-    if (settings.academyName) {
-
-      document.title = settings.academyName;
-
-      document.querySelectorAll(
-        ".academy-brand-name, .brand-name, .login-academy-name"
-      ).forEach(element => {
-
-        element.textContent = settings.academyName;
-
-      });
-
-      document.querySelectorAll(".mobile-brand").forEach(element => {
-
-        const name = element.querySelector(".brand-name");
-
-        if (name) {
-
-          name.textContent = settings.academyName;
-
-        }
-
-      });
-
-    }
-
-
-
-    // Academy Logo
-    if (settings.logoUrl) {
-
-      document.querySelectorAll(".brand-mark").forEach(element => {
-
-        const image = document.createElement("img");
-
-        image.src = settings.logoUrl;
-
-        image.alt = "Academy Logo";
-
-        image.style.width = "100%";
-
-        image.style.height = "100%";
-
-        image.style.objectFit = "contain";
-
-        element.replaceChildren(image);
-
-      });
-
-    }
-
-
-
-    // Primary Color
-    if (settings.primaryColor) {
-
-      root.style.setProperty(
-        "--primary",
-        settings.primaryColor
-      );
-
-      root.style.setProperty(
-        "--primary-dark",
-        settings.primaryColor
-      );
-
-    }
-
-
-
-    // Secondary Color
-    if (settings.secondaryColor) {
-
-      root.style.setProperty(
-        "--accent",
-        settings.secondaryColor
-      );
-
-    }
-
-
-
-    // Font
-    if (settings.fontFamily) {
-
-      root.style.setProperty(
-        "--font-body",
-        `"${settings.fontFamily}", sans-serif`
-      );
-
-    }
-
-
-
-    // Theme
-    if (settings.theme) {
-
-      root.dataset.theme = settings.theme;
-
-      localStorage.setItem(
-        "nga-theme",
-        settings.theme
-      );
-
-    }
-
-  } catch (error) {
-
-    console.error(
-      "Branding settings load error:",
-      error
-    );
-
-  }
-
-}
-
-
-
-// Export Utilities
-export {
-  toast,
-  escapeHTML,
-  initials,
-  APP_CONFIG
-};
+</body>
+</html>
