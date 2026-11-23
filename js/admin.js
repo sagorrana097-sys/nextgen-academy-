@@ -1,5 +1,5 @@
 import { renderCentralSettings } from "./settings.js";
-import { showmarksManagement as showExamManagement } from "./exam.js";
+import { showMarksManagement as showExamManagement } from "./exam.js";
 
 import {
   listRecords,
