@@ -616,70 +616,62 @@ export async function renderAdmin(root, { user, profile }) {
             status: "processing"
           });
 
-          await createRecord("students", {
+          content.querySelector("#student-form").onsubmit =
+  async event => {
 
-            name: application.name || "",
-            email: application.email || "",
-            phone: application.phone || "",
-            course: application.course || "",
-            admissionId: id,
-            createdBy: user.uid
+    event.preventDefault();
 
-          });
+    const form = new FormData(event.currentTarget);
+    const submitButton = event.currentTarget.querySelector(
+      'button[type="submit"]'
+    );
 
-          await updateRecord("admissions", id, {
-            status: "approved"
-          });
+    const classId = form.get("classId");
+    const selectedClass = classes.find(c => c.id === classId);
 
-          toast("ভর্তি আবেদন অনুমোদিত হয়েছে।", "success");
+    submitButton.disabled = true;
+    submitButton.textContent = "সংরক্ষণ হচ্ছে...";
 
-          await showAdmissions();
+    try {
 
-        } catch (error) {
+      const student = await createStudentRecord({
 
-          console.error(error);
+        name: form.get("name").trim(),
 
-          toast(
-            "অনুমোদন সম্পন্ন হয়নি। আবেদনটির অবস্থা পরীক্ষা করুন।",
-            "error"
-          );
+        phone: form.get("phone").trim(),
 
-        }
+        email: form.get("email").trim(),
 
-      };
+        classId: classId || "",
 
-    });
+        className: selectedClass?.name || "",
 
+        createdBy: user.uid
 
-    content.querySelectorAll("[data-reject]").forEach(button => {
+      });
 
-      button.onclick = async () => {
+      toast(
+        `শিক্ষার্থী যোগ হয়েছে। Student ID: ${student.studentCode}`,
+        "success"
+      );
 
-        const id = button.dataset.reject;
+      await showStudents();
 
-        if (!confirm("আবেদনটি বাতিল করবেন?")) return;
+    } catch (error) {
 
-        try {
+      console.error(error);
 
-          await updateRecord("admissions", id, {
-            status: "rejected"
-          });
+      toast(
+        "শিক্ষার্থী যোগ করা যায়নি। " + (error.message || ""),
+        "error"
+      );
 
-          toast("আবেদন বাতিল করা হয়েছে।", "success");
+      submitButton.disabled = false;
+      submitButton.textContent = "শিক্ষার্থী সংরক্ষণ করুন";
 
-          await showAdmissions();
+    }
 
-        } catch (error) {
-
-          console.error(error);
-
-          toast("আবেদন বাতিল করা যায়নি।", "error");
-
-        }
-
-      };
-
-    });
+  };
 
   }
 
@@ -2309,31 +2301,62 @@ export async function renderAdmin(root, { user, profile }) {
   }
 
 
-  function studentList(items) {
+  content.querySelector("#student-form").onsubmit =
+  async event => {
 
-    if (!items.length) {
-      return `
-        <p class="muted">কোনো শিক্ষার্থী পাওয়া যায়নি।</p>
-      `;
+    event.preventDefault();
+
+    const form = new FormData(event.currentTarget);
+    const submitButton = event.currentTarget.querySelector(
+      'button[type="submit"]'
+    );
+
+    const classId = form.get("classId");
+    const selectedClass = classes.find(c => c.id === classId);
+
+    submitButton.disabled = true;
+    submitButton.textContent = "সংরক্ষণ হচ্ছে...";
+
+    try {
+
+      const student = await createStudentRecord({
+
+        name: form.get("name").trim(),
+
+        phone: form.get("phone").trim(),
+
+        email: form.get("email").trim(),
+
+        classId: classId || "",
+
+        className: selectedClass?.name || "",
+
+        createdBy: user.uid
+
+      });
+
+      toast(
+        `শিক্ষার্থী যোগ হয়েছে। Student ID: ${student.studentCode}`,
+        "success"
+      );
+
+      await showStudents();
+
+    } catch (error) {
+
+      console.error(error);
+
+      toast(
+        "শিক্ষার্থী যোগ করা যায়নি। " + (error.message || ""),
+        "error"
+      );
+
+      submitButton.disabled = false;
+      submitButton.textContent = "শিক্ষার্থী সংরক্ষণ করুন";
+
     }
 
-    return `
-      <ul class="simple-list">
-        ${items.map(student => `
-          <li>
-            <span>
-              ${escapeHTML(student.name || "—")}
-              <small>${escapeHTML(student.phone || "")}</small>
-            </span>
-
-            <small>${escapeHTML(student.className || "")}</small>
-          </li>
-        `).join("")}
-      </ul>
-    `;
-
-  }
-
+  };
 
   await openPage("dashboard");
 
