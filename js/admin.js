@@ -4,6 +4,7 @@ import { showMarksManagement as showExamManagement } from "./exam.js";
 import {
   listRecords,
   createRecord,
+  createStudentRecord,
   updateRecord,
   deleteRecord,
   getAcademySettings,
@@ -15,7 +16,6 @@ import {
   formatDate,
   toast
 } from "./utils.js";
-
 
 export async function renderAdmin(root, { user, profile }) {
 
