@@ -119,6 +119,90 @@ export async function createStudentRecord(data) {
     };
   });
 }
+// Approve admission and create student atomically
+export async function approveAdmission(admissionId, userId) {
+  const admissionRef = doc(
+    db,
+    APP_CONFIG.collections.admissions,
+    admissionId
+  );
+
+  const year = new Date().getFullYear();
+
+  const counterRef = doc(
+    db,
+    "counters",
+    `students_${year}`
+  );
+
+  const studentRef = doc(col("students"));
+
+  return await runTransaction(db, async transaction => {
+    // Read admission first
+    const admissionSnap = await transaction.get(admissionRef);
+
+    if (!admissionSnap.exists()) {
+      throw new Error("ভর্তি আবেদন পাওয়া যায়নি।");
+    }
+
+    const application = admissionSnap.data();
+
+    // Prevent duplicate student creation
+    if (application.status === "approved") {
+      return {
+        alreadyApproved: true,
+        id: application.studentId || "",
+        studentCode: application.studentCode || ""
+      };
+    }
+
+    // Read counter
+    const counterSnap = await transaction.get(counterRef);
+
+    const currentSerial = counterSnap.exists()
+      ? Number(counterSnap.data().lastSerial || 0)
+      : 0;
+
+    const nextSerial = currentSerial + 1;
+
+    const studentCode =
+      `NGA-${year}-${String(nextSerial).padStart(4, "0")}`;
+
+    // Create student
+    transaction.set(studentRef, {
+      name: application.name || "",
+      email: application.email || "",
+      phone: application.phone || "",
+      course: application.course || "",
+      admissionId,
+      studentCode,
+      createdBy: userId,
+      createdAt: serverTimestamp(),
+      updatedAt: serverTimestamp()
+    });
+
+    // Update counter
+    transaction.set(counterRef, {
+      lastSerial: nextSerial,
+      year,
+      updatedAt: serverTimestamp()
+    });
+
+    // Approve admission
+    transaction.update(admissionRef, {
+      status: "approved",
+      studentId: studentRef.id,
+      studentCode,
+      updatedAt: serverTimestamp()
+    });
+
+    return {
+      alreadyApproved: false,
+      id: studentRef.id,
+      studentCode
+    };
+  });
+}
 
 // Update record
 export async function updateRecord(name, id, data) {
