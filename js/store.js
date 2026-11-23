@@ -18,13 +18,9 @@ import {
 
 import { APP_CONFIG } from "./config.js";
 
-// Collection Reference
 const col = name => collection(db, APP_CONFIG.collections[name]);
 
-// ==========================================
-// USER PROFILE
-// ==========================================
-
+// Get user profile
 export async function getUserProfile(uid) {
   const snap = await getDoc(
     doc(db, APP_CONFIG.collections.users, uid)
@@ -35,6 +31,7 @@ export async function getUserProfile(uid) {
     : null;
 }
 
+// Save user profile
 export async function saveUserProfile(uid, data) {
   await setDoc(
     doc(db, APP_CONFIG.collections.users, uid),
@@ -46,11 +43,7 @@ export async function saveUserProfile(uid, data) {
   );
 }
 
-// ==========================================
-// COMMON RECORD MANAGEMENT
-// ==========================================
-
-// Get Records
+// List records
 export async function listRecords(name, max = 100) {
   try {
     const snap = await getDocs(
@@ -72,7 +65,7 @@ export async function listRecords(name, max = 100) {
   }
 }
 
-// Create Record
+// Create normal record
 export async function createRecord(name, data) {
   return addDoc(col(name), {
     ...data,
@@ -81,50 +74,38 @@ export async function createRecord(name, data) {
   });
 }
 
-// ==========================================
-// SEQUENTIAL STUDENT ID GENERATOR
-// ==========================================
-
+// Create student with sequential Student ID
 export async function createStudentRecord(data) {
   const year = new Date().getFullYear();
 
-  // Student collection
   const studentsCollection = col("students");
-
-  // Generate Firestore document reference
   const studentRef = doc(studentsCollection);
 
-  // Year-wise counter document
   const counterRef = doc(
     db,
     "counters",
     `students_${year}`
   );
 
-  return await runTransaction(db, async (transaction) => {
+  return await runTransaction(db, async transaction => {
 
-    // Read current serial
     const counterSnap = await transaction.get(counterRef);
 
     const currentSerial = counterSnap.exists()
       ? Number(counterSnap.data().lastSerial || 0)
       : 0;
 
-    // Next serial
     const nextSerial = currentSerial + 1;
 
-    // Format Student ID
     const studentCode =
       `NGA-${year}-${String(nextSerial).padStart(4, "0")}`;
 
-    // Save updated counter
     transaction.set(counterRef, {
       lastSerial: nextSerial,
       year,
       updatedAt: serverTimestamp()
     });
 
-    // Create student
     transaction.set(studentRef, {
       ...data,
       studentCode,
@@ -139,10 +120,7 @@ export async function createStudentRecord(data) {
   });
 }
 
-// ==========================================
-// UPDATE RECORD
-// ==========================================
-
+// Update record
 export async function updateRecord(name, id, data) {
   return updateDoc(
     doc(db, APP_CONFIG.collections[name], id),
@@ -153,20 +131,14 @@ export async function updateRecord(name, id, data) {
   );
 }
 
-// ==========================================
-// DELETE RECORD
-// ==========================================
-
+// Delete record
 export async function deleteRecord(name, id) {
   return deleteDoc(
     doc(db, APP_CONFIG.collections[name], id)
   );
 }
 
-// ==========================================
-// ACADEMY SETTINGS
-// ==========================================
-
+// Get academy settings
 export async function getAcademySettings() {
   const ref = doc(
     db,
@@ -179,6 +151,7 @@ export async function getAcademySettings() {
   return snap.exists() ? snap.data() : {};
 }
 
+// Save academy settings
 export async function saveAcademySettings(data) {
   const ref = doc(
     db,
@@ -196,16 +169,14 @@ export async function saveAcademySettings(data) {
   );
 }
 
-// ==========================================
-// ACADEMIC YEAR SETTINGS
-// ==========================================
-
+// Get academic years
 export async function getAcademicYears() {
   const settings = await getAcademySettings();
 
   return settings.academicYears || [];
 }
 
+// Save academic years
 export async function saveAcademicYears(years) {
   await saveAcademySettings({
     academicYears: years
