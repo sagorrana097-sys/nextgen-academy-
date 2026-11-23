@@ -12,7 +12,8 @@ import {
   setDoc,
   updateDoc,
   deleteDoc,
-  serverTimestamp
+  serverTimestamp,
+  runTransaction
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 import { APP_CONFIG } from "./config.js";
@@ -80,7 +81,68 @@ export async function createRecord(name, data) {
   });
 }
 
-// Update Record
+// ==========================================
+// SEQUENTIAL STUDENT ID GENERATOR
+// ==========================================
+
+export async function createStudentRecord(data) {
+  const year = new Date().getFullYear();
+
+  // Student collection
+  const studentsCollection = col("students");
+
+  // Generate Firestore document reference
+  const studentRef = doc(studentsCollection);
+
+  // Year-wise counter document
+  const counterRef = doc(
+    db,
+    "counters",
+    `students_${year}`
+  );
+
+  return await runTransaction(db, async (transaction) => {
+
+    // Read current serial
+    const counterSnap = await transaction.get(counterRef);
+
+    const currentSerial = counterSnap.exists()
+      ? Number(counterSnap.data().lastSerial || 0)
+      : 0;
+
+    // Next serial
+    const nextSerial = currentSerial + 1;
+
+    // Format Student ID
+    const studentCode =
+      `NGA-${year}-${String(nextSerial).padStart(4, "0")}`;
+
+    // Save updated counter
+    transaction.set(counterRef, {
+      lastSerial: nextSerial,
+      year,
+      updatedAt: serverTimestamp()
+    });
+
+    // Create student
+    transaction.set(studentRef, {
+      ...data,
+      studentCode,
+      createdAt: serverTimestamp(),
+      updatedAt: serverTimestamp()
+    });
+
+    return {
+      id: studentRef.id,
+      studentCode
+    };
+  });
+}
+
+// ==========================================
+// UPDATE RECORD
+// ==========================================
+
 export async function updateRecord(name, id, data) {
   return updateDoc(
     doc(db, APP_CONFIG.collections[name], id),
@@ -91,7 +153,10 @@ export async function updateRecord(name, id, data) {
   );
 }
 
-// Delete Record
+// ==========================================
+// DELETE RECORD
+// ==========================================
+
 export async function deleteRecord(name, id) {
   return deleteDoc(
     doc(db, APP_CONFIG.collections[name], id)
