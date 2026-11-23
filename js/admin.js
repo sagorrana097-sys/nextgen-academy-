@@ -5,6 +5,7 @@ import {
   listRecords,
   createRecord,
   createStudentRecord,
+  approveAdmission,
   updateRecord,
   deleteRecord,
   getAcademySettings,
