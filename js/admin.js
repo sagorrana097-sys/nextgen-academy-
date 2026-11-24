@@ -23,18 +23,18 @@ export async function renderAdmin(root, { user, profile }) {
   let currentPage = "dashboard";
 
   const pages = [
-    ["dashboard", "▦", "ড্যাশবোর্ড"],
-    ["courses", "📚", "কোর্স"],
-    ["students", "👨‍🎓", "শিক্ষার্থী"],
-    ["teachers", "👨‍🏫", "শিক্ষক"],
-    ["batches", "🏫", "ব্যাচ"],
-    ["academic", "🎓", "Class & Subject"],
-    ["exams", "📝", "পরীক্ষা ব্যবস্থাপনা"],
-    ["attendance", "📅", "উপস্থিতি"],
-    ["admissions", "📝", "ভর্তি আবেদন"],
-    ["notices", "📢", "নোটিশ"],
-    ["settings", "⚙️", "Academy Settings"],
-    ["central-settings", "⚙️", "সকল সেটিংস"]
+    ["dashboard", "â–¦", "à¦¡à§à¦¯à¦¾à¦¶à¦¬à§‹à¦°à§à¦¡"],
+    ["courses", "ðŸ“š", "à¦•à§‹à¦°à§à¦¸"],
+    ["students", "ðŸ‘¨â€ðŸŽ“", "à¦¶à¦¿à¦•à§à¦·à¦¾à¦°à§à¦¥à§€"],
+    ["teachers", "ðŸ‘¨â€ðŸ«", "à¦¶à¦¿à¦•à§à¦·à¦•"],
+    ["batches", "ðŸ«", "à¦¬à§à¦¯à¦¾à¦š"],
+    ["academic", "ðŸŽ“", "Class & Subject"],
+    ["exams", "ðŸ“", "à¦ªà¦°à§€à¦•à§à¦·à¦¾ à¦¬à§à¦¯à¦¬à¦¸à§à¦¥à¦¾à¦ªà¦¨à¦¾"],
+    ["attendance", "ðŸ“…", "à¦‰à¦ªà¦¸à§à¦¥à¦¿à¦¤à¦¿"],
+    ["admissions", "ðŸ“", "à¦­à¦°à§à¦¤à¦¿ à¦†à¦¬à§‡à¦¦à¦¨"],
+    ["notices", "ðŸ“¢", "à¦¨à§‹à¦Ÿà¦¿à¦¶"],
+    ["settings", "âš™ï¸", "Academy Settings"],
+    ["central-settings", "âš™ï¸", "à¦¸à¦•à¦² à¦¸à§‡à¦Ÿà¦¿à¦‚à¦¸"]
   ];
 
 
@@ -79,7 +79,7 @@ export async function renderAdmin(root, { user, profile }) {
           </div>
 
           <button id="logout-btn" class="btn btn-soft btn-block">
-            ↪ লগআউট
+            â†ª à¦²à¦—à¦†à¦‰à¦Ÿ
           </button>
 
         </div>
@@ -92,13 +92,13 @@ export async function renderAdmin(root, { user, profile }) {
         <header class="topbar">
 
           <button id="mobile-menu-btn" class="btn btn-soft mobile-menu">
-            ☰
+            â˜°
           </button>
 
           <div class="topbar-title">Admin Dashboard</div>
 
           <div class="topbar-actions">
-            <button id="theme-btn" class="icon-btn">◐</button>
+            <button id="theme-btn" class="icon-btn">â—</button>
 
             <span class="avatar">
               ${escapeHTML((profile.name || "A")[0])}
@@ -108,7 +108,7 @@ export async function renderAdmin(root, { user, profile }) {
         </header>
 
         <div class="dashboard-content" id="admin-content">
-          <p>লোড হচ্ছে...</p>
+          <p>à¦²à§‹à¦¡ à¦¹à¦šà§à¦›à§‡...</p>
         </div>
 
       </main>
@@ -191,9 +191,9 @@ export async function renderAdmin(root, { user, profile }) {
 
       content.innerHTML = `
         <div class="error-panel">
-          <h3>তথ্য লোড করা যায়নি</h3>
+          <h3>à¦¤à¦¥à§à¦¯ à¦²à§‹à¦¡ à¦•à¦°à¦¾ à¦¯à¦¾à§Ÿà¦¨à¦¿</h3>
           <p>${escapeHTML(error.message || String(error))}</p>
-          <p>সমস্যার কোড: ${escapeHTML(error.code || "Unknown")}</p>
+          <p>à¦¸à¦®à¦¸à§à¦¯à¦¾à¦° à¦•à§‹à¦¡: ${escapeHTML(error.code || "Unknown")}</p>
         </div>
       `;
 
@@ -231,10 +231,10 @@ export async function renderAdmin(root, { user, profile }) {
         <div>
           <span class="eyebrow">ADMIN OVERVIEW</span>
 
-          <h1>স্বাগতম, ${escapeHTML(profile.name || "Admin")} 👋</h1>
+          <h1>à¦¸à§à¦¬à¦¾à¦—à¦¤à¦®, ${escapeHTML(profile.name || "Admin")} ðŸ‘‹</h1>
 
           <p class="muted">
-            আপনার একাডেমির সার্বিক কার্যক্রম দেখুন।
+            à¦†à¦ªà¦¨à¦¾à¦° à¦à¦•à¦¾à¦¡à§‡à¦®à¦¿à¦° à¦¸à¦¾à¦°à§à¦¬à¦¿à¦• à¦•à¦¾à¦°à§à¦¯à¦•à§à¦°à¦® à¦¦à§‡à¦–à§à¦¨à¥¤
           </p>
         </div>
 
@@ -245,10 +245,10 @@ export async function renderAdmin(root, { user, profile }) {
 
       <div class="stats-grid">
 
-        ${stat("📚", "মোট কোর্স", courses.length)}
-        ${stat("👨‍🎓", "শিক্ষার্থী", students.length)}
-        ${stat("📝", "ভর্তি আবেদন", admissions.length)}
-        ${stat("📢", "নোটিশ", notices.length)}
+        ${stat("ðŸ“š", "à¦®à§‹à¦Ÿ à¦•à§‹à¦°à§à¦¸", courses.length)}
+        ${stat("ðŸ‘¨â€ðŸŽ“", "à¦¶à¦¿à¦•à§à¦·à¦¾à¦°à§à¦¥à§€", students.length)}
+        ${stat("ðŸ“", "à¦­à¦°à§à¦¤à¦¿ à¦†à¦¬à§‡à¦¦à¦¨", admissions.length)}
+        ${stat("ðŸ“¢", "à¦¨à§‹à¦Ÿà¦¿à¦¶", notices.length)}
 
       </div>
 
@@ -257,12 +257,12 @@ export async function renderAdmin(root, { user, profile }) {
 
         <section class="neu-card panel">
 
-          <h2 class="section-title">সাম্প্রতিক ভর্তি আবেদন</h2>
+          <h2 class="section-title">à¦¸à¦¾à¦®à§à¦ªà§à¦°à¦¤à¦¿à¦• à¦­à¦°à§à¦¤à¦¿ à¦†à¦¬à§‡à¦¦à¦¨</h2>
 
-          ${makeList(admissions, "name", "কোনো আবেদন নেই")}
+          ${makeList(admissions, "name", "à¦•à§‹à¦¨à§‹ à¦†à¦¬à§‡à¦¦à¦¨ à¦¨à§‡à¦‡")}
 
           <button class="btn btn-primary" data-goto="admissions">
-            সব আবেদন দেখুন
+            à¦¸à¦¬ à¦†à¦¬à§‡à¦¦à¦¨ à¦¦à§‡à¦–à§à¦¨
           </button>
 
         </section>
@@ -270,12 +270,12 @@ export async function renderAdmin(root, { user, profile }) {
 
         <section class="neu-card panel">
 
-          <h2 class="section-title">সাম্প্রতিক কোর্স</h2>
+          <h2 class="section-title">à¦¸à¦¾à¦®à§à¦ªà§à¦°à¦¤à¦¿à¦• à¦•à§‹à¦°à§à¦¸</h2>
 
-          ${makeList(courses, "title", "কোনো কোর্স নেই")}
+          ${makeList(courses, "title", "à¦•à§‹à¦¨à§‹ à¦•à§‹à¦°à§à¦¸ à¦¨à§‡à¦‡")}
 
           <button class="btn btn-primary" data-goto="courses">
-            কোর্স দেখুন
+            à¦•à§‹à¦°à§à¦¸ à¦¦à§‡à¦–à§à¦¨
           </button>
 
         </section>
@@ -297,31 +297,31 @@ export async function renderAdmin(root, { user, profile }) {
     const courses = await listRecords("courses");
 
     content.innerHTML = `
-      <h1>📚 কোর্স ব্যবস্থাপনা</h1>
+      <h1>ðŸ“š à¦•à§‹à¦°à§à¦¸ à¦¬à§à¦¯à¦¬à¦¸à§à¦¥à¦¾à¦ªà¦¨à¦¾</h1>
 
       <section class="neu-card panel">
 
-        <h2 class="section-title">নতুন কোর্স যোগ করুন</h2>
+        <h2 class="section-title">à¦¨à¦¤à§à¦¨ à¦•à§‹à¦°à§à¦¸ à¦¯à§‹à¦— à¦•à¦°à§à¦¨</h2>
 
         <form id="course-form" class="form-stack">
 
           <label class="field">
-            <span>কোর্সের নাম</span>
+            <span>à¦•à§‹à¦°à§à¦¸à§‡à¦° à¦¨à¦¾à¦®</span>
 
             <input name="title" required
-              placeholder="যেমন: HSC পদার্থবিজ্ঞান">
+              placeholder="à¦¯à§‡à¦®à¦¨: HSC à¦ªà¦¦à¦¾à¦°à§à¦¥à¦¬à¦¿à¦œà§à¦žà¦¾à¦¨">
           </label>
 
 
           <label class="field">
-            <span>বর্ণনা</span>
+            <span>à¦¬à¦°à§à¦£à¦¨à¦¾</span>
 
             <textarea name="description" rows="3"></textarea>
           </label>
 
 
           <button class="btn btn-primary">
-            কোর্স সংরক্ষণ করুন
+            à¦•à§‹à¦°à§à¦¸ à¦¸à¦‚à¦°à¦•à§à¦·à¦£ à¦•à¦°à§à¦¨
           </button>
 
         </form>
@@ -332,10 +332,10 @@ export async function renderAdmin(root, { user, profile }) {
       <section class="neu-card panel">
 
         <h2 class="section-title">
-          সকল কোর্স (${courses.length})
+          à¦¸à¦•à¦² à¦•à§‹à¦°à§à¦¸ (${courses.length})
         </h2>
 
-        ${makeList(courses, "title", "কোনো কোর্স যোগ করা হয়নি")}
+        ${makeList(courses, "title", "à¦•à§‹à¦¨à§‹ à¦•à§‹à¦°à§à¦¸ à¦¯à§‹à¦— à¦•à¦°à¦¾ à¦¹à§Ÿà¦¨à¦¿")}
 
       </section>
     `;
@@ -357,7 +357,7 @@ export async function renderAdmin(root, { user, profile }) {
             active: true
           });
 
-          toast("কোর্স যোগ হয়েছে।", "success");
+          toast("à¦•à§‹à¦°à§à¦¸ à¦¯à§‹à¦— à¦¹à§Ÿà§‡à¦›à§‡à¥¤", "success");
 
           await showCourses();
 
@@ -365,7 +365,7 @@ export async function renderAdmin(root, { user, profile }) {
 
           console.error(error);
 
-          toast("কোর্স যোগ করা যায়নি।", "error");
+          toast("à¦•à§‹à¦°à§à¦¸ à¦¯à§‹à¦— à¦•à¦°à¦¾ à¦¯à¦¾à§Ÿà¦¨à¦¿à¥¤", "error");
 
         }
 
@@ -377,303 +377,178 @@ export async function renderAdmin(root, { user, profile }) {
   // STUDENT MANAGEMENT
 
   async function showStudents() {
-
     const [students, classes] = await Promise.all([
       listRecords("students"),
       listRecords("classes")
     ]);
 
     content.innerHTML = `
-      <h1>👨‍🎓 শিক্ষার্থী ব্যবস্থাপনা</h1>
-
+      <h1>ðŸ‘¨â€ðŸŽ“ à¦¶à¦¿à¦•à§à¦·à¦¾à¦°à§à¦¥à§€ à¦¬à§à¦¯à¦¬à¦¸à§à¦¥à¦¾à¦ªà¦¨à¦¾</h1>
       <section class="neu-card panel">
-
-        <h2 class="section-title">নতুন শিক্ষার্থী যোগ করুন</h2>
-
+        <h2 class="section-title">à¦¨à¦¤à§à¦¨ à¦¶à¦¿à¦•à§à¦·à¦¾à¦°à§à¦¥à§€ à¦¯à§‹à¦— à¦•à¦°à§à¦¨</h2>
         <form id="student-form" class="form-stack">
-
           <label class="field">
-            <span>শিক্ষার্থীর নাম</span>
+            <span>à¦¶à¦¿à¦•à§à¦·à¦¾à¦°à§à¦¥à§€à¦° à¦¨à¦¾à¦®</span>
             <input name="name" required>
           </label>
-
-
           <label class="field">
-            <span>মোবাইল নম্বর</span>
+            <span>à¦®à§‹à¦¬à¦¾à¦‡à¦² à¦¨à¦®à§à¦¬à¦°</span>
             <input name="phone" required>
           </label>
-
-
           <label class="field">
-            <span>ইমেইল</span>
+            <span>à¦‡à¦®à§‡à¦‡à¦²</span>
             <input name="email" type="email">
           </label>
-
-
           <label class="field">
-            <span>ক্লাস</span>
-
+            <span>à¦•à§à¦²à¦¾à¦¸</span>
             <select name="classId">
-              <option value="">ক্লাস নির্বাচন করুন</option>
-
+              <option value="">à¦•à§à¦²à¦¾à¦¸ à¦¨à¦¿à¦°à§à¦¬à¦¾à¦šà¦¨ à¦•à¦°à§à¦¨</option>
               ${classes.map(c => `
-                <option value="${escapeHTML(c.id)}">
-                  ${escapeHTML(c.name || "")}
-                </option>
+                <option value="${escapeHTML(c.id)}">${escapeHTML(c.name || "")}</option>
               `).join("")}
-
             </select>
           </label>
-
-
-          <button class="btn btn-primary">
-            শিক্ষার্থী সংরক্ষণ করুন
-          </button>
-
+          <button type="submit" class="btn btn-primary">à¦¶à¦¿à¦•à§à¦·à¦¾à¦°à§à¦¥à§€ à¦¸à¦‚à¦°à¦•à§à¦·à¦£ à¦•à¦°à§à¦¨</button>
         </form>
-
       </section>
 
-
       <section class="neu-card panel">
-
-        <h2 class="section-title">
-          সকল শিক্ষার্থী (${students.length})
-        </h2>
-
-        <input id="student-search"
-          placeholder="নাম দিয়ে শিক্ষার্থী খুঁজুন">
-
-        <div id="student-list">
-          ${studentList(students)}
-        </div>
-
+        <h2 class="section-title">à¦¸à¦•à¦² à¦¶à¦¿à¦•à§à¦·à¦¾à¦°à§à¦¥à§€ (${students.length})</h2>
+        <input id="student-search" placeholder="à¦¨à¦¾à¦® à¦¬à¦¾ Student ID à¦¦à¦¿à§Ÿà§‡ à¦–à§à¦à¦œà§à¦¨">
+        <div id="student-list">${studentList(students)}</div>
       </section>
     `;
 
+    content.querySelector("#student-form").onsubmit = async event => {
+      event.preventDefault();
+      const formElement = event.currentTarget;
+      const form = new FormData(formElement);
+      const submitButton = formElement.querySelector('button[type="submit"]');
+      const classId = form.get("classId");
+      const selectedClass = classes.find(c => c.id === classId);
 
-    content.querySelector("#student-form").onsubmit =
-      async event => {
+      submitButton.disabled = true;
+      submitButton.textContent = "à¦¸à¦‚à¦°à¦•à§à¦·à¦£ à¦¹à¦šà§à¦›à§‡...";
 
-        event.preventDefault();
+      try {
+        const student = await createStudentRecord({
+          name: String(form.get("name") || "").trim(),
+          phone: String(form.get("phone") || "").trim(),
+          email: String(form.get("email") || "").trim(),
+          classId: classId || "",
+          className: selectedClass?.name || "",
+          createdBy: user.uid
+        });
 
-        const form = new FormData(event.currentTarget);
-
-        const classId = form.get("classId");
-
-        const selectedClass = classes.find(c => c.id === classId);
-
-        try {
-
-          await createRecord("students", {
-
-            name: form.get("name").trim(),
-
-            phone: form.get("phone").trim(),
-
-            email: form.get("email").trim(),
-
-            classId: classId || "",
-
-            className: selectedClass?.name || "",
-
-            createdBy: user.uid
-
-          });
-
-          toast("শিক্ষার্থী যোগ হয়েছে।", "success");
-
-          await showStudents();
-
-        } catch (error) {
-
-          console.error(error);
-
-          toast("শিক্ষার্থী যোগ করা যায়নি।", "error");
-
-        }
-
-      };
-
-
-    content.querySelector("#student-search").oninput = event => {
-
-      const search = event.target.value.toLowerCase();
-
-      const filtered = students.filter(student =>
-        (student.name || "").toLowerCase().includes(search)
-      );
-
-      content.querySelector("#student-list").innerHTML =
-        studentList(filtered);
-
+        toast(`à¦¶à¦¿à¦•à§à¦·à¦¾à¦°à§à¦¥à§€ à¦¯à§‹à¦— à¦¹à§Ÿà§‡à¦›à§‡à¥¤ Student ID: ${student.studentCode}`, "success");
+        await showStudents();
+      } catch (error) {
+        console.error("Student creation failed:", error);
+        toast("à¦¶à¦¿à¦•à§à¦·à¦¾à¦°à§à¦¥à§€ à¦¯à§‹à¦— à¦•à¦°à¦¾ à¦¯à¦¾à§Ÿà¦¨à¦¿à¥¤ " + (error.message || ""), "error");
+        submitButton.disabled = false;
+        submitButton.textContent = "à¦¶à¦¿à¦•à§à¦·à¦¾à¦°à§à¦¥à§€ à¦¸à¦‚à¦°à¦•à§à¦·à¦£ à¦•à¦°à§à¦¨";
+      }
     };
 
+    content.querySelector("#student-search").oninput = event => {
+      const search = event.target.value.trim().toLowerCase();
+      const filtered = students.filter(student =>
+        (student.name || "").toLowerCase().includes(search) ||
+        (student.studentCode || "").toLowerCase().includes(search) ||
+        (student.phone || "").toLowerCase().includes(search)
+      );
+      content.querySelector("#student-list").innerHTML = studentList(filtered);
+    };
   }
 
 
   // ADMISSION MANAGEMENT
 
   async function showAdmissions() {
-
     const admissions = await listRecords("admissions");
 
     content.innerHTML = `
-      <h1>📝 ভর্তি আবেদন ব্যবস্থাপনা</h1>
-
+      <h1>ðŸ“ à¦­à¦°à§à¦¤à¦¿ à¦†à¦¬à§‡à¦¦à¦¨ à¦¬à§à¦¯à¦¬à¦¸à§à¦¥à¦¾à¦ªà¦¨à¦¾</h1>
       <section class="neu-card panel">
-
-        <h2 class="section-title">
-          মোট আবেদন: ${admissions.length}
-        </h2>
-
+        <h2 class="section-title">à¦®à§‹à¦Ÿ à¦†à¦¬à§‡à¦¦à¦¨: ${admissions.length}</h2>
         <div class="tablewrap">
-
           <table>
-
             <thead>
               <tr>
-                <th>নাম</th>
-                <th>ইমেইল</th>
-                <th>ফোন</th>
-                <th>কোর্স</th>
-                <th>অবস্থা</th>
-                <th>কার্যক্রম</th>
+                <th>à¦¨à¦¾à¦®</th><th>à¦‡à¦®à§‡à¦‡à¦²</th><th>à¦«à§‹à¦¨</th>
+                <th>à¦•à§‹à¦°à§à¦¸</th><th>à¦…à¦¬à¦¸à§à¦¥à¦¾</th><th>à¦•à¦¾à¦°à§à¦¯à¦•à§à¦°à¦®</th>
               </tr>
             </thead>
-
-
             <tbody>
-
               ${admissions.map(item => `
-
                 <tr>
-
-                  <td>${escapeHTML(item.name || "—")}</td>
-
-                  <td>${escapeHTML(item.email || "—")}</td>
-
-                  <td>${escapeHTML(item.phone || "—")}</td>
-
-                  <td>${escapeHTML(item.course || "—")}</td>
-
+                  <td>${escapeHTML(item.name || "â€”")}</td>
+                  <td>${escapeHTML(item.email || "â€”")}</td>
+                  <td>${escapeHTML(item.phone || "â€”")}</td>
+                  <td>${escapeHTML(item.course || "â€”")}</td>
                   <td>${escapeHTML(item.status || "pending")}</td>
-
                   <td>
-
-                    ${
-                      item.status === "approved"
-
-                      ? "অনুমোদিত"
-
+                    ${item.status === "approved"
+                      ? `à¦…à¦¨à§à¦®à§‹à¦¦à¦¿à¦¤${item.studentCode ? `<br><small>${escapeHTML(item.studentCode)}</small>` : ""}`
                       : `
-
-                        <button
-                          class="btn btn-primary"
-                          data-approve="${item.id}">
-                          অনুমোদন
-                        </button>
-
-                        <button
-                          class="btn btn-soft"
-                          data-reject="${item.id}">
-                          বাতিল
-                        </button>
-
-                      `
-                    }
-
+                        <button type="button" class="btn btn-primary" data-approve="${escapeHTML(item.id)}">à¦…à¦¨à§à¦®à§‹à¦¦à¦¨</button>
+                        <button type="button" class="btn btn-soft" data-reject="${escapeHTML(item.id)}">à¦¬à¦¾à¦¤à¦¿à¦²</button>
+                      `}
                   </td>
-
                 </tr>
-
               `).join("")}
-
             </tbody>
-
           </table>
-
         </div>
-
       </section>
     `;
 
-
     content.querySelectorAll("[data-approve]").forEach(button => {
-
       button.onclick = async () => {
-
         const id = button.dataset.approve;
-
-        const application = admissions.find(x => x.id === id);
-
+        const application = admissions.find(item => item.id === id);
         if (!application || application.status === "approved") return;
+        if (!confirm(`â€œ${application.name || "à¦à¦‡ à¦†à¦¬à§‡à¦¦à¦¨"}â€ à¦…à¦¨à§à¦®à§‹à¦¦à¦¨ à¦•à¦°à§‡ à¦¶à¦¿à¦•à§à¦·à¦¾à¦°à§à¦¥à§€ à¦¹à¦¿à¦¸à§‡à¦¬à§‡ à¦¯à§à¦•à§à¦¤ à¦•à¦°à¦¬à§‡à¦¨?`)) return;
 
-        if (!confirm("এই ভর্তি আবেদন অনুমোদন করবেন?")) return;
-
+        button.disabled = true;
+        button.textContent = "à¦…à¦¨à§à¦®à§‹à¦¦à¦¨ à¦¹à¦šà§à¦›à§‡...";
         try {
+          const result = await approveAdmission(id, user.uid);
+          const code = result?.studentCode || result?.student?.studentCode || "";
+          toast(
+            code ? `à¦­à¦°à§à¦¤à¦¿ à¦…à¦¨à§à¦®à§‹à¦¦à¦¿à¦¤à¥¤ Student ID: ${code}` : "à¦­à¦°à§à¦¤à¦¿ à¦†à¦¬à§‡à¦¦à¦¨ à¦…à¦¨à§à¦®à§‹à¦¦à¦¿à¦¤ à¦¹à§Ÿà§‡à¦›à§‡à¥¤",
+            "success"
+          );
+          await showAdmissions();
+        } catch (error) {
+          console.error("Admission approval failed:", error);
+          toast("à¦­à¦°à§à¦¤à¦¿ à¦…à¦¨à§à¦®à§‹à¦¦à¦¨ à¦•à¦°à¦¾ à¦¯à¦¾à§Ÿà¦¨à¦¿à¥¤ " + (error.message || ""), "error");
+          button.disabled = false;
+          button.textContent = "à¦…à¦¨à§à¦®à§‹à¦¦à¦¨";
+        }
+      };
+    });
 
+    content.querySelectorAll("[data-reject]").forEach(button => {
+      button.onclick = async () => {
+        const id = button.dataset.reject;
+        if (!confirm("à¦à¦‡ à¦­à¦°à§à¦¤à¦¿ à¦†à¦¬à§‡à¦¦à¦¨à¦Ÿà¦¿ à¦¬à¦¾à¦¤à¦¿à¦² à¦•à¦°à¦¬à§‡à¦¨?")) return;
+        button.disabled = true;
+        try {
           await updateRecord("admissions", id, {
-            status: "processing"
+            status: "rejected",
+            reviewedBy: user.uid,
+            reviewedAt: new Date().toISOString()
           });
-
-          content.querySelector("#student-form").onsubmit =
-  async event => {
-
-    event.preventDefault();
-
-    const form = new FormData(event.currentTarget);
-    const submitButton = event.currentTarget.querySelector(
-      'button[type="submit"]'
-    );
-
-    const classId = form.get("classId");
-    const selectedClass = classes.find(c => c.id === classId);
-
-    submitButton.disabled = true;
-    submitButton.textContent = "সংরক্ষণ হচ্ছে...";
-
-    try {
-
-      const student = await createStudentRecord({
-
-        name: form.get("name").trim(),
-
-        phone: form.get("phone").trim(),
-
-        email: form.get("email").trim(),
-
-        classId: classId || "",
-
-        className: selectedClass?.name || "",
-
-        createdBy: user.uid
-
-      });
-
-      toast(
-        `শিক্ষার্থী যোগ হয়েছে। Student ID: ${student.studentCode}`,
-        "success"
-      );
-
-      await showStudents();
-
-    } catch (error) {
-
-      console.error(error);
-
-      toast(
-        "শিক্ষার্থী যোগ করা যায়নি। " + (error.message || ""),
-        "error"
-      );
-
-      submitButton.disabled = false;
-      submitButton.textContent = "শিক্ষার্থী সংরক্ষণ করুন";
-
-    }
-
-  };
-
+          toast("à¦­à¦°à§à¦¤à¦¿ à¦†à¦¬à§‡à¦¦à¦¨ à¦¬à¦¾à¦¤à¦¿à¦² à¦•à¦°à¦¾ à¦¹à§Ÿà§‡à¦›à§‡à¥¤", "success");
+          await showAdmissions();
+        } catch (error) {
+          console.error("Admission rejection failed:", error);
+          toast("à¦†à¦¬à§‡à¦¦à¦¨ à¦¬à¦¾à¦¤à¦¿à¦² à¦•à¦°à¦¾ à¦¯à¦¾à§Ÿà¦¨à¦¿à¥¤ " + (error.message || ""), "error");
+          button.disabled = false;
+        }
+      };
+    });
   }
 
 
@@ -684,26 +559,26 @@ export async function renderAdmin(root, { user, profile }) {
     const notices = await listRecords("notices");
 
     content.innerHTML = `
-      <h1>📢 নোটিশ ব্যবস্থাপনা</h1>
+      <h1>ðŸ“¢ à¦¨à§‹à¦Ÿà¦¿à¦¶ à¦¬à§à¦¯à¦¬à¦¸à§à¦¥à¦¾à¦ªà¦¨à¦¾</h1>
 
       <section class="neu-card panel">
 
         <form id="notice-form" class="form-stack">
 
           <label class="field">
-            <span>নোটিশের শিরোনাম</span>
+            <span>à¦¨à§‹à¦Ÿà¦¿à¦¶à§‡à¦° à¦¶à¦¿à¦°à§‹à¦¨à¦¾à¦®</span>
             <input name="title" required>
           </label>
 
 
           <label class="field">
-            <span>নোটিশের বিস্তারিত</span>
+            <span>à¦¨à§‹à¦Ÿà¦¿à¦¶à§‡à¦° à¦¬à¦¿à¦¸à§à¦¤à¦¾à¦°à¦¿à¦¤</span>
             <textarea name="body" rows="4" required></textarea>
           </label>
 
 
           <button class="btn btn-primary">
-            নোটিশ প্রকাশ করুন
+            à¦¨à§‹à¦Ÿà¦¿à¦¶ à¦ªà§à¦°à¦•à¦¾à¦¶ à¦•à¦°à§à¦¨
           </button>
 
         </form>
@@ -713,9 +588,9 @@ export async function renderAdmin(root, { user, profile }) {
 
       <section class="neu-card panel">
 
-        <h2 class="section-title">প্রকাশিত নোটিশ</h2>
+        <h2 class="section-title">à¦ªà§à¦°à¦•à¦¾à¦¶à¦¿à¦¤ à¦¨à§‹à¦Ÿà¦¿à¦¶</h2>
 
-        ${makeList(notices, "title", "কোনো নোটিশ নেই")}
+        ${makeList(notices, "title", "à¦•à§‹à¦¨à§‹ à¦¨à§‹à¦Ÿà¦¿à¦¶ à¦¨à§‡à¦‡")}
 
       </section>
     `;
@@ -740,7 +615,7 @@ export async function renderAdmin(root, { user, profile }) {
 
           });
 
-          toast("নোটিশ প্রকাশিত হয়েছে।", "success");
+          toast("à¦¨à§‹à¦Ÿà¦¿à¦¶ à¦ªà§à¦°à¦•à¦¾à¦¶à¦¿à¦¤ à¦¹à§Ÿà§‡à¦›à§‡à¥¤", "success");
 
           await showNotices();
 
@@ -748,7 +623,7 @@ export async function renderAdmin(root, { user, profile }) {
 
           console.error(error);
 
-          toast("নোটিশ প্রকাশ করা যায়নি।", "error");
+          toast("à¦¨à§‹à¦Ÿà¦¿à¦¶ à¦ªà§à¦°à¦•à¦¾à¦¶ à¦•à¦°à¦¾ à¦¯à¦¾à§Ÿà¦¨à¦¿à¥¤", "error");
 
         }
 
@@ -767,38 +642,38 @@ export async function renderAdmin(root, { user, profile }) {
     ]);
 
     content.innerHTML = `
-      <h1>👨‍🏫 শিক্ষক ব্যবস্থাপনা</h1>
+      <h1>ðŸ‘¨â€ðŸ« à¦¶à¦¿à¦•à§à¦·à¦• à¦¬à§à¦¯à¦¬à¦¸à§à¦¥à¦¾à¦ªà¦¨à¦¾</h1>
 
       <section class="neu-card panel">
 
-        <h2 class="section-title">নতুন শিক্ষক যোগ করুন</h2>
+        <h2 class="section-title">à¦¨à¦¤à§à¦¨ à¦¶à¦¿à¦•à§à¦·à¦• à¦¯à§‹à¦— à¦•à¦°à§à¦¨</h2>
 
         <form id="teacher-form" class="form-stack">
 
           <label class="field">
-            <span>শিক্ষকের নাম</span>
+            <span>à¦¶à¦¿à¦•à§à¦·à¦•à§‡à¦° à¦¨à¦¾à¦®</span>
             <input name="name" required>
           </label>
 
 
           <label class="field">
-            <span>মোবাইল</span>
+            <span>à¦®à§‹à¦¬à¦¾à¦‡à¦²</span>
             <input name="phone">
           </label>
 
 
           <label class="field">
-            <span>ইমেইল</span>
+            <span>à¦‡à¦®à§‡à¦‡à¦²</span>
             <input name="email" type="email">
           </label>
 
 
           <label class="field">
-            <span>বিষয়</span>
+            <span>à¦¬à¦¿à¦·à§Ÿ</span>
 
             <select name="subjectId">
 
-              <option value="">বিষয় নির্বাচন করুন</option>
+              <option value="">à¦¬à¦¿à¦·à§Ÿ à¦¨à¦¿à¦°à§à¦¬à¦¾à¦šà¦¨ à¦•à¦°à§à¦¨</option>
 
               ${subjects.map(s => `
                 <option value="${escapeHTML(s.id)}">
@@ -812,13 +687,13 @@ export async function renderAdmin(root, { user, profile }) {
 
 
           <label class="field">
-            <span>মাসিক বেতন</span>
+            <span>à¦®à¦¾à¦¸à¦¿à¦• à¦¬à§‡à¦¤à¦¨</span>
             <input name="salary" type="number" min="0">
           </label>
 
 
           <button class="btn btn-primary">
-            শিক্ষক সংরক্ষণ করুন
+            à¦¶à¦¿à¦•à§à¦·à¦• à¦¸à¦‚à¦°à¦•à§à¦·à¦£ à¦•à¦°à§à¦¨
           </button>
 
         </form>
@@ -829,10 +704,10 @@ export async function renderAdmin(root, { user, profile }) {
       <section class="neu-card panel">
 
         <h2 class="section-title">
-          শিক্ষক তালিকা (${teachers.length})
+          à¦¶à¦¿à¦•à§à¦·à¦• à¦¤à¦¾à¦²à¦¿à¦•à¦¾ (${teachers.length})
         </h2>
 
-        ${makeList(teachers, "name", "কোনো শিক্ষক যোগ করা হয়নি")}
+        ${makeList(teachers, "name", "à¦•à§‹à¦¨à§‹ à¦¶à¦¿à¦•à§à¦·à¦• à¦¯à§‹à¦— à¦•à¦°à¦¾ à¦¹à§Ÿà¦¨à¦¿")}
 
       </section>
     `;
@@ -869,7 +744,7 @@ export async function renderAdmin(root, { user, profile }) {
 
           });
 
-          toast("শিক্ষক যোগ হয়েছে।", "success");
+          toast("à¦¶à¦¿à¦•à§à¦·à¦• à¦¯à§‹à¦— à¦¹à§Ÿà§‡à¦›à§‡à¥¤", "success");
 
           await showTeachers();
 
@@ -877,7 +752,7 @@ export async function renderAdmin(root, { user, profile }) {
 
           console.error(error);
 
-          toast("শিক্ষক যোগ করা যায়নি।", "error");
+          toast("à¦¶à¦¿à¦•à§à¦·à¦• à¦¯à§‹à¦— à¦•à¦°à¦¾ à¦¯à¦¾à§Ÿà¦¨à¦¿à¥¤", "error");
 
         }
 
@@ -902,26 +777,26 @@ export async function renderAdmin(root, { user, profile }) {
 
 
     content.innerHTML = `
-      <h1>🏫 ব্যাচ ব্যবস্থাপনা</h1>
+      <h1>ðŸ« à¦¬à§à¦¯à¦¾à¦š à¦¬à§à¦¯à¦¬à¦¸à§à¦¥à¦¾à¦ªà¦¨à¦¾</h1>
 
       <section class="neu-card panel">
 
-        <h2 class="section-title">নতুন ব্যাচ তৈরি করুন</h2>
+        <h2 class="section-title">à¦¨à¦¤à§à¦¨ à¦¬à§à¦¯à¦¾à¦š à¦¤à§ˆà¦°à¦¿ à¦•à¦°à§à¦¨</h2>
 
         <form id="batch-form" class="form-stack">
 
           <label class="field">
-            <span>ব্যাচের নাম</span>
+            <span>à¦¬à§à¦¯à¦¾à¦šà§‡à¦° à¦¨à¦¾à¦®</span>
             <input name="name" required>
           </label>
 
 
           <label class="field">
-            <span>শ্রেণি</span>
+            <span>à¦¶à§à¦°à§‡à¦£à¦¿</span>
 
             <select name="classId">
 
-              <option value="">ক্লাস নির্বাচন করুন</option>
+              <option value="">à¦•à§à¦²à¦¾à¦¸ à¦¨à¦¿à¦°à§à¦¬à¦¾à¦šà¦¨ à¦•à¦°à§à¦¨</option>
 
               ${classes.map(c => `
                 <option value="${escapeHTML(c.id)}">
@@ -935,7 +810,7 @@ export async function renderAdmin(root, { user, profile }) {
 
 
           <label class="field">
-            <span>বিভাগ</span>
+            <span>à¦¬à¦¿à¦­à¦¾à¦—</span>
 
             <select name="division">
               <option>General</option>
@@ -948,11 +823,11 @@ export async function renderAdmin(root, { user, profile }) {
 
 
           <label class="field">
-            <span>শিক্ষক</span>
+            <span>à¦¶à¦¿à¦•à§à¦·à¦•</span>
 
             <select name="teacherId">
 
-              <option value="">শিক্ষক নির্বাচন করুন</option>
+              <option value="">à¦¶à¦¿à¦•à§à¦·à¦• à¦¨à¦¿à¦°à§à¦¬à¦¾à¦šà¦¨ à¦•à¦°à§à¦¨</option>
 
               ${teachers.map(t => `
                 <option value="${escapeHTML(t.id)}">
@@ -966,13 +841,13 @@ export async function renderAdmin(root, { user, profile }) {
 
 
           <label class="field">
-            <span>ক্লাসের সময়সূচি</span>
-            <input name="schedule" placeholder="যেমন: সকাল ১০টা">
+            <span>à¦•à§à¦²à¦¾à¦¸à§‡à¦° à¦¸à¦®à§Ÿà¦¸à§‚à¦šà¦¿</span>
+            <input name="schedule" placeholder="à¦¯à§‡à¦®à¦¨: à¦¸à¦•à¦¾à¦² à§§à§¦à¦Ÿà¦¾">
           </label>
 
 
           <button class="btn btn-primary">
-            ব্যাচ সংরক্ষণ করুন
+            à¦¬à§à¦¯à¦¾à¦š à¦¸à¦‚à¦°à¦•à§à¦·à¦£ à¦•à¦°à§à¦¨
           </button>
 
         </form>
@@ -983,7 +858,7 @@ export async function renderAdmin(root, { user, profile }) {
       <section class="neu-card panel">
 
         <h2 class="section-title">
-          ব্যাচ তালিকা (${batches.length})
+          à¦¬à§à¦¯à¦¾à¦š à¦¤à¦¾à¦²à¦¿à¦•à¦¾ (${batches.length})
         </h2>
 
 
@@ -1002,17 +877,17 @@ export async function renderAdmin(root, { user, profile }) {
                 <li>
 
                   <span>
-                    ${escapeHTML(b.name || "—")}
+                    ${escapeHTML(b.name || "â€”")}
 
                     <small>
                       ${escapeHTML(classItem?.name || b.className || "")}
-                      · ${escapeHTML(b.division || "")}
+                      Â· ${escapeHTML(b.division || "")}
                     </small>
 
                   </span>
 
                   <small>
-                    ${escapeHTML(teacher?.name || "শিক্ষক নির্ধারিত নয়")}
+                    ${escapeHTML(teacher?.name || "à¦¶à¦¿à¦•à§à¦·à¦• à¦¨à¦¿à¦°à§à¦§à¦¾à¦°à¦¿à¦¤ à¦¨à§Ÿ")}
                     <br>
                     ${escapeHTML(b.schedule || "")}
                   </small>
@@ -1027,7 +902,7 @@ export async function renderAdmin(root, { user, profile }) {
 
         ` : `
 
-          <p class="muted">কোনো ব্যাচ তৈরি করা হয়নি।</p>
+          <p class="muted">à¦•à§‹à¦¨à§‹ à¦¬à§à¦¯à¦¾à¦š à¦¤à§ˆà¦°à¦¿ à¦•à¦°à¦¾ à¦¹à§Ÿà¦¨à¦¿à¥¤</p>
 
         `}
 
@@ -1066,7 +941,7 @@ export async function renderAdmin(root, { user, profile }) {
 
           });
 
-          toast("নতুন ব্যাচ তৈরি হয়েছে।", "success");
+          toast("à¦¨à¦¤à§à¦¨ à¦¬à§à¦¯à¦¾à¦š à¦¤à§ˆà¦°à¦¿ à¦¹à§Ÿà§‡à¦›à§‡à¥¤", "success");
 
           await showBatches();
 
@@ -1074,7 +949,7 @@ export async function renderAdmin(root, { user, profile }) {
 
           console.error(error);
 
-          toast("ব্যাচ তৈরি করা যায়নি।", "error");
+          toast("à¦¬à§à¦¯à¦¾à¦š à¦¤à§ˆà¦°à¦¿ à¦•à¦°à¦¾ à¦¯à¦¾à§Ÿà¦¨à¦¿à¥¤", "error");
 
         }
 
@@ -1090,10 +965,10 @@ export async function renderAdmin(root, { user, profile }) {
     let activeTab = "classes";
 
     content.innerHTML = `
-      <h1>🎓 Class & Subject Management</h1>
+      <h1>ðŸŽ“ Class & Subject Management</h1>
 
       <p class="muted">
-        এখান থেকে প্রতিষ্ঠানের ক্লাস ও বিষয় পরিচালনা করুন।
+        à¦à¦–à¦¾à¦¨ à¦¥à§‡à¦•à§‡ à¦ªà§à¦°à¦¤à¦¿à¦·à§à¦ à¦¾à¦¨à§‡à¦° à¦•à§à¦²à¦¾à¦¸ à¦“ à¦¬à¦¿à¦·à§Ÿ à¦ªà¦°à¦¿à¦šà¦¾à¦²à¦¨à¦¾ à¦•à¦°à§à¦¨à¥¤
       </p>
 
 
@@ -1102,11 +977,11 @@ export async function renderAdmin(root, { user, profile }) {
         <div class="academic-tabs">
 
           <button class="btn btn-primary" data-tab="classes">
-            📚 ক্লাস ব্যবস্থাপনা
+            ðŸ“š à¦•à§à¦²à¦¾à¦¸ à¦¬à§à¦¯à¦¬à¦¸à§à¦¥à¦¾à¦ªà¦¨à¦¾
           </button>
 
           <button class="btn btn-soft" data-tab="subjects">
-            📖 বিষয় ব্যবস্থাপনা
+            ðŸ“– à¦¬à¦¿à¦·à§Ÿ à¦¬à§à¦¯à¦¬à¦¸à§à¦¥à¦¾à¦ªà¦¨à¦¾
           </button>
 
         </div>
@@ -1170,7 +1045,7 @@ export async function renderAdmin(root, { user, profile }) {
       tabContent.innerHTML = `
 
         <h2 class="section-title">
-          ক্লাস তৈরি ও পরিচালনা
+          à¦•à§à¦²à¦¾à¦¸ à¦¤à§ˆà¦°à¦¿ à¦“ à¦ªà¦°à¦¿à¦šà¦¾à¦²à¦¨à¦¾
         </h2>
 
 
@@ -1180,35 +1055,35 @@ export async function renderAdmin(root, { user, profile }) {
 
 
           <label class="field">
-            <span>ক্লাসের নাম</span>
+            <span>à¦•à§à¦²à¦¾à¦¸à§‡à¦° à¦¨à¦¾à¦®</span>
 
             <input name="name"
               required
-              placeholder="যেমন: Class Six">
+              placeholder="à¦¯à§‡à¦®à¦¨: Class Six">
           </label>
 
 
           <label class="field">
-            <span>ক্লাস কোড</span>
+            <span>à¦•à§à¦²à¦¾à¦¸ à¦•à§‹à¦¡</span>
 
             <input name="code"
-              placeholder="যেমন: C06">
+              placeholder="à¦¯à§‡à¦®à¦¨: C06">
           </label>
 
 
           <label class="field">
-            <span>বর্ণনা</span>
+            <span>à¦¬à¦°à§à¦£à¦¨à¦¾</span>
 
             <textarea name="description" rows="2"></textarea>
           </label>
 
 
           <label class="field">
-            <span>অবস্থা</span>
+            <span>à¦…à¦¬à¦¸à§à¦¥à¦¾</span>
 
             <select name="active">
-              <option value="true">সক্রিয়</option>
-              <option value="false">নিষ্ক্রিয়</option>
+              <option value="true">à¦¸à¦•à§à¦°à¦¿à§Ÿ</option>
+              <option value="false">à¦¨à¦¿à¦·à§à¦•à§à¦°à¦¿à§Ÿ</option>
             </select>
 
           </label>
@@ -1217,11 +1092,11 @@ export async function renderAdmin(root, { user, profile }) {
           <div style="display:flex;gap:10px;flex-wrap:wrap">
 
             <button type="submit" class="btn btn-primary">
-              💾 ক্লাস সংরক্ষণ করুন
+              ðŸ’¾ à¦•à§à¦²à¦¾à¦¸ à¦¸à¦‚à¦°à¦•à§à¦·à¦£ à¦•à¦°à§à¦¨
             </button>
 
             <button type="reset" class="btn btn-soft">
-              নতুন করে লিখুন
+              à¦¨à¦¤à§à¦¨ à¦•à¦°à§‡ à¦²à¦¿à¦–à§à¦¨
             </button>
 
           </div>
@@ -1232,7 +1107,7 @@ export async function renderAdmin(root, { user, profile }) {
         <hr style="margin:25px 0">
 
 
-        <h3>সকল ক্লাস (${classes.length})</h3>
+        <h3>à¦¸à¦•à¦² à¦•à§à¦²à¦¾à¦¸ (${classes.length})</h3>
 
 
         ${classes.length ? `
@@ -1243,11 +1118,11 @@ export async function renderAdmin(root, { user, profile }) {
 
               <thead>
                 <tr>
-                  <th>নাম</th>
-                  <th>কোড</th>
-                  <th>বিষয় সংখ্যা</th>
-                  <th>অবস্থা</th>
-                  <th>কার্যক্রম</th>
+                  <th>à¦¨à¦¾à¦®</th>
+                  <th>à¦•à§‹à¦¡</th>
+                  <th>à¦¬à¦¿à¦·à§Ÿ à¦¸à¦‚à¦–à§à¦¯à¦¾</th>
+                  <th>à¦…à¦¬à¦¸à§à¦¥à¦¾</th>
+                  <th>à¦•à¦¾à¦°à§à¦¯à¦•à§à¦°à¦®</th>
                 </tr>
               </thead>
 
@@ -1266,12 +1141,12 @@ export async function renderAdmin(root, { user, profile }) {
 
                       <td>${escapeHTML(c.name || "")}</td>
 
-                      <td>${escapeHTML(c.code || "—")}</td>
+                      <td>${escapeHTML(c.code || "â€”")}</td>
 
                       <td>${count}</td>
 
                       <td>
-                        ${c.active === false ? "নিষ্ক্রিয়" : "সক্রিয়"}
+                        ${c.active === false ? "à¦¨à¦¿à¦·à§à¦•à§à¦°à¦¿à§Ÿ" : "à¦¸à¦•à§à¦°à¦¿à§Ÿ"}
                       </td>
 
                       <td>
@@ -1279,13 +1154,13 @@ export async function renderAdmin(root, { user, profile }) {
                         <button
                           class="btn btn-soft"
                           data-edit-class="${c.id}">
-                          সম্পাদনা
+                          à¦¸à¦®à§à¦ªà¦¾à¦¦à¦¨à¦¾
                         </button>
 
                         <button
                           class="btn btn-soft"
                           data-delete-class="${c.id}">
-                          মুছুন
+                          à¦®à§à¦›à§à¦¨
                         </button>
 
                       </td>
@@ -1304,7 +1179,7 @@ export async function renderAdmin(root, { user, profile }) {
 
         ` : `
 
-          <p class="muted">এখনো কোনো ক্লাস তৈরি করা হয়নি।</p>
+          <p class="muted">à¦à¦–à¦¨à§‹ à¦•à§‹à¦¨à§‹ à¦•à§à¦²à¦¾à¦¸ à¦¤à§ˆà¦°à¦¿ à¦•à¦°à¦¾ à¦¹à§Ÿà¦¨à¦¿à¥¤</p>
 
         `}
 
@@ -1334,17 +1209,17 @@ export async function renderAdmin(root, { user, profile }) {
 
           if (editId) {
             await updateRecord("classes", editId, data);
-            toast("ক্লাস আপডেট হয়েছে।", "success");
+            toast("à¦•à§à¦²à¦¾à¦¸ à¦†à¦ªà¦¡à§‡à¦Ÿ à¦¹à§Ÿà§‡à¦›à§‡à¥¤", "success");
           } else {
             await createRecord("classes", data);
-            toast("নতুন ক্লাস তৈরি হয়েছে।", "success");
+            toast("à¦¨à¦¤à§à¦¨ à¦•à§à¦²à¦¾à¦¸ à¦¤à§ˆà¦°à¦¿ à¦¹à§Ÿà§‡à¦›à§‡à¥¤", "success");
           }
 
           await renderClasses();
 
         } catch (error) {
           console.error(error);
-          toast("ক্লাস সংরক্ষণ করা যায়নি।", "error");
+          toast("à¦•à§à¦²à¦¾à¦¸ à¦¸à¦‚à¦°à¦•à§à¦·à¦£ à¦•à¦°à¦¾ à¦¯à¦¾à§Ÿà¦¨à¦¿à¥¤", "error");
         }
 
       };
@@ -1389,21 +1264,21 @@ export async function renderAdmin(root, { user, profile }) {
 
           if (linkedSubjects.length) {
             toast(
-              "এই ক্লাসের সঙ্গে বিষয় যুক্ত আছে। আগে বিষয়গুলো থেকে ক্লাসটি সরান।",
+              "à¦à¦‡ à¦•à§à¦²à¦¾à¦¸à§‡à¦° à¦¸à¦™à§à¦—à§‡ à¦¬à¦¿à¦·à§Ÿ à¦¯à§à¦•à§à¦¤ à¦†à¦›à§‡à¥¤ à¦†à¦—à§‡ à¦¬à¦¿à¦·à§Ÿà¦—à§à¦²à§‹ à¦¥à§‡à¦•à§‡ à¦•à§à¦²à¦¾à¦¸à¦Ÿà¦¿ à¦¸à¦°à¦¾à¦¨à¥¤",
               "error"
             );
             return;
           }
 
-          if (!confirm("এই ক্লাসটি মুছে ফেলবেন?")) return;
+          if (!confirm("à¦à¦‡ à¦•à§à¦²à¦¾à¦¸à¦Ÿà¦¿ à¦®à§à¦›à§‡ à¦«à§‡à¦²à¦¬à§‡à¦¨?")) return;
 
           try {
             await deleteRecord("classes", id);
-            toast("ক্লাস মুছে ফেলা হয়েছে।", "success");
+            toast("à¦•à§à¦²à¦¾à¦¸ à¦®à§à¦›à§‡ à¦«à§‡à¦²à¦¾ à¦¹à§Ÿà§‡à¦›à§‡à¥¤", "success");
             await renderClasses();
           } catch (error) {
             console.error(error);
-            toast("ক্লাস মুছে ফেলা যায়নি।", "error");
+            toast("à¦•à§à¦²à¦¾à¦¸ à¦®à§à¦›à§‡ à¦«à§‡à¦²à¦¾ à¦¯à¦¾à§Ÿà¦¨à¦¿à¥¤", "error");
           }
 
         };
@@ -1424,7 +1299,7 @@ export async function renderAdmin(root, { user, profile }) {
       tabContent.innerHTML = `
 
         <h2 class="section-title">
-          বিষয় তৈরি ও পরিচালনা
+          à¦¬à¦¿à¦·à§Ÿ à¦¤à§ˆà¦°à¦¿ à¦“ à¦ªà¦°à¦¿à¦šà¦¾à¦²à¦¨à¦¾
         </h2>
 
 
@@ -1434,25 +1309,25 @@ export async function renderAdmin(root, { user, profile }) {
 
 
           <label class="field">
-            <span>বিষয়ের নাম</span>
+            <span>à¦¬à¦¿à¦·à§Ÿà§‡à¦° à¦¨à¦¾à¦®</span>
 
             <input name="name"
               required
-              placeholder="যেমন: Mathematics">
+              placeholder="à¦¯à§‡à¦®à¦¨: Mathematics">
           </label>
 
 
           <label class="field">
-            <span>বিষয় কোড</span>
+            <span>à¦¬à¦¿à¦·à§Ÿ à¦•à§‹à¦¡</span>
 
             <input name="code"
-              placeholder="যেমন: MAT">
+              placeholder="à¦¯à§‡à¦®à¦¨: MAT">
           </label>
 
 
           <div class="field">
 
-            <span>যেসব ক্লাসে বিষয়টি পড়ানো হবে</span>
+            <span>à¦¯à§‡à¦¸à¦¬ à¦•à§à¦²à¦¾à¦¸à§‡ à¦¬à¦¿à¦·à§Ÿà¦Ÿà¦¿ à¦ªà§œà¦¾à¦¨à§‹ à¦¹à¦¬à§‡</span>
 
             <div class="subject-class-options">
 
@@ -1478,7 +1353,7 @@ export async function renderAdmin(root, { user, profile }) {
               `).join("") : `
 
                 <p class="muted">
-                  আগে Class Management থেকে ক্লাস তৈরি করুন।
+                  à¦†à¦—à§‡ Class Management à¦¥à§‡à¦•à§‡ à¦•à§à¦²à¦¾à¦¸ à¦¤à§ˆà¦°à¦¿ à¦•à¦°à§à¦¨à¥¤
                 </p>
 
               `}
@@ -1489,11 +1364,11 @@ export async function renderAdmin(root, { user, profile }) {
 
 
           <label class="field">
-            <span>অবস্থা</span>
+            <span>à¦…à¦¬à¦¸à§à¦¥à¦¾</span>
 
             <select name="active">
-              <option value="true">সক্রিয়</option>
-              <option value="false">নিষ্ক্রিয়</option>
+              <option value="true">à¦¸à¦•à§à¦°à¦¿à§Ÿ</option>
+              <option value="false">à¦¨à¦¿à¦·à§à¦•à§à¦°à¦¿à§Ÿ</option>
             </select>
 
           </label>
@@ -1502,11 +1377,11 @@ export async function renderAdmin(root, { user, profile }) {
           <div style="display:flex;gap:10px;flex-wrap:wrap">
 
             <button type="submit" class="btn btn-primary">
-              💾 বিষয় সংরক্ষণ করুন
+              ðŸ’¾ à¦¬à¦¿à¦·à§Ÿ à¦¸à¦‚à¦°à¦•à§à¦·à¦£ à¦•à¦°à§à¦¨
             </button>
 
             <button type="reset" class="btn btn-soft">
-              নতুন করে লিখুন
+              à¦¨à¦¤à§à¦¨ à¦•à¦°à§‡ à¦²à¦¿à¦–à§à¦¨
             </button>
 
           </div>
@@ -1517,7 +1392,7 @@ export async function renderAdmin(root, { user, profile }) {
         <hr style="margin:25px 0">
 
 
-        <h3>সকল বিষয় (${subjects.length})</h3>
+        <h3>à¦¸à¦•à¦² à¦¬à¦¿à¦·à§Ÿ (${subjects.length})</h3>
 
 
         ${subjects.length ? `
@@ -1528,11 +1403,11 @@ export async function renderAdmin(root, { user, profile }) {
 
               <thead>
                 <tr>
-                  <th>বিষয়</th>
-                  <th>কোড</th>
-                  <th>ক্লাস</th>
-                  <th>অবস্থা</th>
-                  <th>কার্যক্রম</th>
+                  <th>à¦¬à¦¿à¦·à§Ÿ</th>
+                  <th>à¦•à§‹à¦¡</th>
+                  <th>à¦•à§à¦²à¦¾à¦¸</th>
+                  <th>à¦…à¦¬à¦¸à§à¦¥à¦¾</th>
+                  <th>à¦•à¦¾à¦°à§à¦¯à¦•à§à¦°à¦®</th>
                 </tr>
               </thead>
 
@@ -1551,19 +1426,19 @@ export async function renderAdmin(root, { user, profile }) {
 
                       <td>${escapeHTML(s.name || "")}</td>
 
-                      <td>${escapeHTML(s.code || "—")}</td>
+                      <td>${escapeHTML(s.code || "â€”")}</td>
 
                       <td>
                         ${linkedClasses.length
                           ? linkedClasses.map(c =>
                               escapeHTML(c.name)
                             ).join(", ")
-                          : "ক্লাস নির্ধারিত নয়"
+                          : "à¦•à§à¦²à¦¾à¦¸ à¦¨à¦¿à¦°à§à¦§à¦¾à¦°à¦¿à¦¤ à¦¨à§Ÿ"
                         }
                       </td>
 
                       <td>
-                        ${s.active === false ? "নিষ্ক্রিয়" : "সক্রিয়"}
+                        ${s.active === false ? "à¦¨à¦¿à¦·à§à¦•à§à¦°à¦¿à§Ÿ" : "à¦¸à¦•à§à¦°à¦¿à§Ÿ"}
                       </td>
 
                       <td>
@@ -1571,13 +1446,13 @@ export async function renderAdmin(root, { user, profile }) {
                         <button
                           class="btn btn-soft"
                           data-edit-subject="${s.id}">
-                          সম্পাদনা
+                          à¦¸à¦®à§à¦ªà¦¾à¦¦à¦¨à¦¾
                         </button>
 
                         <button
                           class="btn btn-soft"
                           data-delete-subject="${s.id}">
-                          মুছুন
+                          à¦®à§à¦›à§à¦¨
                         </button>
 
                       </td>
@@ -1596,7 +1471,7 @@ export async function renderAdmin(root, { user, profile }) {
 
         ` : `
 
-          <p class="muted">এখনো কোনো বিষয় তৈরি করা হয়নি।</p>
+          <p class="muted">à¦à¦–à¦¨à§‹ à¦•à§‹à¦¨à§‹ à¦¬à¦¿à¦·à§Ÿ à¦¤à§ˆà¦°à¦¿ à¦•à¦°à¦¾ à¦¹à§Ÿà¦¨à¦¿à¥¤</p>
 
         `}
 
@@ -1627,17 +1502,17 @@ export async function renderAdmin(root, { user, profile }) {
 
           if (editId) {
             await updateRecord("subjects", editId, data);
-            toast("বিষয় আপডেট হয়েছে।", "success");
+            toast("à¦¬à¦¿à¦·à§Ÿ à¦†à¦ªà¦¡à§‡à¦Ÿ à¦¹à§Ÿà§‡à¦›à§‡à¥¤", "success");
           } else {
             await createRecord("subjects", data);
-            toast("নতুন বিষয় তৈরি হয়েছে।", "success");
+            toast("à¦¨à¦¤à§à¦¨ à¦¬à¦¿à¦·à§Ÿ à¦¤à§ˆà¦°à¦¿ à¦¹à§Ÿà§‡à¦›à§‡à¥¤", "success");
           }
 
           await renderSubjects();
 
         } catch (error) {
           console.error(error);
-          toast("বিষয় সংরক্ষণ করা যায়নি।", "error");
+          toast("à¦¬à¦¿à¦·à§Ÿ à¦¸à¦‚à¦°à¦•à§à¦·à¦£ à¦•à¦°à¦¾ à¦¯à¦¾à§Ÿà¦¨à¦¿à¥¤", "error");
         }
 
       };
@@ -1680,15 +1555,15 @@ export async function renderAdmin(root, { user, profile }) {
 
           const id = button.dataset.deleteSubject;
 
-          if (!confirm("এই বিষয়টি মুছে ফেলবেন?")) return;
+          if (!confirm("à¦à¦‡ à¦¬à¦¿à¦·à§Ÿà¦Ÿà¦¿ à¦®à§à¦›à§‡ à¦«à§‡à¦²à¦¬à§‡à¦¨?")) return;
 
           try {
             await deleteRecord("subjects", id);
-            toast("বিষয় মুছে ফেলা হয়েছে।", "success");
+            toast("à¦¬à¦¿à¦·à§Ÿ à¦®à§à¦›à§‡ à¦«à§‡à¦²à¦¾ à¦¹à§Ÿà§‡à¦›à§‡à¥¤", "success");
             await renderSubjects();
           } catch (error) {
             console.error(error);
-            toast("বিষয় মুছে ফেলা যায়নি।", "error");
+            toast("à¦¬à¦¿à¦·à§Ÿ à¦®à§à¦›à§‡ à¦«à§‡à¦²à¦¾ à¦¯à¦¾à§Ÿà¦¨à¦¿à¥¤", "error");
           }
 
         };
@@ -1783,7 +1658,7 @@ export async function renderAdmin(root, { user, profile }) {
       </style>
 
 
-      <h1>📅 উপস্থিতি ব্যবস্থাপনা</h1>
+      <h1>ðŸ“… à¦‰à¦ªà¦¸à§à¦¥à¦¿à¦¤à¦¿ à¦¬à§à¦¯à¦¬à¦¸à§à¦¥à¦¾à¦ªà¦¨à¦¾</h1>
 
 
       <section class="neu-card panel">
@@ -1791,13 +1666,13 @@ export async function renderAdmin(root, { user, profile }) {
         <div class="form-stack">
 
           <label class="field">
-            <span>তারিখ নির্বাচন করুন</span>
+            <span>à¦¤à¦¾à¦°à¦¿à¦– à¦¨à¦¿à¦°à§à¦¬à¦¾à¦šà¦¨ à¦•à¦°à§à¦¨</span>
             <input type="date" id="attendance-date" value="${today}">
           </label>
 
 
           <button class="btn btn-primary" id="load-attendance">
-            শিক্ষার্থী তালিকা দেখুন
+            à¦¶à¦¿à¦•à§à¦·à¦¾à¦°à§à¦¥à§€ à¦¤à¦¾à¦²à¦¿à¦•à¦¾ à¦¦à§‡à¦–à§à¦¨
           </button>
 
         </div>
@@ -1810,16 +1685,16 @@ export async function renderAdmin(root, { user, profile }) {
 
           <hr style="margin:25px 0">
 
-          <h2 class="section-title">📊 উপস্থিতির রিপোর্ট</h2>
+          <h2 class="section-title">ðŸ“Š à¦‰à¦ªà¦¸à§à¦¥à¦¿à¦¤à¦¿à¦° à¦°à¦¿à¦ªà§‹à¦°à§à¦Ÿ</h2>
 
           <label class="field">
-            <span>রিপোর্টের তারিখ নির্বাচন করুন</span>
+            <span>à¦°à¦¿à¦ªà§‹à¦°à§à¦Ÿà§‡à¦° à¦¤à¦¾à¦°à¦¿à¦– à¦¨à¦¿à¦°à§à¦¬à¦¾à¦šà¦¨ à¦•à¦°à§à¦¨</span>
             <input type="date" id="report-date" value="${today}">
           </label>
 
 
           <button class="btn btn-primary" id="show-attendance-report">
-            রিপোর্ট দেখুন
+            à¦°à¦¿à¦ªà§‹à¦°à§à¦Ÿ à¦¦à§‡à¦–à§à¦¨
           </button>
 
 
@@ -1841,7 +1716,7 @@ export async function renderAdmin(root, { user, profile }) {
       const result = content.querySelector("#attendance-report-result");
 
       if (!date) {
-        toast("রিপোর্টের তারিখ নির্বাচন করুন।", "error");
+        toast("à¦°à¦¿à¦ªà§‹à¦°à§à¦Ÿà§‡à¦° à¦¤à¦¾à¦°à¦¿à¦– à¦¨à¦¿à¦°à§à¦¬à¦¾à¦šà¦¨ à¦•à¦°à§à¦¨à¥¤", "error");
         return;
       }
 
@@ -1870,30 +1745,30 @@ export async function renderAdmin(root, { user, profile }) {
 
         <div class="stats-grid" style="margin-top:20px">
 
-          ${stat("👨‍🎓", "মোট শিক্ষার্থী", students.length)}
-          ${stat("✅", "উপস্থিত", presentStudents.length)}
-          ${stat("❌", "অনুপস্থিত", absentStudents.length)}
-          ${stat("⏳", "হিসাব হয়নি", unmarked)}
+          ${stat("ðŸ‘¨â€ðŸŽ“", "à¦®à§‹à¦Ÿ à¦¶à¦¿à¦•à§à¦·à¦¾à¦°à§à¦¥à§€", students.length)}
+          ${stat("âœ…", "à¦‰à¦ªà¦¸à§à¦¥à¦¿à¦¤", presentStudents.length)}
+          ${stat("âŒ", "à¦…à¦¨à§à¦ªà¦¸à§à¦¥à¦¿à¦¤", absentStudents.length)}
+          ${stat("â³", "à¦¹à¦¿à¦¸à¦¾à¦¬ à¦¹à§Ÿà¦¨à¦¿", unmarked)}
 
         </div>
 
 
         <section class="neu-card panel" style="margin-top:20px">
-          <h3>✅ উপস্থিত শিক্ষার্থীরা</h3>
+          <h3>âœ… à¦‰à¦ªà¦¸à§à¦¥à¦¿à¦¤ à¦¶à¦¿à¦•à§à¦·à¦¾à¦°à§à¦¥à§€à¦°à¦¾</h3>
 
           ${presentStudents.length
             ? makeList(presentStudents, "name", "")
-            : `<p class="muted">কেউ উপস্থিত নেই।</p>`
+            : `<p class="muted">à¦•à§‡à¦‰ à¦‰à¦ªà¦¸à§à¦¥à¦¿à¦¤ à¦¨à§‡à¦‡à¥¤</p>`
           }
         </section>
 
 
         <section class="neu-card panel" style="margin-top:20px">
-          <h3>❌ অনুপস্থিত শিক্ষার্থীরা</h3>
+          <h3>âŒ à¦…à¦¨à§à¦ªà¦¸à§à¦¥à¦¿à¦¤ à¦¶à¦¿à¦•à§à¦·à¦¾à¦°à§à¦¥à§€à¦°à¦¾</h3>
 
           ${absentStudents.length
             ? makeList(absentStudents, "name", "")
-            : `<p class="muted">কেউ অনুপস্থিত নেই।</p>`
+            : `<p class="muted">à¦•à§‡à¦‰ à¦…à¦¨à§à¦ªà¦¸à§à¦¥à¦¿à¦¤ à¦¨à§‡à¦‡à¥¤</p>`
           }
         </section>
 
@@ -1907,13 +1782,13 @@ export async function renderAdmin(root, { user, profile }) {
       const date = content.querySelector("#attendance-date").value;
 
       if (!date) {
-        toast("তারিখ নির্বাচন করুন।", "error");
+        toast("à¦¤à¦¾à¦°à¦¿à¦– à¦¨à¦¿à¦°à§à¦¬à¦¾à¦šà¦¨ à¦•à¦°à§à¦¨à¥¤", "error");
         return;
       }
 
       if (!students.length) {
         list.innerHTML = `
-          <p class="muted">কোনো শিক্ষার্থী পাওয়া যায়নি।</p>
+          <p class="muted">à¦•à§‹à¦¨à§‹ à¦¶à¦¿à¦•à§à¦·à¦¾à¦°à§à¦¥à§€ à¦ªà¦¾à¦“à§Ÿà¦¾ à¦¯à¦¾à§Ÿà¦¨à¦¿à¥¤</p>
         `;
         return;
       }
@@ -1921,7 +1796,7 @@ export async function renderAdmin(root, { user, profile }) {
       list.innerHTML = `
 
         <h2 class="section-title" style="margin-top:25px">
-          👨‍🎓 শিক্ষার্থীদের উপস্থিতি (${students.length})
+          ðŸ‘¨â€ðŸŽ“ à¦¶à¦¿à¦•à§à¦·à¦¾à¦°à§à¦¥à§€à¦¦à§‡à¦° à¦‰à¦ªà¦¸à§à¦¥à¦¿à¦¤à¦¿ (${students.length})
         </h2>
 
 
@@ -1940,7 +1815,7 @@ export async function renderAdmin(root, { user, profile }) {
               <div class="attendance-card">
 
                 <span class="attendance-student-name">
-                  ${index + 1}. ${escapeHTML(s.name || "—")}
+                  ${index + 1}. ${escapeHTML(s.name || "â€”")}
                 </span>
 
 
@@ -1958,7 +1833,7 @@ export async function renderAdmin(root, { user, profile }) {
                     >
 
                     <label for="present-${s.id}">
-                      ✓ উপস্থিত
+                      âœ“ à¦‰à¦ªà¦¸à§à¦¥à¦¿à¦¤
                     </label>
 
                   </div>
@@ -1976,7 +1851,7 @@ export async function renderAdmin(root, { user, profile }) {
                     >
 
                     <label for="absent-${s.id}">
-                      ✕ অনুপস্থিত
+                      âœ• à¦…à¦¨à§à¦ªà¦¸à§à¦¥à¦¿à¦¤
                     </label>
 
                   </div>
@@ -1993,7 +1868,7 @@ export async function renderAdmin(root, { user, profile }) {
 
 
         <button class="btn btn-primary attendance-save-btn" id="save-attendance">
-          💾 উপস্থিতি সংরক্ষণ করুন
+          ðŸ’¾ à¦‰à¦ªà¦¸à§à¦¥à¦¿à¦¤à¦¿ à¦¸à¦‚à¦°à¦•à§à¦·à¦£ à¦•à¦°à§à¦¨
         </button>
 
       `;
@@ -2030,12 +1905,12 @@ export async function renderAdmin(root, { user, profile }) {
 
           }
 
-          toast("উপস্থিতি সংরক্ষণ হয়েছে।", "success");
+          toast("à¦‰à¦ªà¦¸à§à¦¥à¦¿à¦¤à¦¿ à¦¸à¦‚à¦°à¦•à§à¦·à¦£ à¦¹à§Ÿà§‡à¦›à§‡à¥¤", "success");
           await showAttendance();
 
         } catch (error) {
           console.error(error);
-          toast("উপস্থিতি সংরক্ষণ করা যায়নি।", "error");
+          toast("à¦‰à¦ªà¦¸à§à¦¥à¦¿à¦¤à¦¿ à¦¸à¦‚à¦°à¦•à§à¦·à¦£ à¦•à¦°à¦¾ à¦¯à¦¾à§Ÿà¦¨à¦¿à¥¤", "error");
         }
 
       };
@@ -2053,19 +1928,19 @@ export async function renderAdmin(root, { user, profile }) {
 
     content.innerHTML = `
 
-      <h1>⚙️ Academy Settings</h1>
+      <h1>âš™ï¸ Academy Settings</h1>
 
 
       <section class="neu-card panel">
 
-        <h2 class="section-title">১. প্রতিষ্ঠান পরিচিতি</h2>
+        <h2 class="section-title">à§§. à¦ªà§à¦°à¦¤à¦¿à¦·à§à¦ à¦¾à¦¨ à¦ªà¦°à¦¿à¦šà¦¿à¦¤à¦¿</h2>
 
 
         <form id="academy-settings-form" class="form-stack">
 
 
           <label class="field">
-            <span>একাডেমির নাম</span>
+            <span>à¦à¦•à¦¾à¦¡à§‡à¦®à¦¿à¦° à¦¨à¦¾à¦®</span>
 
             <input name="academyName"
               value="${escapeHTML(settings.academyName || "")}"
@@ -2074,7 +1949,7 @@ export async function renderAdmin(root, { user, profile }) {
 
 
           <label class="field">
-            <span>স্লোগান</span>
+            <span>à¦¸à§à¦²à§‹à¦—à¦¾à¦¨</span>
 
             <input name="tagline"
               value="${escapeHTML(settings.tagline || "")}">
@@ -2082,7 +1957,7 @@ export async function renderAdmin(root, { user, profile }) {
 
 
           <label class="field">
-            <span>প্রতিষ্ঠানের লোগো URL</span>
+            <span>à¦ªà§à¦°à¦¤à¦¿à¦·à§à¦ à¦¾à¦¨à§‡à¦° à¦²à§‹à¦—à§‹ URL</span>
 
             <input name="logoUrl"
               type="url"
@@ -2107,7 +1982,7 @@ export async function renderAdmin(root, { user, profile }) {
 
 
           <label class="field">
-            <span>মোবাইল নম্বর</span>
+            <span>à¦®à§‹à¦¬à¦¾à¦‡à¦² à¦¨à¦®à§à¦¬à¦°</span>
 
             <input name="phone"
               value="${escapeHTML(settings.phone || "")}">
@@ -2115,7 +1990,7 @@ export async function renderAdmin(root, { user, profile }) {
 
 
           <label class="field">
-            <span>ইমেইল</span>
+            <span>à¦‡à¦®à§‡à¦‡à¦²</span>
 
             <input name="email"
               type="email"
@@ -2124,7 +1999,7 @@ export async function renderAdmin(root, { user, profile }) {
 
 
           <label class="field">
-            <span>ওয়েবসাইট</span>
+            <span>à¦“à§Ÿà§‡à¦¬à¦¸à¦¾à¦‡à¦Ÿ</span>
 
             <input name="website"
               type="url"
@@ -2133,7 +2008,7 @@ export async function renderAdmin(root, { user, profile }) {
 
 
           <label class="field">
-            <span>প্রতিষ্ঠানের ঠিকানা</span>
+            <span>à¦ªà§à¦°à¦¤à¦¿à¦·à§à¦ à¦¾à¦¨à§‡à¦° à¦ à¦¿à¦•à¦¾à¦¨à¦¾</span>
 
             <textarea name="address">${escapeHTML(settings.address || "")}</textarea>
           </label>
@@ -2142,11 +2017,11 @@ export async function renderAdmin(root, { user, profile }) {
           <hr>
 
 
-          <h2 class="section-title">২. Branding ও Design</h2>
+          <h2 class="section-title">à§¨. Branding à¦“ Design</h2>
 
 
           <label class="field">
-            <span>প্রধান রং (Primary Color)</span>
+            <span>à¦ªà§à¦°à¦§à¦¾à¦¨ à¦°à¦‚ (Primary Color)</span>
 
             <input type="color" name="primaryColor"
               value="${escapeHTML(settings.primaryColor || "#2563eb")}">
@@ -2154,7 +2029,7 @@ export async function renderAdmin(root, { user, profile }) {
 
 
           <label class="field">
-            <span>সহায়ক রং (Secondary Color)</span>
+            <span>à¦¸à¦¹à¦¾à§Ÿà¦• à¦°à¦‚ (Secondary Color)</span>
 
             <input type="color" name="secondaryColor"
               value="${escapeHTML(settings.secondaryColor || "#0f172a")}">
@@ -2162,7 +2037,7 @@ export async function renderAdmin(root, { user, profile }) {
 
 
           <label class="field">
-            <span>ওয়েবসাইটের Theme</span>
+            <span>à¦“à§Ÿà§‡à¦¬à¦¸à¦¾à¦‡à¦Ÿà§‡à¦° Theme</span>
 
             <select name="theme">
 
@@ -2180,7 +2055,7 @@ export async function renderAdmin(root, { user, profile }) {
 
 
           <label class="field">
-            <span>ওয়েবসাইটের Font</span>
+            <span>à¦“à§Ÿà§‡à¦¬à¦¸à¦¾à¦‡à¦Ÿà§‡à¦° Font</span>
 
             <select name="fontFamily">
 
@@ -2205,7 +2080,7 @@ export async function renderAdmin(root, { user, profile }) {
 
 
           <button type="submit" class="btn btn-primary">
-            💾 সেটিংস সংরক্ষণ করুন
+            ðŸ’¾ à¦¸à§‡à¦Ÿà¦¿à¦‚à¦¸ à¦¸à¦‚à¦°à¦•à§à¦·à¦£ à¦•à¦°à§à¦¨
           </button>
 
 
@@ -2233,7 +2108,7 @@ export async function renderAdmin(root, { user, profile }) {
       const button = form.querySelector('button[type="submit"]');
 
       button.disabled = true;
-      button.textContent = "সংরক্ষণ হচ্ছে...";
+      button.textContent = "à¦¸à¦‚à¦°à¦•à§à¦·à¦£ à¦¹à¦šà§à¦›à§‡...";
 
       try {
 
@@ -2243,7 +2118,7 @@ export async function renderAdmin(root, { user, profile }) {
 
         await saveAcademySettings(data);
 
-        toast("প্রতিষ্ঠানের তথ্য সংরক্ষণ করা হয়েছে।", "success");
+        toast("à¦ªà§à¦°à¦¤à¦¿à¦·à§à¦ à¦¾à¦¨à§‡à¦° à¦¤à¦¥à§à¦¯ à¦¸à¦‚à¦°à¦•à§à¦·à¦£ à¦•à¦°à¦¾ à¦¹à§Ÿà§‡à¦›à§‡à¥¤", "success");
 
         await showAcademySettings();
 
@@ -2251,10 +2126,10 @@ export async function renderAdmin(root, { user, profile }) {
 
         console.error(error);
 
-        toast("সেটিংস সংরক্ষণ করা যায়নি।", "error");
+        toast("à¦¸à§‡à¦Ÿà¦¿à¦‚à¦¸ à¦¸à¦‚à¦°à¦•à§à¦·à¦£ à¦•à¦°à¦¾ à¦¯à¦¾à§Ÿà¦¨à¦¿à¥¤", "error");
 
         button.disabled = false;
-        button.textContent = "💾 সেটিংস সংরক্ষণ করুন";
+        button.textContent = "ðŸ’¾ à¦¸à§‡à¦Ÿà¦¿à¦‚à¦¸ à¦¸à¦‚à¦°à¦•à§à¦·à¦£ à¦•à¦°à§à¦¨";
 
       }
 
@@ -2292,7 +2167,7 @@ export async function renderAdmin(root, { user, profile }) {
       <ul class="simple-list">
         ${items.map(item => `
           <li>
-            <span>${escapeHTML(item[key] || "—")}</span>
+            <span>${escapeHTML(item[key] || "â€”")}</span>
             <small>${formatDate(item.createdAt)}</small>
           </li>
         `).join("")}
@@ -2302,62 +2177,30 @@ export async function renderAdmin(root, { user, profile }) {
   }
 
 
-  content.querySelector("#student-form").onsubmit =
-  async event => {
-
-    event.preventDefault();
-
-    const form = new FormData(event.currentTarget);
-    const submitButton = event.currentTarget.querySelector(
-      'button[type="submit"]'
-    );
-
-    const classId = form.get("classId");
-    const selectedClass = classes.find(c => c.id === classId);
-
-    submitButton.disabled = true;
-    submitButton.textContent = "সংরক্ষণ হচ্ছে...";
-
-    try {
-
-      const student = await createStudentRecord({
-
-        name: form.get("name").trim(),
-
-        phone: form.get("phone").trim(),
-
-        email: form.get("email").trim(),
-
-        classId: classId || "",
-
-        className: selectedClass?.name || "",
-
-        createdBy: user.uid
-
-      });
-
-      toast(
-        `শিক্ষার্থী যোগ হয়েছে। Student ID: ${student.studentCode}`,
-        "success"
-      );
-
-      await showStudents();
-
-    } catch (error) {
-
-      console.error(error);
-
-      toast(
-        "শিক্ষার্থী যোগ করা যায়নি। " + (error.message || ""),
-        "error"
-      );
-
-      submitButton.disabled = false;
-      submitButton.textContent = "শিক্ষার্থী সংরক্ষণ করুন";
-
+  function studentList(items) {
+    if (!items.length) {
+      return `<p class="muted empty-state">à¦•à§‹à¦¨à§‹ à¦¶à¦¿à¦•à§à¦·à¦¾à¦°à§à¦¥à§€ à¦ªà¦¾à¦“à§Ÿà¦¾ à¦¯à¦¾à§Ÿà¦¨à¦¿à¥¤</p>`;
     }
-
-  };
+    return `
+      <div class="tablewrap">
+        <table>
+          <thead>
+            <tr><th>Student ID</th><th>à¦¨à¦¾à¦®</th><th>à¦®à§‹à¦¬à¦¾à¦‡à¦²</th><th>à¦•à§à¦²à¦¾à¦¸</th></tr>
+          </thead>
+          <tbody>
+            ${items.map(student => `
+              <tr>
+                <td><strong>${escapeHTML(student.studentCode || "ID à¦¨à§‡à¦‡")}</strong></td>
+                <td>${escapeHTML(student.name || "â€”")}</td>
+                <td>${escapeHTML(student.phone || "â€”")}</td>
+                <td>${escapeHTML(student.className || "â€”")}</td>
+              </tr>
+            `).join("")}
+          </tbody>
+        </table>
+      </div>
+    `;
+  }
 
   await openPage("dashboard");
 
